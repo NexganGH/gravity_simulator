@@ -9,7 +9,6 @@ class PhysicsEngine {
   
   public:
     void applyGravity(std::shared_ptr<Body> b1, std::shared_ptr<Body> b2) {
-      math::
     }
 
     void evolve(std::shared_ptr<Body> b1, double dt) {
