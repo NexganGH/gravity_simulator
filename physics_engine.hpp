@@ -8,10 +8,10 @@ class PhysicsEngine {
   const float G = 10;
   
   public:
-    void applyGravity(std::shared_ptr<Body> b1, std::shared_ptr<Body> b2) {
+    void applyGravity(std::unique_ptr<Body>& b1, std::shared_ptr<Body> b2) {
     }
 
-    void evolve(std::shared_ptr<Body> b1, double dt) {
+    void evolve(std::unique_ptr<Body>& b1, double dt) {
       auto pos = b1->getPosition();
       auto vel = b1->getVelocity();
 
