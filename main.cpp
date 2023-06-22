@@ -34,9 +34,9 @@ int main() {
       
     // }
 
-    for (auto it = bodies.begin(); it != bodies.end() - 1; ++it) {
-      //for (auto it2 = it; )
-    }
+    // for (auto it = bodies.begin(); it != bodies.end() - 1; ++it) {
+    //   //for (auto it2 = it; )
+    // }
 
     for (std::unique_ptr<Body>& body : bodies ) {
 
