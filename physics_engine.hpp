@@ -18,7 +18,7 @@ class PhysicsEngine {
       auto acc = b1->getAcceleration();
       
 
-      auto newPosition = Vector { pos.x + vel.x * dt + std::pow((acc.x), 2)/2 * dt, pos.y + vel.y * dt + std::pow(acc.y, 2)/2 * dt};
+      auto newPosition = Vector { pos.x + vel.x * dt + 0.5*acc.x*std::pow(dt,2), pos.y + vel.y * dt + 0.5*acc.y*std::pow(dt,2)};
       b1->setPosition(newPosition);
 
       vel.x = vel.x + acc.x * dt;
