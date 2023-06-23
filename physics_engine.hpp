@@ -5,7 +5,7 @@
 #include<cmath>
 
 class PhysicsEngine {
-  const float G = 10;
+  const float G = 6.67430E-11;
   
   public:
     void applyGravity(std::unique_ptr<Body>& b1, std::unique_ptr<Body>& b2) {
@@ -18,7 +18,7 @@ class PhysicsEngine {
       auto acc = b1->getAcceleration();
       
 
-      auto newPosition = Vector { pos.x + vel.x * dt + 0.5*acc.x*std::pow(dt,2), pos.y + vel.y * dt + 0.5*acc.y*std::pow(dt,2)};
+      auto newPosition = Vector { pos.x + vel.x * dt + 0.5*acc.x*std::pow(dt,2), pos.y + vel.y * dt + 0.5 * acc.y*std::pow(dt,2)};
       b1->setPosition(newPosition);
 
       vel.x = vel.x + acc.x * dt;

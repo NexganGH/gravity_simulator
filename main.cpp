@@ -10,7 +10,7 @@ int main() {
   std::vector<std::unique_ptr<Body>> bodies;
   PhysicsEngine ph;
 
-  auto p1 = new Planet({20, 20}, {20, 20}, 20);
+  auto p1 = new Planet({20, 20}, {20, 20}, 5.972E24);
 
   p1->setForce({100, 0});
   bodies.push_back(std::unique_ptr<Body>(p1));
