@@ -34,7 +34,7 @@ class PhysicsEngine {
 
     // if(X<0){
     force.x = -G * (b1->getMass()) * (b2->getMass()) * X /
-              std::pow(distance(b1, b2), 2);
+              std::pow(distance(b1, b2), 3);
     // force_der.x = -G * (b1->getMass()) * (b2->getMass()) *
     //               ((Xder * std::pow(distance(b1, b2), 6)) -
     //                1.5 * X * (2 * X * Xder + 2 * Y * Yder)) /
@@ -46,7 +46,7 @@ class PhysicsEngine {
 
     // Qui la distanza era elevata alla 3a anziché alla 2a. Credo fosse sbagliato
     force.y = -G * (b1->getMass()) * (b2->getMass()) * Y /
-              std::pow(distance(b1, b2), 2);
+              std::pow(distance(b1, b2), 3);
     // force_der.y = -G * (b1->getMass()) * (b2->getMass()) *
     //               ((Yder * std::pow(distance(b1, b2), 6)) -
     //                1.5 * Y * (2 * X * Xder + 2 * Y * Yder)) /
