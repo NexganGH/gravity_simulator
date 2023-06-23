@@ -8,11 +8,15 @@ struct Vector {
   double y;
 };
 
+//D//overload operatore somma per vector
+Vector operator+(Vector a, Vector b){return {a.x+b.x, a.y+b.y};}
+
 class Body {
  protected:
   Vector _position;
   Vector _velocity;
   Vector _force;
+  Vector _force_deriv;
   double _mass;
 
  public:
@@ -20,6 +24,15 @@ class Body {
       : _position{position}, _velocity{velocity}, _mass{mass} {
     // TODO: Add class invariants.
   }
+
+  //MODIFICHE//
+  double getMass() { return _mass; }
+  void setForce_deriv(Vector a) { _force_deriv = a; }
+  Vector getAccDer(){return {_force_deriv.x/_mass, _force_deriv.y/_mass};}
+
+  void setForceUp(Vector f){_force=_force+f;}
+  void setForce_derivUp(Vector f){_force_deriv=_force_deriv+f;}
+  //MODIFICHE//
 
   Vector getPosition() const { return _position; }
 
