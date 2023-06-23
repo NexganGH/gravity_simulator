@@ -13,7 +13,7 @@ int main() {
   // "Vector" must be specified in order for make_unique to understand the type.
   std::unique_ptr<Body> p1 = std::make_unique<Planet>(Vector {20, 20}, Vector {20, 20}, 5.972E24);
 
-  p1->setForce({100, 0});
+  p1->setForce({4 * p1->getMass(), 0});
   bodies.push_back(std::move(p1));
 
   sf::RenderWindow window(sf::VideoMode(1500, 1000), "Gravity Simulator");

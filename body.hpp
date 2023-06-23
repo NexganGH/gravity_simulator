@@ -21,6 +21,8 @@ class Body {
     // TODO: Add class invariants.
   }
 
+  float getMass() const { return _mass; }
+
   Vector getPosition() const { return _position; }
 
   void setPosition(Vector v) {
