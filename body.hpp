@@ -2,6 +2,8 @@
 #define BODY_HPP
 
 #include <SFML/Graphics.hpp>
+#include <cmath>
+#include <iostream>
 
 struct Vector {
   double x;
@@ -26,12 +28,12 @@ class Body {
   }
 
   //MODIFICHE//
-  double getMass() { return _mass; }
+  double getMass() const { return _mass; }
   void setForce_deriv(Vector a) { _force_deriv = a; }
   Vector getAccDer(){return {_force_deriv.x/_mass, _force_deriv.y/_mass};}
 
   void setForceUp(Vector f){_force=_force+f;}
-  void setForce_derivUp(Vector f){_force_deriv=_force_deriv+f;}
+  void setForce_derivUp(Vector f){_force_deriv = _force_deriv+f;}
   //MODIFICHE//
 
   Vector getPosition() const { return _position; }
@@ -64,6 +66,12 @@ class Planet : public Body {
   std::unique_ptr<sf::Shape> getShape() const override {
     std::unique_ptr<sf::Shape> circle = std::make_unique<sf::CircleShape>(5);
     circle->setFillColor(sf::Color::Blue);
+    
+    // Making body's size proportional to mass.
+    auto size = sqrt(getMass()) * 10E-7 / 3;
+    circle->setScale( size, size);
+    std::cout<<size << "\n";
+
     circle->setPosition(_position.x, _position.y);
     return circle;
   }
