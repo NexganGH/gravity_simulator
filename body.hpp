@@ -49,7 +49,7 @@ class Planet : public Body {
       : Body(position, velocity, mass) {}
 
   std::unique_ptr<sf::Shape> getShape() const override {
-    auto circle = std::make_unique<sf::CircleShape>(5);
+    std::unique_ptr<sf::Shape> circle = std::make_unique<sf::CircleShape>(5);
     circle->setFillColor(sf::Color::Blue);
     circle->setPosition(_position.x, _position.y);
     return circle;
