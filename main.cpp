@@ -10,10 +10,10 @@ int main() {
   std::vector<std::unique_ptr<Body>> bodies;
   PhysicsEngine ph;
 
-  auto p1 = new Planet({20, 20}, {20, 20}, 5.972E24);
+  auto p1 = std::make_unique<Body>(Vector {20, 20}, Vector {20, 20}, 5972E24);
 
   p1->setForce({100, 0});
-  bodies.push_back(std::unique_ptr<Body>(p1));
+  bodies.push_back(p1);
 
   sf::RenderWindow window(sf::VideoMode(1500, 1000), "Gravity Simulator");
 
