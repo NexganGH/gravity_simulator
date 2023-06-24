@@ -57,7 +57,7 @@ class PhysicsEngine {
     // }
 
     // Qui c'era setForceUp.. perché?
-    b1->setForce(force);
+    b1->setForceUp(force);
 
     // Da implementare in EVOLVE 
     b1->setForce_derivUp(force_der);
