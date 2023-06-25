@@ -64,15 +64,13 @@ class Planet : public Body {
       : Body(position, velocity, mass) {}
 
   std::unique_ptr<sf::Shape> getShape() const override {
-    std::unique_ptr<sf::Shape> circle = std::make_unique<sf::CircleShape>(5);
+    auto circle = std::make_unique<sf::CircleShape>(5);
     circle->setFillColor(sf::Color::Blue);
     
     // Making body's size proportional to mass.
-    auto size = sqrt(getMass()) * 10E-7 / 3;
-    circle->setScale( size, size);
-    std::cout<<size << "\n";
-
-    circle->setPosition(_position.x, _position.y);
+    auto radius = sqrt(getMass()) * 10E-7 / 2.5;
+    circle->setRadius( radius);
+    circle->setPosition(_position.x - radius, _position.y - radius);
     return circle;
   }
 };

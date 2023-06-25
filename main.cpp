@@ -11,9 +11,9 @@ int main() {
 
   // "Vector" must be specified in order for make_unique to understand the type.
   std::unique_ptr<Body> p1 =
-      std::make_unique<Planet>(Vector{800, 800}, Vector{-10, 10}, 10E12);
+      std::make_unique<Planet>(Vector{800, 400}, Vector{0, 0}, 10E15);
   std::unique_ptr<Body> p2 =
-      std::make_unique<Planet>(Vector{700, 300}, Vector{-0.5, 0}, 10E13);
+      std::make_unique<Planet>(Vector{500, 400}, Vector{0, 45}, 10E13);
 
   bodies.push_back(std::move(p1));
   bodies.push_back(std::move(p2));

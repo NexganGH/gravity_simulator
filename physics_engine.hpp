@@ -7,7 +7,7 @@
 
 class PhysicsEngine {
   // La vera costante è 6.67E-11
-  const float G = 6.67E-12;
+  const float G = 6.67E-11;
 
  public:
   // MODIFICHE//
