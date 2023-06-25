@@ -3,22 +3,30 @@
 #include <vector>
 
 #include "body.hpp"
-#include "configurations.hpp"
 #include "physics_engine.hpp"
+#include "configurations.hpp"
 
 int main() {
   std::vector<std::unique_ptr<Body>> bodies;
   PhysicsEngine ph;
 
-  // "Vector" must be specified in order for make_unique to understand the type.
-  // stableOrbitTwoPlanets(bodies);
-  // binaryStars(bodies);
-  // threeBodies(bodies);
-  collapsingBinaryStars(bodies);
+  // // "Vector" must be specified in order for make_unique to understand the
+  // type. std::unique_ptr<Body> p1 =
+  //     std::make_unique<Planet>(Vector{800, 800}, Vector{-10, 10}, 10E12);
+  // std::unique_ptr<Body> p2 =
+  //     std::make_unique<Planet>(Vector{700, 300}, Vector{-0.5, 0}, 10E13);
+
+  // bodies.push_back(std::move(p1));
+  // bodies.push_back(std::move(p2));
+
+  //binaryStars(bodies);
+  //threeBodies(bodies);
+  //collapsingBinaryStars(bodies);
+  stableOrbitTwoPlanets(bodies);
 
   sf::RenderWindow window(sf::VideoMode(1500, 1000), "Gravity Simulator");
 
-  window.setFramerateLimit(60);
+  window.setFramerateLimit(120);
 
   while (window.isOpen()) {
     sf::Event event;
@@ -51,10 +59,10 @@ int main() {
             break;
           }
         }
-        ph.applyGravity(*it, *is);
+        ph.applyGravity(*it, *is, 0.2);
       }
     }
-    //
+
     // POI aplico evolve con le forze determinate per tutti
     for (auto it = bodies.begin(); it != bodies.end(); ++it) {
       PhysicsEngine ph;
@@ -77,7 +85,10 @@ int main() {
     // dopo;
     for (auto it = bodies.begin(); it != bodies.end(); ++it) {
       (*it)->setForce({0, 0});
-      (*it)->setForce_deriv({0, 0});
+      // mod
+      (*it)->RKCxClear();
+      (*it)->RKCyClear();
+      // mod
     }
 
     window.display();
