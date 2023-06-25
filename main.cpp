@@ -59,7 +59,7 @@ int main() {
             break;
           }
         }
-        ph.applyGravity(*it, *is, 0.2);
+        ph.applyGravity(*it, *is);
       }
     }
 
