@@ -3,15 +3,15 @@
 #include <vector>
 
 #include "body.hpp"
-#include "physics_engine.hpp"
 #include "configurations.hpp"
+#include "physics_engine.hpp"
 
 int main() {
   std::vector<std::unique_ptr<Body>> bodies;
   PhysicsEngine ph;
 
   // "Vector" must be specified in order for make_unique to understand the type.
-  //stableOrbitTwoPlanets(bodies);
+  // stableOrbitTwoPlanets(bodies);
   binaryStars(bodies);
 
   sf::RenderWindow window(sf::VideoMode(1500, 1000), "Gravity Simulator");
@@ -31,8 +31,12 @@ int main() {
     // PRIMA faccio un ciclo dove calcolo per ciascun pianeta le forze totali
     // riwultanti
     // TODO:
-    //  Volendo si può modificare la funzione applyGravity in modo che applichi la gravità a entrambi. Così facendo si può modificare questo algoritmo facendo partire il secondo ciclo dall'iteratore it (is = it). Così il numero di operazioni si riduce significativamente, da n^2 -> n + (n-1) + (n-2) + ... + 1
-    // Con anche solo 10 corpi si riduce il numero di cicli da 100 a 55 ! 
+    //  Volendo si può modificare la funzione applyGravity in modo che applichi
+    //  la gravità a entrambi. Così facendo si può modificare questo algoritmo
+    //  facendo partire il secondo ciclo dall'iteratore it (is = it). Così il
+    //  numero di operazioni si riduce significativamente, da n^2 -> n + (n-1) +
+    //  (n-2) + ... + 1
+    // Con anche solo 10 corpi si riduce il numero di cicli da 100 a 55 !
     for (auto it = bodies.begin(); it != bodies.end(); ++it) {
       for (auto is = bodies.begin(); is != bodies.end(); ++is) {
         PhysicsEngine ph;

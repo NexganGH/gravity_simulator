@@ -12,12 +12,13 @@ class PhysicsEngine {
  public:
   // MODIFICHE//
   /* TODO:
-    * Inserire un fattore di scala, in questo modo le distanze tra i pianeti sono più grandi (come nella realtà) e si possono usare le masse reali.
-    * Rendere distance() una funzione membro di planet (oppure usare direttamente l'operatore '-', vedi dopo)
-    * Implementare le operazioni tra vettori: v1-v2 per la distanza, k*v1 per riscalare, ecc...
-    * Derivata prima della forza
-    * 
-  */
+   * Inserire un fattore di scala, in questo modo le distanze tra i pianeti sono
+   * più grandi (come nella realtà) e si possono usare le masse reali. Rendere
+   * distance() una funzione membro di planet (oppure usare direttamente
+   * l'operatore '-', vedi dopo) Implementare le operazioni tra vettori: v1-v2
+   * per la distanza, k*v1 per riscalare, ecc... Derivata prima della forza
+   *
+   */
   double distance(std::unique_ptr<Body> &b1, std::unique_ptr<Body> &b2) {
     return std::sqrt(std::pow(b1->getPosition().x - b2->getPosition().x, 2) +
                      std::pow(b1->getPosition().y - b2->getPosition().y, 2));
@@ -44,7 +45,8 @@ class PhysicsEngine {
     // force_der.x=G*(b1->getMass())*(b2->getMass())*((Xder*std::pow(distance(b1,b2),6))-1.5*X*(2*X*Xder+2*Y*Yder))/std::pow(distance(b1,b2),5);
     // }
 
-    // Qui la distanza era elevata alla 3a anziché alla 2a. Credo fosse sbagliato
+    // Qui la distanza era elevata alla 3a anziché alla 2a. Credo fosse
+    // sbagliato
     force.y = -G * (b1->getMass()) * (b2->getMass()) * Y /
               std::pow(distance(b1, b2), 3);
     // force_der.y = -G * (b1->getMass()) * (b2->getMass()) *
@@ -59,7 +61,7 @@ class PhysicsEngine {
     // Qui c'era setForceUp.. perché?
     b1->setForceUp(force);
 
-    // Da implementare in EVOLVE 
+    // Da implementare in EVOLVE
     b1->setForce_derivUp(force_der);
   }
   // MODIFICHE//

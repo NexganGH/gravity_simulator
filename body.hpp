@@ -10,8 +10,8 @@ struct Vector {
   double y;
 };
 
-//D//overload operatore somma per vector
-Vector operator+(Vector a, Vector b){return {a.x+b.x, a.y+b.y};}
+// D//overload operatore somma per vector
+Vector operator+(Vector a, Vector b) { return {a.x + b.x, a.y + b.y}; }
 
 class Body {
  protected:
@@ -27,14 +27,16 @@ class Body {
     // TODO: Add class invariants.
   }
 
-  //MODIFICHE//
+  // MODIFICHE//
   double getMass() const { return _mass; }
   void setForce_deriv(Vector a) { _force_deriv = a; }
-  Vector getAccDer(){return {_force_deriv.x/_mass, _force_deriv.y/_mass};}
+  Vector getAccDer() {
+    return {_force_deriv.x / _mass, _force_deriv.y / _mass};
+  }
 
-  void setForceUp(Vector f){_force=_force+f;}
-  void setForce_derivUp(Vector f){_force_deriv = _force_deriv+f;}
-  //MODIFICHE//
+  void setForceUp(Vector f) { _force = _force + f; }
+  void setForce_derivUp(Vector f) { _force_deriv = _force_deriv + f; }
+  // MODIFICHE//
 
   Vector getPosition() const { return _position; }
 
@@ -52,7 +54,7 @@ class Body {
   void setForce(Vector force) { _force = force; }
 
   Vector getAcceleration() const {
-    return { _force.x / _mass, _force.y / _mass };
+    return {_force.x / _mass, _force.y / _mass};
   }
 
   virtual std::unique_ptr<sf::Shape> getShape() const = 0;
@@ -66,10 +68,10 @@ class Planet : public Body {
   std::unique_ptr<sf::Shape> getShape() const override {
     auto circle = std::make_unique<sf::CircleShape>(5);
     circle->setFillColor(sf::Color::Blue);
-    
+
     // Making body's size proportional to mass.
     auto radius = sqrt(getMass()) * 10E-7 / 2.5;
-    circle->setRadius( radius);
+    circle->setRadius(radius);
     circle->setPosition(_position.x - radius, _position.y - radius);
     return circle;
   }
