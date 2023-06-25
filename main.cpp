@@ -12,7 +12,9 @@ int main() {
 
   // "Vector" must be specified in order for make_unique to understand the type.
   // stableOrbitTwoPlanets(bodies);
-  binaryStars(bodies);
+  // binaryStars(bodies);
+  // threeBodies(bodies);
+  collapsingBinaryStars(bodies);
 
   sf::RenderWindow window(sf::VideoMode(1500, 1000), "Gravity Simulator");
 
