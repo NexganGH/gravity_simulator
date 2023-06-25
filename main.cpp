@@ -85,10 +85,8 @@ int main() {
     // dopo;
     for (auto it = bodies.begin(); it != bodies.end(); ++it) {
       (*it)->setForce({0, 0});
-      // mod
-      (*it)->RKCxClear();
-      (*it)->RKCyClear();
-      // mod
+      (*it)->setForce_deriv({0, 0});
+      
     }
 
     window.display();
