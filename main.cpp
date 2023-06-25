@@ -4,19 +4,22 @@
 
 #include "body.hpp"
 #include "physics_engine.hpp"
+#include "configurations.hpp"
 
 int main() {
   std::vector<std::unique_ptr<Body>> bodies;
   PhysicsEngine ph;
 
-  // "Vector" must be specified in order for make_unique to understand the type.
-  std::unique_ptr<Body> p1 =
-      std::make_unique<Planet>(Vector{800, 800}, Vector{-10, 10}, 10E12);
-  std::unique_ptr<Body> p2 =
-      std::make_unique<Planet>(Vector{700, 300}, Vector{-0.5, 0}, 10E13);
+  // // "Vector" must be specified in order for make_unique to understand the
+  // type. std::unique_ptr<Body> p1 =
+  //     std::make_unique<Planet>(Vector{800, 800}, Vector{-10, 10}, 10E12);
+  // std::unique_ptr<Body> p2 =
+  //     std::make_unique<Planet>(Vector{700, 300}, Vector{-0.5, 0}, 10E13);
 
-  bodies.push_back(std::move(p1));
-  bodies.push_back(std::move(p2));
+  // bodies.push_back(std::move(p1));
+  // bodies.push_back(std::move(p2));
+
+  binaryStars(bodies);
 
   sf::RenderWindow window(sf::VideoMode(1500, 1000), "Gravity Simulator");
 
@@ -53,14 +56,14 @@ int main() {
             break;
           }
         }
-        ph.applyGravity(*it, *is, 0.1);
+        ph.applyGravity(*it, *is, 0.2);
       }
     }
 
     // POI aplico evolve con le forze determinate per tutti
     for (auto it = bodies.begin(); it != bodies.end(); ++it) {
       PhysicsEngine ph;
-      ph.evolve(*it, 0.1);
+      ph.evolve(*it, 0.2);
       window.draw(*(
           (*it)->getShape()));  // (*it) ottengo il puntatore (che sia shared o
                                 // puntatore porprio) allo heap, (*it)->getShape
