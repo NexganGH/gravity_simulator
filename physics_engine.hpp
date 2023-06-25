@@ -69,9 +69,10 @@ b1->RKCyAddUp(3,yk4);
 
     auto acc = b1->getAcceleration();
 
-   
-    auto newPosition = Vector{pos.x + vel.x * dt + 0.5 * acc.x * dt * dt,
-                              pos.y + vel.y * dt + 0.5 * acc.y * dt * dt};
+  //  auto newPosition = Vector{pos.x + vel.x * dt,
+  //                             pos.y + vel.y * dt};
+     auto newPosition = Vector{pos.x + vel.x * dt + 0.5 * acc.x * dt * dt,
+                               pos.y + vel.y * dt + 0.5 * acc.y * dt * dt};
     b1->setPosition(newPosition);
 
     //mod
