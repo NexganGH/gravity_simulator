@@ -4,19 +4,15 @@
 
 #include "body.hpp"
 #include "physics_engine.hpp"
+#include "configurations.hpp"
 
 int main() {
   std::vector<std::unique_ptr<Body>> bodies;
   PhysicsEngine ph;
 
   // "Vector" must be specified in order for make_unique to understand the type.
-  std::unique_ptr<Body> p1 =
-      std::make_unique<Planet>(Vector{800, 400}, Vector{0, 0}, 10E15);
-  std::unique_ptr<Body> p2 =
-      std::make_unique<Planet>(Vector{500, 400}, Vector{0, 45}, 10E13);
-
-  bodies.push_back(std::move(p1));
-  bodies.push_back(std::move(p2));
+  //stableOrbitTwoPlanets(bodies);
+  binaryStars(bodies);
 
   sf::RenderWindow window(sf::VideoMode(1500, 1000), "Gravity Simulator");
 
