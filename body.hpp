@@ -10,7 +10,6 @@ struct Vector {
   double y;
 };
 
-//D//overload operatore somma per vector
 Vector operator+(Vector a, Vector b){return {a.x+b.x, a.y+b.y};}
 
 class Body {
@@ -18,7 +17,10 @@ class Body {
   Vector _position;
   Vector _velocity;
   Vector _force;
-  Vector _force_deriv;
+   //mod//aggiunta
+  std::array<double,4> _RKCx;
+  std::array<double,4> _RKCy;
+  //mod
   double _mass;
 
  public:
@@ -29,17 +31,39 @@ class Body {
 
   //MODIFICHE//
   double getMass() const { return _mass; }
-  void setForce_deriv(Vector a) { _force_deriv = a; }
-  Vector getAccDer(){return {_force_deriv.x/_mass, _force_deriv.y/_mass};}
-
   void setForceUp(Vector f){_force=_force+f;}
-  void setForce_derivUp(Vector f){_force_deriv = _force_deriv+f;}
   //MODIFICHE//
+
+//mod//aggiunte
+  std::array<double,4> getRKCx() const{return _RKCx;}
+  std::array<double,4> getRKCy() const{return _RKCy;}
+
+//sommo i parametri k calcolati con i vari pianeti //verifica che sia corretto
+  void RKCxAddUp(int a, double b){_RKCx[a]+=b;} //a deve essere compreso tra 0 e 3// come fare il chek?
+  void RKCyAddUp(int a, double b){_RKCy[a]+=b;}
+
+//alla fine di ogni evolve devo ricalcolare tutti i parametri k in funzione delle nuove posizioni quindi setto quelli che ci sono a zero
+  void RKCxClear(){
+    for(int i{0};i<3;++i){
+      _RKCx[i]=0;
+    }
+  }
+
+  void RKCyClear(){
+    for(int i{0};i<3;++i){
+      _RKCy[i]=0;
+    }
+  }
+  
+  //mod
+
+
+
 
   Vector getPosition() const { return _position; }
 
   void setPosition(Vector v) {
-    // TODO: Add check that v.x, v.y >= 0.
+    // TODO: Add check that v.x, v.y >= 0.  //perchè?
     _position = v;
   }
 

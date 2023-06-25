@@ -20,7 +20,7 @@ int main() {
 
   sf::RenderWindow window(sf::VideoMode(1500, 1000), "Gravity Simulator");
 
-  window.setFramerateLimit(60);
+  window.setFramerateLimit(120);
 
   while (window.isOpen()) {
     sf::Event event;
@@ -35,8 +35,12 @@ int main() {
     // PRIMA faccio un ciclo dove calcolo per ciascun pianeta le forze totali
     // riwultanti
     // TODO:
-    //  Volendo si può modificare la funzione applyGravity in modo che applichi la gravità a entrambi. Così facendo si può modificare questo algoritmo facendo partire il secondo ciclo dall'iteratore it (is = it). Così il numero di operazioni si riduce significativamente, da n^2 -> n + (n-1) + (n-2) + ... + 1
-    // Con anche solo 10 corpi si riduce il numero di cicli da 100 a 55 ! 
+    //  Volendo si può modificare la funzione applyGravity in modo che applichi
+    //  la gravità a entrambi. Così facendo si può modificare questo algoritmo
+    //  facendo partire il secondo ciclo dall'iteratore it (is = it). Così il
+    //  numero di operazioni si riduce significativamente, da n^2 -> n + (n-1) +
+    //  (n-2) + ... + 1
+    // Con anche solo 10 corpi si riduce il numero di cicli da 100 a 55 !
     for (auto it = bodies.begin(); it != bodies.end(); ++it) {
       for (auto is = bodies.begin(); is != bodies.end(); ++is) {
         PhysicsEngine ph;
@@ -49,14 +53,14 @@ int main() {
             break;
           }
         }
-        ph.applyGravity(*it, *is);
+        ph.applyGravity(*it, *is, 0.1);
       }
     }
-    //
+
     // POI aplico evolve con le forze determinate per tutti
     for (auto it = bodies.begin(); it != bodies.end(); ++it) {
       PhysicsEngine ph;
-      ph.evolve(*it, 0.2);
+      ph.evolve(*it, 0.1);
       window.draw(*(
           (*it)->getShape()));  // (*it) ottengo il puntatore (che sia shared o
                                 // puntatore porprio) allo heap, (*it)->getShape
@@ -75,7 +79,10 @@ int main() {
     // dopo;
     for (auto it = bodies.begin(); it != bodies.end(); ++it) {
       (*it)->setForce({0, 0});
-      (*it)->setForce_deriv({0, 0});
+      // mod
+      (*it)->RKCxClear();
+      (*it)->RKCyClear();
+      // mod
     }
 
     window.display();
