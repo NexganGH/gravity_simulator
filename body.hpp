@@ -92,7 +92,7 @@ class Planet : public Body {
     circle->setFillColor(sf::Color::Blue);
     
     // Making body's size proportional to mass.
-    auto size = sqrt(getMass()) * 10E-7 / 3;
+    auto size = sqrt(getMass()) * 10E-7 / 2.5;
     circle->setScale( size, size);
     std::cout<<size << "\n";
 
