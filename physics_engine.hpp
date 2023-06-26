@@ -36,10 +36,10 @@ class PhysicsEngine {
     // if(X<0){
     force.x = -G * (b1->getMass()) * (b2->getMass()) * X /
               std::pow(distance(b1, b2), 3);
-    // force_der.x = -G * (b1->getMass()) * (b2->getMass()) *
-    //               ((Xder * std::pow(distance(b1, b2), 6)) -
-    //                1.5 * X * (2 * X * Xder + 2 * Y * Yder)) /
-    //               std::pow(distance(b1, b2), 5);
+     force_der.x = -G * (b1->getMass()) * (b2->getMass()) *
+                  ((Xder * std::pow(distance(b1, b2), 2)) -
+                   1.5 * X * (2 * X * Xder + 2 * Y * Yder)) /
+                  std::pow(distance(b1, b2), 5);
     // } else {
     // force.x=G*(b1->getMass())*(b2->getMass())*X/std::pow(distance(b1,b2),3);
     // force_der.x=G*(b1->getMass())*(b2->getMass())*((Xder*std::pow(distance(b1,b2),6))-1.5*X*(2*X*Xder+2*Y*Yder))/std::pow(distance(b1,b2),5);
@@ -49,10 +49,10 @@ class PhysicsEngine {
     // sbagliato
     force.y = -G * (b1->getMass()) * (b2->getMass()) * Y /
               std::pow(distance(b1, b2), 3);
-    // force_der.y = -G * (b1->getMass()) * (b2->getMass()) *
-    //               ((Yder * std::pow(distance(b1, b2), 6)) -
-    //                1.5 * Y * (2 * X * Xder + 2 * Y * Yder)) /
-    //               std::pow(distance(b1, b2), 5);
+    force_der.y = -G * (b1->getMass()) * (b2->getMass()) *
+                  ((Yder * std::pow(distance(b1, b2), 2)) -
+                   1.5 * Y * (2 * X * Xder + 2 * Y * Yder)) /
+                  std::pow(distance(b1, b2), 5);
     // } else {
     // force.y=G*(b1->getMass())*(b2->getMass())*Y/std::pow(distance(b1,b2),3);
     // force_der.y=G*(b1->getMass())*(b2->getMass())*((Yder*std::pow(distance(b1,b2),6))-1.5*Y*(2*X*Xder+2*Y*Yder))/std::pow(distance(b1,b2),5);
@@ -73,15 +73,15 @@ class PhysicsEngine {
 
     // implementazione eulero
 
-    // auto newPosition = Vector { pos.x + vel.x * dt +
-    // 0.5*acc.x*dt*dt+0.1666667*b1->getAccDer().x*dt*dt*dt, pos.y + vel.y * dt
-    // + 0.5*acc.y *dt* dt+0.1666667*b1->getAccDer().y*dt*dt*dt};
-    auto newPosition = Vector{pos.x + vel.x * dt + 0.5 * acc.x * dt * dt,
-                              pos.y + vel.y * dt + 0.5 * acc.y * dt * dt};
+    auto newPosition = Vector { pos.x + vel.x * dt +
+    0.5*acc.x*dt*dt+0.1666667*b1->getAccDer().x*dt*dt*dt, pos.y + vel.y * dt
+    + 0.5*acc.y *dt* dt+0.1666667*b1->getAccDer().y*dt*dt*dt};
+    // auto newPosition = Vector{pos.x + vel.x * dt + 0.5 * acc.x * dt * dt,
+    //                           pos.y + vel.y * dt + 0.5 * acc.y * dt * dt};
     b1->setPosition(newPosition);
 
-    vel.x = vel.x + acc.x * dt;  //+0.5*b1->getAccDer().x*dt*dt;
-    vel.y = vel.y + acc.y * dt;  //+0.5*b1->getAccDer().y*dt*dt;
+    vel.x = vel.x + acc.x * dt+0.5*b1->getAccDer().x*dt*dt;
+    vel.y = vel.y + acc.y * dt+0.5*b1->getAccDer().y*dt*dt;
     b1->setVelocity(vel);
   }
 };
