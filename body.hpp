@@ -81,6 +81,7 @@ class Planet : public Body {
     auto radius = sqrt(getMass()) * 10E-7 / 2.5;
     circle->setRadius(radius);
     circle->setPosition(_position.x - radius, _position.y - radius);
+    // circle->setPosition(_position.x, _position.y);
     return circle;
   }
 };

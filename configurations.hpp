@@ -15,6 +15,16 @@ void stableOrbitTwoPlanets(std::vector<std::unique_ptr<Body>>& bodies) {
   bodies.push_back(std::move(p2));
 }
 
+void stableOrbitTwoPlanets2(std::vector<std::unique_ptr<Body>>& bodies) {
+  std::unique_ptr<Body> p1 =
+      std::make_unique<Planet>(Vector{800, 400}, Vector{0, 0}, 10E16);
+  std::unique_ptr<Body> p2 =
+      std::make_unique<Planet>(Vector{800, 100}, Vector{-180, 0}, 10E11);
+
+  bodies.push_back(std::move(p1));
+  bodies.push_back(std::move(p2));
+}
+
 void threeBodies(std::vector<std::unique_ptr<Body>>& bodies) {
   std::unique_ptr<Body> p2 =
       std::make_unique<Planet>(Vector{500, 400}, Vector{0, 30}, 10E14);
