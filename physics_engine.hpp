@@ -42,20 +42,20 @@ class PhysicsEngine {
 
 //mod
 //calcoliamo i parametri di RK oer le x 
-double xk1=-G*b2->getMass()*X/std::pow(X*X+Y*Y,1.5);
-double xk2=-G*b2->getMass()*(X+Xder*dt/2+Xderder*dt*dt/8)/std::pow(std::pow(X+Xder*dt/2+Xderder*dt*dt/8,2)+std::pow(Y+Yder*dt/2+Yderder*dt*dt/8,2),1.5);//*dt)/std::pow(std::pow(Xder+0.5*xk1*dt,2)+std::pow(Y+dt*Yder/2,2),1.5); //sarebe l'espasione di eulero di Y(t+dt/2);
-double xk3=-G*b2->getMass()*(X+Xder*dt/2+Xderder*dt*dt/8)/std::pow(std::pow(X+Xder*dt/2+Xderder*dt*dt/8,2)+std::pow(Y+Yder*dt/2+Yderder*dt*dt/8,2),1.5);//check su questa 
-double xk4=-G*b2->getMass()*(X+Xder*dt+0.5*Xderder*dt*dt)/std::pow(std::pow(X+Xder*dt+0.5*Xderder*dt*dt,2)+std::pow(Y+dt*Yder+0.5*Yderder*dt*dt,2),1.5);// check su questa 
+double xk1=-G*b2->getMass()*(b1->getPosition().x)/std::pow(X*X+Y*Y,1.5);
+double xk2=-G*b2->getMass()*((b1->getPosition().x)+(b1->getVelocity().x)*dt/2+(b1->getAcceleration().x)*dt*dt/8)/std::pow(std::pow(X+Xder*dt/2+Xderder*dt*dt/8,2)+std::pow(Y+Yder*dt/2+Yderder*dt*dt/8,2),1.5);//*dt)/std::pow(std::pow(Xder+0.5*xk1*dt,2)+std::pow(Y+dt*Yder/2,2),1.5); //sarebe l'espasione di eulero di Y(t+dt/2);
+double xk3=-G*b2->getMass()*((b1->getPosition().x)+(b1->getVelocity().x)*dt/2+(b1->getAcceleration().x)*dt*dt/8)/std::pow(std::pow(X+Xder*dt/2+Xderder*dt*dt/8,2)+std::pow(Y+Yder*dt/2+Yderder*dt*dt/8,2),1.5);//check su questa 
+double xk4=-G*b2->getMass()*((b1->getPosition().x)+(b1->getVelocity().x)*dt+0.5*(b1->getAcceleration().x)*dt*dt)/std::pow(std::pow(X+Xder*dt+0.5*Xderder*dt*dt,2)+std::pow(Y+dt*Yder+0.5*Yderder*dt*dt,2),1.5);// check su questa 
 b1->RKCxAddUp(0,xk1);
 b1->RKCxAddUp(1,xk2);
 b1->RKCxAddUp(2,xk3);
 b1->RKCxAddUp(3,xk4);
 
 //calcoliamo i parametri per RK per le y
-double yk1=-G*b2->getMass()*Y/std::pow(Y*Y+X*X,1.5);
-double yk2=-G*b2->getMass()*(Y+Yder*dt/2+Yderder*dt*dt/8)/std::pow(std::pow(X+Xder*dt/2+Xderder*dt*dt/8,2)+std::pow(Y+Yder*dt/2+Yderder*dt*dt/8,2),1.5);
-double yk3=-G*b2->getMass()*(Y+Yder*dt/2+Yderder*dt*dt/8)/std::pow(std::pow(X+Xder*dt/2+Xderder*dt*dt/8,2)+std::pow(Y+Yder*dt/2+Yderder*dt*dt/8,2),1.5);
-double yk4=-G*b2->getMass()*(Y+Yder*dt+Yderder*dt*dt)/std::pow(std::pow(X+Xder*dt+0.5*Xderder*dt*dt,2)+std::pow(Y+dt*Yder+Yderder*dt*dt,2),1.5);
+double yk1=-G*b2->getMass()*(b1->getPosition().y)/std::pow(Y*Y+X*X,1.5);
+double yk2=-G*b2->getMass()*((b1->getPosition().y)+(b1->getVelocity().y)*dt/2+(b1->getAcceleration().y)*dt*dt/8)/std::pow(std::pow(X+Xder*dt/2+Xderder*dt*dt/8,2)+std::pow(Y+Yder*dt/2+Yderder*dt*dt/8,2),1.5);
+double yk3=-G*b2->getMass()*((b1->getPosition().y)+(b1->getVelocity().y)*dt/2+(b1->getAcceleration().y)*dt*dt/8)/std::pow(std::pow(X+Xder*dt/2+Xderder*dt*dt/8,2)+std::pow(Y+Yder*dt/2+Yderder*dt*dt/8,2),1.5);
+double yk4=-G*b2->getMass()*((b1->getPosition().y)+(b1->getVelocity().y)*dt+(b1->getAcceleration().y)*dt*dt)/std::pow(std::pow(X+Xder*dt+0.5*Xderder*dt*dt,2)+std::pow(Y+dt*Yder+Yderder*dt*dt,2),1.5);
 b1->RKCyAddUp(0,yk1);
 b1->RKCyAddUp(1,yk2);
 b1->RKCyAddUp(2,yk3);
