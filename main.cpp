@@ -77,15 +77,13 @@ int main() {
                                 // punatto dal puntatore circle*
     }
 
-    // std::cout<<bodies[0]->getAcceleration().x<<"   "<<
-    // bodies[1]->getAcceleration().x<<"         "  <<bodies[0]->getPosition().x
-    // <<"   "<<bodies[1]->getPosition().x <<'\n';
-
     // resetto le forze a zero per ricalcolarle con la funzione set force sum
     // dopo;
     for (auto it = bodies.begin(); it != bodies.end(); ++it) {
       (*it)->setForce({0, 0});
       (*it)->setForce_deriv({0, 0});
+      //mod
+      (*it)->setForce2deriv({0,0});
       
     }
 

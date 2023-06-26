@@ -19,6 +19,8 @@ class Body {
   Vector _velocity;
   Vector _force;
   Vector _force_deriv;
+  // mod
+  Vector _force_2deriv;
   double _mass;
 
  public:
@@ -27,16 +29,22 @@ class Body {
     // TODO: Add class invariants.
   }
 
-  // MODIFICHE//
   double getMass() const { return _mass; }
   void setForce_deriv(Vector a) { _force_deriv = a; }
   Vector getAccDer() {
     return {_force_deriv.x / _mass, _force_deriv.y / _mass};
   }
 
+  //mod
+  void setForce2deriv(Vector a) { _force_2deriv = a; }
+  Vector getAcc2der() {
+    return {_force_2deriv.x / _mass, _force_2deriv.x / _mass};
+  }
+void setForce2derivUp(Vector a){_force_2deriv=_force_2deriv+a;}
+  //mod
+
   void setForceUp(Vector f) { _force = _force + f; }
   void setForce_derivUp(Vector f) { _force_deriv = _force_deriv + f; }
-  // MODIFICHE//
 
   Vector getPosition() const { return _position; }
 
