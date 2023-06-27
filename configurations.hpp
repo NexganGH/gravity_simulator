@@ -13,20 +13,54 @@ Renderer earthAndSun(std::vector<std::unique_ptr<Body>>& bodies,
   const float EARTH_MASS = 5.9722E24;
   const float SUN_MASS = 1.98855E30;
 
-  auto renderer =
-      Renderer::fromUniverseWidth(window, 2 * EARTH_SUN_DISTANCE + EARTH_SUN_DISTANCE);
+  auto renderer = Renderer::fromUniverseWidth(
+      window, 2 * EARTH_SUN_DISTANCE + EARTH_SUN_DISTANCE);
 
   auto height = renderer.getUniverseHeight();
 
   std::unique_ptr<Body> sun = std::make_unique<Planet>(
-      Vector{0.5 * 1E5 + EARTH_SUN_DISTANCE + EARTH_SUN_DISTANCE/2, height / 2}, Vector{0, 0},
-      SUN_MASS);
+      Vector{0.5 * 1E5 + EARTH_SUN_DISTANCE + EARTH_SUN_DISTANCE / 2,
+             height / 2},
+      Vector{0, 0}, SUN_MASS);
   std::unique_ptr<Body> earth = std::make_unique<Planet>(
-      Vector{0.5 * 1E5 + EARTH_SUN_DISTANCE * 2 + EARTH_SUN_DISTANCE/2, height / 2}, Vector{0, -EARTH_SPEED},
-      EARTH_MASS);
+      Vector{0.5 * 1E5 + EARTH_SUN_DISTANCE * 2 + EARTH_SUN_DISTANCE / 2,
+             height / 2},
+      Vector{0, -EARTH_SPEED}, EARTH_MASS);
 
   bodies.push_back(std::move(sun));
   bodies.push_back(std::move(earth));
+
+  return renderer;
+}
+
+Renderer starCollision(std::vector<std::unique_ptr<Body>>& bodies,
+                       sf::RenderWindow& window) {
+  const float EARTH_SUN_DISTANCE = 149597870700;
+  const float EARTH_SPEED = 30.24E3;
+  const float EARTH_MASS = 5.9722E24;
+  const float SUN_MASS = 1.98855E30;
+
+  auto renderer = Renderer::fromUniverseWidth(
+      window, 2 * EARTH_SUN_DISTANCE + EARTH_SUN_DISTANCE);
+
+  auto height = renderer.getUniverseHeight();
+
+  std::unique_ptr<Body> sun = std::make_unique<Planet>(
+      Vector{0.5 * 1E5 + EARTH_SUN_DISTANCE + EARTH_SUN_DISTANCE / 2,
+             height / 2},
+      Vector{0, 0}, SUN_MASS);
+  std::unique_ptr<Body> earth = std::make_unique<Planet>(
+      Vector{0.5 * 1E5 + EARTH_SUN_DISTANCE * 2 + EARTH_SUN_DISTANCE / 2,
+             height / 2},
+      Vector{0, -EARTH_SPEED}, EARTH_MASS);
+  std::unique_ptr<Body> star = std::make_unique<Planet>(
+      Vector{0.5 * 1E5 + EARTH_SUN_DISTANCE + EARTH_SUN_DISTANCE,
+             height / 2 + height / 4},
+      Vector{0, -EARTH_SPEED * 2}, 5E30);
+
+  bodies.push_back(std::move(sun));
+  bodies.push_back(std::move(earth));
+  bodies.push_back(std::move(star));
 
   return renderer;
 }

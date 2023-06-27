@@ -49,6 +49,8 @@ class Renderer {
     // Must make it centered
     _window.draw(shape);
   }
+
+  Vector screenToReal(Vector screen) { return _scale * screen; }
 };
 
 #endif

@@ -1,35 +1,26 @@
 #include <SFML/Graphics.hpp>
+#include <TGUI/Backend/SFML-Graphics.hpp>
 #include <TGUI/TGUI.hpp>
 #include <iostream>
 #include <vector>
 
 #include "body.hpp"
 #include "configurations.hpp"
+#include "gui_manager.hpp"
 #include "orbit_drawer.hpp"
 #include "physics_engine.hpp"
 #include "renderer.hpp"
-#include "gui_manager.hpp"
-
 
 int main() {
   std::vector<std::unique_ptr<Body>> bodies;
   PhysicsEngine ph(500000);
   OrbitDrawer orbitDrawer;
-  
 
   sf::RenderWindow window(sf::VideoMode(1500, 1500), "Gravity Simulator");
-  // Renderer render(window, 100);
-
-  // bodies.push_back(std::move(p1));
-  // bodies.push_back(std::move(p2));
-
-  // binaryStars(bodies);
-  // threeBodies(bodies);
-  // collapsingBinaryStars(bodies);
   auto render = earthAndSun(bodies, window);
 
   tgui::Gui gui{window};
-  GuiManager guiManager{gui, ph};
+  GuiManager guiManager{gui, ph, bodies, render};
   guiManager.controlButtons();
 
   window.setFramerateLimit(60);
@@ -45,9 +36,8 @@ int main() {
       if (event.type == sf::Event::MouseButtonPressed)
         if (event.mouseButton.button == sf::Mouse::Right)
           guiManager.rightButtonClicked(event);
+      gui.handleEvent(event);
     }
-
-    gui.handleEvent(event);
 
     // redrawing the scene
     window.clear();
@@ -68,10 +58,7 @@ int main() {
         // posso calcolare la forza del pianeta che agisce su se stesso per cui
         // gli faccio saltare se stesso
         if (it == is) {
-          is += 1;
-          if (is >= bodies.end()) {
-            break;
-          }
+          continue;
         }
         ph.applyGravity(*it, *is);
       }
@@ -101,8 +88,6 @@ int main() {
     guiManager.setTimeElapsed(ph.getTimeElapsed() / 3.154E7);
     orbitDrawer.draw(render);
     gui.draw();
-
-    
 
     window.display();
   }
