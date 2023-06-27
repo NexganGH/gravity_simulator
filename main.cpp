@@ -1,31 +1,22 @@
 #include <SFML/Graphics.hpp>
 #include <TGUI/TGUI.hpp>
+#include <TGUI/Backend/SFML-Graphics.hpp>
 #include <iostream>
 #include <vector>
 
 #include "body.hpp"
 #include "configurations.hpp"
+#include "gui_manager.hpp"
 #include "orbit_drawer.hpp"
 #include "physics_engine.hpp"
 #include "renderer.hpp"
-#include "gui_manager.hpp"
-
 
 int main() {
   std::vector<std::unique_ptr<Body>> bodies;
   PhysicsEngine ph(500000);
   OrbitDrawer orbitDrawer;
-  
 
   sf::RenderWindow window(sf::VideoMode(1500, 1500), "Gravity Simulator");
-  // Renderer render(window, 100);
-
-  // bodies.push_back(std::move(p1));
-  // bodies.push_back(std::move(p2));
-
-  // binaryStars(bodies);
-  // threeBodies(bodies);
-  // collapsingBinaryStars(bodies);
   auto render = earthAndSun(bodies, window);
 
   tgui::Gui gui{window};
@@ -45,9 +36,14 @@ int main() {
       if (event.type == sf::Event::MouseButtonPressed)
         if (event.mouseButton.button == sf::Mouse::Right)
           guiManager.rightButtonClicked(event);
+      //std::cout << "EVENT ";
+      if (event.type == sf::Event::KeyPressed) {
+        //std::cout<<"Key pressed: " << event.key.code;
+        //if (event.key.code == sf::Keyboard::Enter)
+          guiManager.pressedEnter();
+      }
+      gui.handleEvent(event);
     }
-
-    gui.handleEvent(event);
 
     // redrawing the scene
     window.clear();
@@ -101,8 +97,6 @@ int main() {
     guiManager.setTimeElapsed(ph.getTimeElapsed() / 3.154E7);
     orbitDrawer.draw(render);
     gui.draw();
-
-    
 
     window.display();
   }

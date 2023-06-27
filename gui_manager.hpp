@@ -8,12 +8,16 @@
 
 #include "physics_engine.hpp"
 
+void handleReturnKey() {
+  std::cout << "test";
+}
 class GuiManager {
  private:
   tgui::Gui& _gui;
   PhysicsEngine& _ph;
 
   tgui::Label::Ptr timeLabel;
+  tgui::EditBox::Ptr _massInserter;
 
  public:
   GuiManager(tgui::Gui& gui, PhysicsEngine& ph) : _gui(gui), _ph(ph) {}
@@ -38,6 +42,8 @@ class GuiManager {
     auto renderer = timeLabel->getSharedRenderer();
     renderer->setTextColor(tgui::Color::White);
     _gui.add(timeLabel);
+
+    
   }
 
   void setTimeElapsed(double timeElapsed) {
@@ -45,15 +51,18 @@ class GuiManager {
   }
 
   void rightButtonClicked(sf::Event event) {
-    auto listBox = tgui::ListBox::create();
-    // listBox->setRenderer(theme.getRenderer("ListBox"));
-    listBox->setSize(120, 30);
-    listBox->setItemHeight(24);
-    listBox->setPosition(event.mouseButton.x, event.mouseButton.y);
-    listBox->addItem("Item 1");
-    listBox->setEnabled(true);
-    listBox->onItemSelect.connect([&]() { std::cout << "test"; });
-    _gui.add(listBox);
+    _massInserter = tgui::EditBox::create();
+    _massInserter->setText("2");
+    _massInserter->setPosition(event.mouseButton.x, event.mouseButton.y);
+    
+    //editBox->on
+    _gui.add(_massInserter);
+  }
+
+  void pressedEnter() {
+    std::cout<<"grevissimo ";
+    if(_massInserter)
+      std::cout<<"greve";
   }
 };
 
