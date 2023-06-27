@@ -29,6 +29,7 @@ class Body {
     // TODO: Add class invariants.
   }
 
+
   double getMass() const { return _mass; }
   void setForce_deriv(Vector a) { _force_deriv = a; }
   Vector getAccDer() {

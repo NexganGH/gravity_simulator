@@ -19,6 +19,7 @@ int main() {
   // bodies.push_back(std::move(p1));
   // bodies.push_back(std::move(p2));
 
+
   //binaryStars(bodies);
   //threeBodies(bodies);
   //collapsingBinaryStars(bodies);
