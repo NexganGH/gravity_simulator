@@ -2,17 +2,25 @@
 #define BODY_HPP
 
 #include <SFML/Graphics.hpp>
+#include <cmath>
+#include <iostream>
 
 struct Vector {
   double x;
   double y;
 };
 
+// D//overload operatore somma per vector
+Vector operator+(Vector a, Vector b) { return {a.x + b.x, a.y + b.y}; }
+
 class Body {
  protected:
   Vector _position;
   Vector _velocity;
   Vector _force;
+  Vector _force_deriv;
+  // mod
+  Vector _force_2deriv;
   double _mass;
 
  public:
@@ -21,7 +29,23 @@ class Body {
     // TODO: Add class invariants.
   }
 
-  float getMass() const { return _mass; }
+
+  double getMass() const { return _mass; }
+  void setForce_deriv(Vector a) { _force_deriv = a; }
+  Vector getAccDer() {
+    return {_force_deriv.x / _mass, _force_deriv.y / _mass};
+  }
+
+  //mod
+  void setForce2deriv(Vector a) { _force_2deriv = a; }
+  Vector getAcc2der() {
+    return {_force_2deriv.x / _mass, _force_2deriv.x / _mass};
+  }
+void setForce2derivUp(Vector a){_force_2deriv=_force_2deriv+a;}
+  //mod
+
+  void setForceUp(Vector f) { _force = _force + f; }
+  void setForce_derivUp(Vector f) { _force_deriv = _force_deriv + f; }
 
   Vector getPosition() const { return _position; }
 
@@ -39,7 +63,7 @@ class Body {
   void setForce(Vector force) { _force = force; }
 
   Vector getAcceleration() const {
-    return { _force.x / _mass, _force.y / _mass };
+    return {_force.x / _mass, _force.y / _mass};
   }
 
   virtual std::unique_ptr<sf::Shape> getShape() const = 0;
@@ -51,9 +75,14 @@ class Planet : public Body {
       : Body(position, velocity, mass) {}
 
   std::unique_ptr<sf::Shape> getShape() const override {
-    std::unique_ptr<sf::Shape> circle = std::make_unique<sf::CircleShape>(5);
+    auto circle = std::make_unique<sf::CircleShape>(5);
     circle->setFillColor(sf::Color::Blue);
-    circle->setPosition(_position.x, _position.y);
+
+    // Making body's size proportional to mass.
+    auto radius = sqrt(getMass()) * 10E-7 / 2.5;
+    circle->setRadius(radius);
+    circle->setPosition(_position.x - radius, _position.y - radius);
+    // circle->setPosition(_position.x, _position.y);
     return circle;
   }
 };
