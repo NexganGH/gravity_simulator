@@ -9,10 +9,10 @@
 
 int main() {
   std::vector<std::unique_ptr<Body>> bodies;
-  PhysicsEngine ph;
+  PhysicsEngine ph(1000000);
 
-  sf::RenderWindow window(sf::VideoMode(1500, 1000), "Gravity Simulator");
-  Renderer render(window, 100);
+  sf::RenderWindow window(sf::VideoMode(1500, 1500), "Gravity Simulator");
+  //Renderer render(window, 100);
 
   // // "Vector" must be specified in order for make_unique to understand the
   // type. std::unique_ptr<Body> p1 =
@@ -26,13 +26,15 @@ int main() {
   // binaryStars(bodies);
   // threeBodies(bodies);
   // collapsingBinaryStars(bodies);
-  stableOrbitTwoPlanets(bodies);
-
-  
+  auto render = earthAndSun(bodies, window);
 
   window.setFramerateLimit(120);
 
+  sf::Clock deltaClock;
   while (window.isOpen()) {
+    sf::Time dt = deltaClock.restart();
+
+
     sf::Event event;
     while (window.pollEvent(event)) {
       if (event.type == sf::Event::Closed) window.close();
@@ -53,7 +55,7 @@ int main() {
     // Con anche solo 10 corpi si riduce il numero di cicli da 100 a 55 !
     for (auto it = bodies.begin(); it != bodies.end(); ++it) {
       for (auto is = bodies.begin(); is != bodies.end(); ++is) {
-        PhysicsEngine ph;
+        
         // se gli iteratori sono uguali puntano allo stesso pianeta per cui non
         // posso calcolare la forza del pianeta che agisce su se stesso per cui
         // gli faccio saltare se stesso
@@ -69,16 +71,17 @@ int main() {
 
     // POI aplico evolve con le forze determinate per tutti
     for (auto it = bodies.begin(); it != bodies.end(); ++it) {
-      PhysicsEngine ph;
-      ph.evolve(*it, 0.2);
+    
+      ph.evolve(*it, dt.asSeconds());
       render.draw(*it);
-      //     (*it)->getShape()));  // (*it) ottengo il puntatore (che sia shared o
-                                // puntatore porprio) allo heap, (*it)->getShape
-                                // mi ritorna il punattore sullo heap a circle
-                                // (vedi tipo ritornato di  funzioen getshape),
-                                // e dereferenzio questo per far disegnare
-                                // porprio il cerchio che è allocato sullo heap
-                                // punatto dal puntatore circle*
+      //     (*it)->getShape()));  // (*it) ottengo il puntatore (che sia shared
+      //     o
+      // puntatore porprio) allo heap, (*it)->getShape
+      // mi ritorna il punattore sullo heap a circle
+      // (vedi tipo ritornato di  funzioen getshape),
+      // e dereferenzio questo per far disegnare
+      // porprio il cerchio che è allocato sullo heap
+      // punatto dal puntatore circle*
     }
 
     // resetto le forze a zero per ricalcolarle con la funzione set force sum

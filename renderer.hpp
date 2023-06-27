@@ -37,18 +37,28 @@ class Renderer {
     invariant();
   }
 
+  static Renderer fromUniverseWidth(sf::RenderWindow& window,
+                                    double universeWidth) {
+    return Renderer(window, universeWidth / window.getView().getSize().x);
+  }
+
   // Renderer(sf::RenderWindow& window, double universeWidth)
   //     : Renderer(window, universeWidth / window.getView().getSize().x) {
 
   //   invariant();
   // }
 
+  double getUniverseHeight() {
+    return _window.getView().getSize().y * _scale;
+  }
+
   void draw(std::unique_ptr<Body>& body) {
     auto shape = body->getShape();
     auto pos = realToScreen(shape->getPosition());
 
     auto rect = shape->getLocalBounds();
-    shape->setPosition(sf::Vector2f(pos.x - rect.width/2, pos.y - rect.height/2));
+    shape->setPosition(
+        sf::Vector2f(pos.x - rect.width / 2, pos.y - rect.height / 2));
     // Must make it centered
     _window.draw(*shape);
   }

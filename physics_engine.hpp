@@ -8,9 +8,13 @@
 
 class PhysicsEngine {
   // La vera costante è 6.67E-11
-  const float G = 6.67E-11;
-
+  const double G = 6.67E-11;
+  double _timeScale = 1;
  public:
+  PhysicsEngine(double timeScale) : _timeScale(timeScale) {
+    assert(_timeScale > 0);
+  }
+
   // MODIFICHE//
   /* TODO:
    * Inserire un fattore di scala, in questo modo le distanze tra i pianeti sono
@@ -85,6 +89,8 @@ class PhysicsEngine {
   }
   // MODIFICHE//
   void evolve(std::unique_ptr<Body> &b1, double dt) {
+    dt *= _timeScale;
+
     auto pos = b1->getPosition();
     auto vel = b1->getVelocity();
 

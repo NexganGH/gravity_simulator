@@ -74,7 +74,7 @@ class Planet : public Body {
     circle->setFillColor(sf::Color::Blue);
 
     // Making body's size proportional to mass.
-    auto radius = sqrt(getMass()) * 10E-7 / 2.5;
+    auto radius = log(getMass()) / 2.5;
     circle->setRadius(radius);
     circle->setPosition(_position.x - radius, _position.y - radius);
     // circle->setPosition(_position.x, _position.y);
