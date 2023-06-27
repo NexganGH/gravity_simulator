@@ -24,22 +24,11 @@ class Body {
 
   double getMass() const { return _mass; }
 
-  void addForce(Vector f) { _force = _force + f; }
-
-  void setForce_deriv(Vector a) { _forceFirstDeriv = a; }
-  Vector getAccDer() {
-    return {_forceFirstDeriv.x / _mass, _forceFirstDeriv.y / _mass};
+  void addForce(Vector force, Vector firstDerivative, Vector secondDerivative) {
+    _force += force;
+    _forceFirstDeriv += firstDerivative;
+    _forceSecondDeriv += secondDerivative;
   }
-
-  // mod
-  void setForce2deriv(Vector a) { _forceSecondDeriv = a; }
-  Vector getAcc2der() {
-    return {_forceSecondDeriv.x / _mass, _forceSecondDeriv.x / _mass};
-  }
-  void setForce2derivUp(Vector a) { _forceSecondDeriv = _forceSecondDeriv + a; }
-  // mod
-
-  void setForce_derivUp(Vector f) { _forceFirstDeriv = _forceFirstDeriv + f; }
 
   Vector getPosition() const { return _position; }
 
@@ -52,12 +41,18 @@ class Body {
 
   void setVelocity(Vector velocity) { _velocity = velocity; }
 
-  Vector getForce() const { return _force; }
-
   void setForce(Vector force) { _force = force; }
 
-  Vector getAcceleration() const {
-    return {_force.x / _mass, _force.y / _mass};
+  Vector getAcceleration() const { return _force / _mass; }
+
+  Vector getAccelerationFirstDer() const { return _forceFirstDeriv / _mass; }
+
+  Vector getAccelerationSecondDer() const { return _forceSecondDeriv / _mass; }
+
+  void resetForces() {
+    _force = {0, 0};
+    _forceFirstDeriv = {0, 0};
+    _forceSecondDeriv = {0, 0};
   }
 
   virtual std::unique_ptr<sf::Shape> getShape() const = 0;

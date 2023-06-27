@@ -38,6 +38,13 @@ struct Vector {
   sf::Vector2f toSfml() {
     return sf::Vector2f(x, y);
   }
+
+  Vector& operator+=(const Vector& v){
+
+      this->x = v.x;
+      this->y = v.y;
+      return *this;
+  }
   
 };
 

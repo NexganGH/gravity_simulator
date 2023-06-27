@@ -14,7 +14,6 @@ class OrbitDrawer {
 
     void addPoint(Vector p) {
       _vectors.push_back(p);
-      std::cout << "Added: " << p.y << "\n";
     }
 
     void draw(Renderer& renderer) {

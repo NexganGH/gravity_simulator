@@ -38,7 +38,10 @@ class PhysicsEngine {
     // [gravity](https://en.wikipedia.org/wiki/Gravity).
     Vector gForce =
         -G * b1->getMass() * b2->getMass() / std::pow(distance, 2) * versor;
-    b1->addForce(gForce);
+
+    // Vector firstDeri
+
+    b1->addForce(gForce, {0, 0}, {0, 0});
 
     // TODO: Reimplement derivatives.
 
@@ -99,31 +102,21 @@ class PhysicsEngine {
     auto vel = b1->getVelocity();
 
     auto acc = b1->getAcceleration();
-    auto acc1 = b1->getAccDer();
-    auto acc2 = b1->getAcc2der();
+    auto acc1 = b1->getAccelerationFirstDer();
+    auto acc2 = b1->getAccelerationSecondDer();
 
     // implementazione eulero
+    auto newPosition = pos + vel * dt + 0.5 * acc * pow(dt, 2) +
+                       (1 / 6) * acc1 * pow(dt, 3) +
+                       (1 / 24) * acc2 * pow(dt, 4);
 
-    auto newPosition = Vector{pos.x + vel.x * dt + 0.5 * acc.x * dt * dt +
-                                  0.1666667 * acc1.x * dt * dt * dt +
-                                  0.04166667 * acc2.x * dt * dt * dt * dt,
-                              pos.y + vel.y * dt + 0.5 * acc.y * dt * dt +
-                                  0.1666667 * acc1.y * dt * dt * dt +
-                                  0.04166667 * acc2.y * dt * dt * dt * dt};
-    // auto newPosition = Vector{pos.x + vel.x * dt + 0.5 * acc.x * dt *
-    // dt+0.1666667 * acc1.x * dt * dt * dt,
-    //                           pos.y + vel.y * dt + 0.5 * acc.y * dt *
-    //                           dt+0.1666667 * acc1.y * dt * dt * dt};
     b1->setPosition(newPosition);
 
-    vel.x = vel.x + acc.x * dt + 0.5 * acc1.x * dt * dt +
-            0.1666667 * acc2.x * dt * dt * dt;
-    vel.y = vel.y + acc.y * dt + 0.5 * acc1.y * dt * dt +
-            0.1666667 * acc2.y * dt * dt * dt;
+    auto newVelocity = vel + acc * dt + 0.5 * acc1 * dt + (1 / 6) * acc2 * pow(dt, 2);
 
     // vel.x = vel.x + acc.x * dt + 0.5 * acc1.x * dt * dt;
     // vel.y = vel.y + acc.y * dt + 0.5 * acc1.y * dt * dt;
-    b1->setVelocity(vel);
+    b1->setVelocity(newVelocity);
   }
 };
 
