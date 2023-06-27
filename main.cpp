@@ -6,10 +6,12 @@
 #include "configurations.hpp"
 #include "physics_engine.hpp"
 #include "renderer.hpp"
+#include "orbit_drawer.hpp"
 
 int main() {
   std::vector<std::unique_ptr<Body>> bodies;
-  PhysicsEngine ph(1000000);
+  PhysicsEngine ph(500000);
+  OrbitDrawer orbitDrawer;
 
   sf::RenderWindow window(sf::VideoMode(1500, 1500), "Gravity Simulator");
   //Renderer render(window, 100);
@@ -28,7 +30,7 @@ int main() {
   // collapsingBinaryStars(bodies);
   auto render = earthAndSun(bodies, window);
 
-  window.setFramerateLimit(120);
+  window.setFramerateLimit(60);
 
   sf::Clock deltaClock;
   while (window.isOpen()) {
@@ -73,6 +75,7 @@ int main() {
     for (auto it = bodies.begin(); it != bodies.end(); ++it) {
     
       ph.evolve(*it, dt.asSeconds());
+      orbitDrawer.addPoint((*it)->getPosition());
       render.draw(*it);
       //     (*it)->getShape()));  // (*it) ottengo il puntatore (che sia shared
       //     o
@@ -92,6 +95,8 @@ int main() {
       // mod
       (*it)->setForce2deriv({0, 0});
     }
+
+    orbitDrawer.draw(render);
 
     window.display();
   }

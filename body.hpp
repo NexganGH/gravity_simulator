@@ -12,9 +12,8 @@ class Body {
   Vector _position;
   Vector _velocity;
   Vector _force;
-  Vector _force_deriv;
-  // mod
-  Vector _force_2deriv;
+  Vector _forceFirstDeriv;
+  Vector _forceSecondDeriv;
   double _mass;
 
  public:
@@ -27,20 +26,20 @@ class Body {
 
   void addForce(Vector f) { _force = _force + f; }
 
-  void setForce_deriv(Vector a) { _force_deriv = a; }
+  void setForce_deriv(Vector a) { _forceFirstDeriv = a; }
   Vector getAccDer() {
-    return {_force_deriv.x / _mass, _force_deriv.y / _mass};
+    return {_forceFirstDeriv.x / _mass, _forceFirstDeriv.y / _mass};
   }
 
   // mod
-  void setForce2deriv(Vector a) { _force_2deriv = a; }
+  void setForce2deriv(Vector a) { _forceSecondDeriv = a; }
   Vector getAcc2der() {
-    return {_force_2deriv.x / _mass, _force_2deriv.x / _mass};
+    return {_forceSecondDeriv.x / _mass, _forceSecondDeriv.x / _mass};
   }
-  void setForce2derivUp(Vector a) { _force_2deriv = _force_2deriv + a; }
+  void setForce2derivUp(Vector a) { _forceSecondDeriv = _forceSecondDeriv + a; }
   // mod
 
-  void setForce_derivUp(Vector f) { _force_deriv = _force_deriv + f; }
+  void setForce_derivUp(Vector f) { _forceFirstDeriv = _forceFirstDeriv + f; }
 
   Vector getPosition() const { return _position; }
 

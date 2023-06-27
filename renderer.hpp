@@ -19,12 +19,6 @@ class Renderer {
   // (screenDistance)*2 (in meters) If scale = 1, the 1 pixel = 1 meter.
   double _scale;
 
-  void invariant() {
-    // assert(_screenHeight > 0);
-    // assert(_screenWidth > 0);
-    assert(_scale > 0);
-  }
-
   double realToScreen(double real) { return real / _scale; }
 
   sf::Vector2f realToScreen(sf::Vector2f real) {
@@ -34,7 +28,7 @@ class Renderer {
  public:
   Renderer(sf::RenderWindow& window, double scale)
       : _window(window), _scale(scale) {
-    invariant();
+    assert(_scale > 0);
   }
 
   static Renderer fromUniverseWidth(sf::RenderWindow& window,
@@ -42,25 +36,18 @@ class Renderer {
     return Renderer(window, universeWidth / window.getView().getSize().x);
   }
 
-  // Renderer(sf::RenderWindow& window, double universeWidth)
-  //     : Renderer(window, universeWidth / window.getView().getSize().x) {
+  double getUniverseHeight() { return _window.getView().getSize().y * _scale; }
 
-  //   invariant();
-  // }
+  void draw(std::unique_ptr<Body>& body) { draw(*(body->getShape())); }
 
-  double getUniverseHeight() {
-    return _window.getView().getSize().y * _scale;
-  }
+  void draw(sf::Shape& shape) {
+    auto pos = realToScreen(shape.getPosition());
 
-  void draw(std::unique_ptr<Body>& body) {
-    auto shape = body->getShape();
-    auto pos = realToScreen(shape->getPosition());
-
-    auto rect = shape->getLocalBounds();
-    shape->setPosition(
+    auto rect = shape.getLocalBounds();
+    shape.setPosition(
         sf::Vector2f(pos.x - rect.width / 2, pos.y - rect.height / 2));
     // Must make it centered
-    _window.draw(*shape);
+    _window.draw(shape);
   }
 };
 

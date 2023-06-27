@@ -2,6 +2,7 @@
 #define VECTOR_H
 
 #include <cmath>
+#include <SFML/Graphics.hpp>
 
 struct Vector {
   double x;
@@ -33,6 +34,10 @@ struct Vector {
    * @see [Unit vector](https://en.wikipedia.org/wiki/Unit_vector)
   */
   Vector versor();
+
+  sf::Vector2f toSfml() {
+    return sf::Vector2f(x, y);
+  }
   
 };
 

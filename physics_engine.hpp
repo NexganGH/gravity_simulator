@@ -8,8 +8,10 @@
 
 class PhysicsEngine {
   // La vera costante è 6.67E-11
+ private:
   const double G = 6.67E-11;
   double _timeScale = 1;
+
  public:
   PhysicsEngine(double timeScale) : _timeScale(timeScale) {
     assert(_timeScale > 0);
@@ -29,11 +31,13 @@ class PhysicsEngine {
   void applyGravity(std::unique_ptr<Body> &b1, std::unique_ptr<Body> &b2) {
     auto p1 = b1->getPosition();
     auto p2 = b2->getPosition();
-    auto versor = (p1 - p2).versor();
-    auto distance = p1.distance(p2);
+    Vector versor = (p1 - p2).versor();
+    double distance = p1.distance(p2);
 
-    // Formula for gravitational force. See [gravity](https://en.wikipedia.org/wiki/Gravity). 
-    auto gForce = -G * b1->getMass() * b2->getMass() / std::pow(distance, 2) * versor;
+    // Formula for gravitational force. See
+    // [gravity](https://en.wikipedia.org/wiki/Gravity).
+    Vector gForce =
+        -G * b1->getMass() * b2->getMass() / std::pow(distance, 2) * versor;
     b1->addForce(gForce);
 
     // TODO: Reimplement derivatives.
