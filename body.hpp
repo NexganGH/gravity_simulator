@@ -24,6 +24,10 @@ class Body {
   }
 
   double getMass() const { return _mass; }
+
+  void addForce(Vector f) { _force = _force + f; }
+
+
   void setForce_deriv(Vector a) { _force_deriv = a; }
   Vector getAccDer() {
     return {_force_deriv.x / _mass, _force_deriv.y / _mass};
@@ -37,7 +41,7 @@ class Body {
   void setForce2derivUp(Vector a) { _force_2deriv = _force_2deriv + a; }
   // mod
 
-  void setForceUp(Vector f) { _force = _force + f; }
+  
   void setForce_derivUp(Vector f) { _force_deriv = _force_deriv + f; }
 
   Vector getPosition() const { return _position; }

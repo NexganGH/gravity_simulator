@@ -20,61 +20,68 @@ class PhysicsEngine {
    * per la distanza, k*v1 per riscalare, ecc... Derivata prima della forza
    *
    */
-  double distance(std::unique_ptr<Body> &b1, std::unique_ptr<Body> &b2) {
-    return std::sqrt(std::pow(b1->getPosition().x - b2->getPosition().x, 2) +
-                     std::pow(b1->getPosition().y - b2->getPosition().y, 2));
-  }
 
   // il primo argomento ella funzione deve essere il pianeta di nostro interesse
   void applyGravity(std::unique_ptr<Body> &b1, std::unique_ptr<Body> &b2) {
-    double X = b1->getPosition().x - b2->getPosition().x;
-    double Y = b1->getPosition().y - b2->getPosition().y;
-    double Xder = b1->getVelocity().x - b2->getVelocity().x;
-    double Yder = b1->getVelocity().y - b2->getVelocity().y;
-    double Xdd = b1->getAcceleration().x - b2->getAcceleration().x;
-    double Ydd = b1->getAcceleration().y - b2->getAcceleration().y;
-    Vector force;
-    Vector force_der;
-    Vector force_2der;
+    auto p1 = b1->getPosition();
+    auto p2 = b2->getPosition();
+    auto versor = (p1 - p2).versor();
+    auto distance = p1.distance(p2);
 
-    force.x = -G * (b1->getMass()) * (b2->getMass()) * X /
-              std::pow(distance(b1, b2), 3);
-    force_der.x = -G * (b1->getMass()) * (b2->getMass()) *
-                  ((Xder * std::pow(distance(b1, b2), 2)) -
-                   1.5 * X * (2 * X * Xder + 2 * Y * Yder)) /
-                  std::pow(distance(b1, b2), 5);
+    // Formula for gravitational force. See [gravity](https://en.wikipedia.org/wiki/Gravity). 
+    auto gForce = -G * b1->getMass() * b2->getMass() / std::pow(distance, 2) * versor;
+    b1->addForce(gForce);
 
-    force.y = -G * (b1->getMass()) * (b2->getMass()) * Y /
-              std::pow(distance(b1, b2), 3);
-    force_der.y = -G * (b1->getMass()) * (b2->getMass()) *
-                  ((Yder * std::pow(distance(b1, b2), 2)) -
-                   1.5 * Y * (2 * X * Xder + 2 * Y * Yder)) /
-                  std::pow(distance(b1, b2), 5);
-    // mod
-    // calcolo force_2der spezzando i temrini che la compongono//lo so dovrei
-    // implementarla in un'altra funzione ma lo faccio qui solo per vedere se
-    // funziona
-    double Nx = Xder * (X * X + Y * Y) - 3 * X * (X * Xder + Y * Yder);
-    double Ny = Yder * (X * X + Y * Y) - 3 * Y * (X * Xder + Y * Yder);
-    double Nxprime = Xdd * (Y * Y - 2 * X * X) -
-                     X * (4 * Xder * Xder + 3 * Yder * Yder) -
-                     Y * (Xder * Yder + 3 * X * Ydd);
-    double Nyprime = Ydd * (X * X - 2 * Y * Y) -
-                     Y * (4 * Yder * Yder + 3 * Xder * Xder) -
-                     X * (Xder * Yder + 3 * Y * Xdd);
-    double D = std::pow(X * X + Y * Y, 2.5);
-    double Dprime = 5 * std::pow(X * X + Y * Y, 1.5) * (X * Xder + Y * Yder);
+    // TODO: Reimplement derivatives.
 
-    force_2der.x = -G * (b1->getMass()) * (b2->getMass()) *
-                   (Nxprime * D - Nx * Dprime) / (D * D);
-    force_2der.y = -G * (b1->getMass()) * (b2->getMass()) *
-                   (Nyprime * D - Ny * Dprime) / (D * D);
+    // double X = b1->getPosition().x - b2->getPosition().x;
+    // double Y = b1->getPosition().y - b2->getPosition().y;
+    // double Xder = b1->getVelocity().x - b2->getVelocity().x;
+    // double Yder = b1->getVelocity().y - b2->getVelocity().y;
+    // double Xdd = b1->getAcceleration().x - b2->getAcceleration().x;
+    // double Ydd = b1->getAcceleration().y - b2->getAcceleration().y;
+    // Vector force;
+    // Vector force_der;
+    // Vector force_2der;
 
-    b1->setForceUp(force);
-    // Da implementare in EVOLVE
-    b1->setForce_derivUp(force_der);
-    // mod
-    b1->setForce2derivUp(force_2der);
+    // force.x = -G * (b1->getMass()) * (b2->getMass()) * X /
+    //           std::pow(distance(b1, b2), 3);
+    // force_der.x = -G * (b1->getMass()) * (b2->getMass()) *
+    //               ((Xder * std::pow(distance(b1, b2), 2)) -
+    //                1.5 * X * (2 * X * Xder + 2 * Y * Yder)) /
+    //               std::pow(distance(b1, b2), 5);
+
+    // force.y = -G * (b1->getMass()) * (b2->getMass()) * Y /
+    //           std::pow(distance(b1, b2), 3);
+    // force_der.y = -G * (b1->getMass()) * (b2->getMass()) *
+    //               ((Yder * std::pow(distance(b1, b2), 2)) -
+    //                1.5 * Y * (2 * X * Xder + 2 * Y * Yder)) /
+    //               std::pow(distance(b1, b2), 5);
+    // // mod
+    // // calcolo force_2der spezzando i temrini che la compongono//lo so dovrei
+    // // implementarla in un'altra funzione ma lo faccio qui solo per vedere se
+    // // funziona
+    // double Nx = Xder * (X * X + Y * Y) - 3 * X * (X * Xder + Y * Yder);
+    // double Ny = Yder * (X * X + Y * Y) - 3 * Y * (X * Xder + Y * Yder);
+    // double Nxprime = Xdd * (Y * Y - 2 * X * X) -
+    //                  X * (4 * Xder * Xder + 3 * Yder * Yder) -
+    //                  Y * (Xder * Yder + 3 * X * Ydd);
+    // double Nyprime = Ydd * (X * X - 2 * Y * Y) -
+    //                  Y * (4 * Yder * Yder + 3 * Xder * Xder) -
+    //                  X * (Xder * Yder + 3 * Y * Xdd);
+    // double D = std::pow(X * X + Y * Y, 2.5);
+    // double Dprime = 5 * std::pow(X * X + Y * Y, 1.5) * (X * Xder + Y * Yder);
+
+    // force_2der.x = -G * (b1->getMass()) * (b2->getMass()) *
+    //                (Nxprime * D - Nx * Dprime) / (D * D);
+    // force_2der.y = -G * (b1->getMass()) * (b2->getMass()) *
+    //                (Nyprime * D - Ny * Dprime) / (D * D);
+
+    // b1->addForce(force);
+    // // Da implementare in EVOLVE
+    // b1->setForce_derivUp(force_der);
+    // // mod
+    // b1->setForce2derivUp(force_2der);
   }
   // MODIFICHE//
   void evolve(std::unique_ptr<Body> &b1, double dt) {
