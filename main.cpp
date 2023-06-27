@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
-#include <TGUI/TGUI.hpp>
 #include <TGUI/Backend/SFML-Graphics.hpp>
+#include <TGUI/TGUI.hpp>
 #include <iostream>
 #include <vector>
 
@@ -20,7 +20,7 @@ int main() {
   auto render = earthAndSun(bodies, window);
 
   tgui::Gui gui{window};
-  GuiManager guiManager{gui, ph};
+  GuiManager guiManager{gui, ph, bodies};
   guiManager.controlButtons();
 
   window.setFramerateLimit(60);
@@ -36,12 +36,6 @@ int main() {
       if (event.type == sf::Event::MouseButtonPressed)
         if (event.mouseButton.button == sf::Mouse::Right)
           guiManager.rightButtonClicked(event);
-      //std::cout << "EVENT ";
-      if (event.type == sf::Event::KeyPressed) {
-        //std::cout<<"Key pressed: " << event.key.code;
-        //if (event.key.code == sf::Keyboard::Enter)
-          guiManager.pressedEnter();
-      }
       gui.handleEvent(event);
     }
 
