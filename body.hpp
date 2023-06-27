@@ -24,24 +24,19 @@ class Body {
 
   double getMass() const { return _mass; }
 
-  void addForce(Vector force, Vector firstDerivative, Vector secondDerivative) {
-    _force += force;
-    _forceFirstDeriv += firstDerivative;
-    _forceSecondDeriv += secondDerivative;
-  }
-
   Vector getPosition() const { return _position; }
 
-  void setPosition(Vector v) {
-    // TODO: Add check that v.x, v.y >= 0.
-    _position = v;
-  }
+  void setPosition(Vector v) { _position = v; }
 
   Vector getVelocity() const { return _velocity; }
 
   void setVelocity(Vector velocity) { _velocity = velocity; }
 
-  void setForce(Vector force) { _force = force; }
+  void addForce(Vector force, Vector firstDerivative, Vector secondDerivative) {
+    _force += force;
+    _forceFirstDeriv += firstDerivative;
+    _forceSecondDeriv += secondDerivative;
+  }
 
   Vector getAcceleration() const { return _force / _mass; }
 

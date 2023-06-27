@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <TGUI/TGUI.hpp>
 #include <iostream>
 #include <vector>
 
@@ -7,20 +8,17 @@
 #include "orbit_drawer.hpp"
 #include "physics_engine.hpp"
 #include "renderer.hpp"
+#include "gui_manager.hpp"
+
 
 int main() {
   std::vector<std::unique_ptr<Body>> bodies;
   PhysicsEngine ph(500000);
   OrbitDrawer orbitDrawer;
+  
 
   sf::RenderWindow window(sf::VideoMode(1500, 1500), "Gravity Simulator");
   // Renderer render(window, 100);
-
-  // // "Vector" must be specified in order for make_unique to understand the
-  // type. std::unique_ptr<Body> p1 =
-  //     std::make_unique<Planet>(Vector{800, 800}, Vector{-10, 10}, 10E12);
-  // std::unique_ptr<Body> p2 =
-  //     std::make_unique<Planet>(Vector{700, 300}, Vector{-0.5, 0}, 10E13);
 
   // bodies.push_back(std::move(p1));
   // bodies.push_back(std::move(p2));
@@ -29,6 +27,10 @@ int main() {
   // threeBodies(bodies);
   // collapsingBinaryStars(bodies);
   auto render = earthAndSun(bodies, window);
+
+  tgui::Gui gui{window};
+  GuiManager guiManager{gui, ph};
+  guiManager.controlButtons();
 
   window.setFramerateLimit(60);
 
@@ -39,7 +41,13 @@ int main() {
     sf::Event event;
     while (window.pollEvent(event)) {
       if (event.type == sf::Event::Closed) window.close();
+
+      if (event.type == sf::Event::MouseButtonPressed)
+        if (event.mouseButton.button == sf::Mouse::Right)
+          guiManager.rightButtonClicked(event);
     }
+
+    gui.handleEvent(event);
 
     // redrawing the scene
     window.clear();
@@ -91,6 +99,9 @@ int main() {
     }
 
     orbitDrawer.draw(render);
+    gui.draw();
+
+    
 
     window.display();
   }

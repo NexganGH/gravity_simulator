@@ -11,10 +11,22 @@ class PhysicsEngine {
  private:
   const double G = 6.67E-11;
   double _timeScale = 1;
+  bool _running = false;
 
  public:
   PhysicsEngine(double timeScale) : _timeScale(timeScale) {
-    assert(_timeScale > 0);
+    assert(_timeScale >= 0);
+  }
+
+  void setTimeScale(double timeScale) {
+    _timeScale = timeScale;
+    assert(_timeScale >= 0);
+  }
+
+  bool isRunning() { return _running; }
+
+  void toggleRunning() {
+    _running = !_running;
   }
 
   // MODIFICHE//
@@ -96,7 +108,7 @@ class PhysicsEngine {
   }
   // MODIFICHE//
   void evolve(std::unique_ptr<Body> &b1, double dt) {
-    dt *= _timeScale;
+    dt *= _timeScale * (_running ? 1 : 0);
 
     auto pos = b1->getPosition();
     auto vel = b1->getVelocity();

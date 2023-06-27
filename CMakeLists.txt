@@ -24,7 +24,7 @@ string(APPEND CMAKE_EXE_LINKER_FLAGS_DEBUG " -fsanitize=address,undefined -fno-o
 find_package(SFML 2.5 COMPONENTS system window graphics)
 add_executable(gravity main.cpp)
 
-target_link_libraries(gravity PRIVATE sfml-graphics sfml-system sfml-window)
+target_link_libraries(gravity PRIVATE tgui sfml-graphics sfml-system sfml-window)
 
 #target_include_directories(gas PRIVATE "${PROJECT_BINARY_DIR}")
 target_compile_features(gravity PRIVATE cxx_std_17)
