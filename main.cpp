@@ -3,12 +3,16 @@
 #include <vector>
 
 #include "body.hpp"
-#include "physics_engine.hpp"
 #include "configurations.hpp"
+#include "physics_engine.hpp"
+#include "renderer.hpp"
 
 int main() {
   std::vector<std::unique_ptr<Body>> bodies;
   PhysicsEngine ph;
+
+  sf::RenderWindow window(sf::VideoMode(1500, 1000), "Gravity Simulator");
+  Renderer render(window, 100);
 
   // // "Vector" must be specified in order for make_unique to understand the
   // type. std::unique_ptr<Body> p1 =
@@ -19,13 +23,12 @@ int main() {
   // bodies.push_back(std::move(p1));
   // bodies.push_back(std::move(p2));
 
-
-  //binaryStars(bodies);
-  //threeBodies(bodies);
-  //collapsingBinaryStars(bodies);
+  // binaryStars(bodies);
+  // threeBodies(bodies);
+  // collapsingBinaryStars(bodies);
   stableOrbitTwoPlanets(bodies);
 
-  sf::RenderWindow window(sf::VideoMode(1500, 1000), "Gravity Simulator");
+  
 
   window.setFramerateLimit(120);
 
@@ -68,8 +71,8 @@ int main() {
     for (auto it = bodies.begin(); it != bodies.end(); ++it) {
       PhysicsEngine ph;
       ph.evolve(*it, 0.2);
-      window.draw(*(
-          (*it)->getShape()));  // (*it) ottengo il puntatore (che sia shared o
+      render.draw(*it);
+      //     (*it)->getShape()));  // (*it) ottengo il puntatore (che sia shared o
                                 // puntatore porprio) allo heap, (*it)->getShape
                                 // mi ritorna il punattore sullo heap a circle
                                 // (vedi tipo ritornato di  funzioen getshape),
@@ -83,9 +86,8 @@ int main() {
     for (auto it = bodies.begin(); it != bodies.end(); ++it) {
       (*it)->setForce({0, 0});
       (*it)->setForce_deriv({0, 0});
-      //mod
-      (*it)->setForce2deriv({0,0});
-      
+      // mod
+      (*it)->setForce2deriv({0, 0});
     }
 
     window.display();
