@@ -98,6 +98,7 @@ int main() {
       (*it)->resetForces();
     }
 
+    guiManager.setTimeElapsed(ph.getTimeElapsed() / 3.154E7);
     orbitDrawer.draw(render);
     gui.draw();
 

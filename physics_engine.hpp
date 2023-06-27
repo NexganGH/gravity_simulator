@@ -12,6 +12,7 @@ class PhysicsEngine {
   const double G = 6.67E-11;
   double _timeScale = 1;
   bool _running = false;
+  double _timeElapsed = 0;
 
  public:
   PhysicsEngine(double timeScale) : _timeScale(timeScale) {
@@ -27,6 +28,10 @@ class PhysicsEngine {
 
   void toggleRunning() {
     _running = !_running;
+  }
+
+  double getTimeElapsed() {
+    return _timeElapsed;
   }
 
   // MODIFICHE//
@@ -129,6 +134,8 @@ class PhysicsEngine {
     // vel.x = vel.x + acc.x * dt + 0.5 * acc1.x * dt * dt;
     // vel.y = vel.y + acc.y * dt + 0.5 * acc1.y * dt * dt;
     b1->setVelocity(newVelocity);
+
+    _timeElapsed += dt;
   }
 };
 
