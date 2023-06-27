@@ -5,13 +5,7 @@
 #include <cmath>
 #include <iostream>
 
-struct Vector {
-  double x;
-  double y;
-};
-
-// D//overload operatore somma per vector
-Vector operator+(Vector a, Vector b) { return {a.x + b.x, a.y + b.y}; }
+#include "vector.hpp"
 
 class Body {
  protected:
@@ -29,20 +23,19 @@ class Body {
     // TODO: Add class invariants.
   }
 
-
   double getMass() const { return _mass; }
   void setForce_deriv(Vector a) { _force_deriv = a; }
   Vector getAccDer() {
     return {_force_deriv.x / _mass, _force_deriv.y / _mass};
   }
 
-  //mod
+  // mod
   void setForce2deriv(Vector a) { _force_2deriv = a; }
   Vector getAcc2der() {
     return {_force_2deriv.x / _mass, _force_2deriv.x / _mass};
   }
-void setForce2derivUp(Vector a){_force_2deriv=_force_2deriv+a;}
-  //mod
+  void setForce2derivUp(Vector a) { _force_2deriv = _force_2deriv + a; }
+  // mod
 
   void setForceUp(Vector f) { _force = _force + f; }
   void setForce_derivUp(Vector f) { _force_deriv = _force_deriv + f; }
