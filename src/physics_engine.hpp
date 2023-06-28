@@ -128,6 +128,15 @@ class PhysicsEngine {
     auto acc1 = b1->getAccelerationFirstDer();
     auto acc2 = b1->getAccelerationSecondDer();
 
+    auto newVelocity =
+        vel +
+        acc * dt /
+            2;  //+ 0.5 * acc1 * pow(dt/2, 2);// + (1 / 6) * acc2 * pow(dt, 3);
+
+    // vel.x = vel.x + acc.x * dt + 0.5 * acc1.x * dt * dt;
+    // vel.y = vel.y + acc.y * dt + 0.5 * acc1.y * dt * dt;
+    b1->setVelocity(newVelocity);
+
     // implementazione eulero
     auto newPosition = pos + vel * dt + 0.5 * acc * pow(dt, 2) +
                        (1 / 6) * acc1 * pow(dt, 3) +
@@ -135,14 +144,27 @@ class PhysicsEngine {
 
     b1->setPosition(newPosition);
 
+    _timeElapsed += dt;
+  }
+
+  void ev(std::unique_ptr<Body> &b1, double dt) {
+    dt *= _timeScale * (_running ? 1 : 0);
+
+    auto vel = b1->getVelocity();
+
+    auto acc = b1->getAcceleration();
+    auto acc1 = b1->getAccelerationFirstDer();
+    auto acc2 = b1->getAccelerationSecondDer();
+
     auto newVelocity =
-        vel + acc * dt + 0.5 * acc1 * pow(dt, 2);// + (1 / 6) * acc2 * pow(dt, 3);
+        vel +
+        acc * dt /
+            2;  //+ 0.5 * acc1 * pow(dt/2, 2);// + (1 / 6) * acc2 * pow(dt, 3);
 
     // vel.x = vel.x + acc.x * dt + 0.5 * acc1.x * dt * dt;
     // vel.y = vel.y + acc.y * dt + 0.5 * acc1.y * dt * dt;
     b1->setVelocity(newVelocity);
-
-    _timeElapsed += dt;
+    
   }
 };
 
