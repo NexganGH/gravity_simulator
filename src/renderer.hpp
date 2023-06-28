@@ -21,9 +21,7 @@ class Renderer {
 
   double realToScreen(double real) { return real / _scale; }
 
-  sf::Vector2f realToScreen(sf::Vector2f real) {
-    return sf::Vector2f(realToScreen(real.x), realToScreen(real.y));
-  }
+  
 
  public:
   Renderer(sf::RenderWindow& window, double scale)
@@ -49,7 +47,19 @@ class Renderer {
     _window.draw(shape);
   }
 
+  void drawGui(sf::VertexArray& shape) {
+    _window.draw(shape);
+  }
+
   Vector screenToReal(Vector screen) { return _scale * screen; }
+
+  sf::Vector2f realToScreen(sf::Vector2f real) {
+    return sf::Vector2f(realToScreen(real.x), realToScreen(real.y));
+  }
+
+  sf::Vector2f getMousePosition() {
+    return sf::Vector2f(sf::Mouse::getPosition(_window));
+  }
 
   Renderer(const Renderer& renderer)
       : _window(renderer._window), _scale(renderer._scale) {}

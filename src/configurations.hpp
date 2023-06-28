@@ -12,8 +12,8 @@ const float EARTH_SPEED = 30.24E3;
 const float EARTH_MASS = 5.9722E24;
 const float SUN_MASS = 1.98855E30;
 
-std::vector<Configuration*> getConfigurations() {
-  std::vector<Configuration*> list;
+std::vector<std::shared_ptr<Configuration>> getConfigurations() {
+  std::vector<std::shared_ptr<Configuration>> list;
 
 
   // Creating earth and sun
@@ -33,7 +33,7 @@ std::vector<Configuration*> getConfigurations() {
 
   earthAndSun->addBody(sun);
   earthAndSun->addBody(earth);
-  list.push_back(earthAndSun);
+  list.push_back(std::unique_ptr<Configuration>(earthAndSun));
   
 
   // Add other configurations

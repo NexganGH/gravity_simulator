@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <TGUI/TGUI.hpp>
+#include <cmath>
 #include <iostream>
 #include <vector>
 
@@ -55,9 +56,9 @@ class GuiManager {
                         " years");
   }
 
-  void addCreatingMass() {
-    _bodies.push_back(std::move(_creatingBody));
-    std::cout << "test";
+  void addCreatingMass(std::unique_ptr<Body>& body) {
+    //_bodies.push_back(std::move(_creatingBody));
+    //_creatingBody = _bodies.at(0);
   }
 
   void rightButtonClicked(sf::Event event) {
@@ -75,12 +76,38 @@ class GuiManager {
       _creatingBody = std::make_unique<Planet>(
           realPos, Vector{0, 0},
           _massInserter->getText().toFloat() * 5.9722E24);
-      addCreatingMass();
+      // addCreatingMass(creatingBody);
       _gui.remove(_massInserter);
     });
 
     _massInserter->onUnfocus([=]() { _gui.remove(_massInserter); });
     _gui.add(_massInserter);
+  }
+
+  void leftButtonClicked(sf::Event event) {
+    if (_creatingBody) {
+      Vector mousePos {event.mouseButton.x, event.mouseButton.y};
+      mousePos = _renderer.screenToReal(mousePos);
+      auto velocityVersor = (mousePos - _creatingBody->getPosition()) / (mousePos - _creatingBody->getPosition()).norm();
+      _creatingBody->setVelocity(velocityVersor * 30E3);
+      _bodies.push_back(std::move(_creatingBody));
+    }
+  }
+
+  void drawArrow() {
+
+    if (_creatingBody) {
+      auto p1 = _renderer.realToScreen(_creatingBody->getPosition().toSfml());
+      auto p2 = _renderer.getMousePosition();
+
+      sf::VertexArray line(sf::Lines, 2);
+      line[0].position = p1;
+      line[0].color = sf::Color::White;
+      line[1].position = p2;
+      line[1].color = sf::Color::White;
+
+      _renderer.drawGui(line);
+    }
   }
 };
 

@@ -42,6 +42,8 @@ int main() {
       if (event.type == sf::Event::MouseButtonPressed) {
         if (event.mouseButton.button == sf::Mouse::Right) {
           guiManager.rightButtonClicked(event);
+        } else if (event.mouseButton.button == sf::Mouse::Left) {
+          guiManager.leftButtonClicked(event);
         }
       }
 
@@ -69,6 +71,7 @@ int main() {
     guiManager.setYearsElapsed(ph.getSecondsElapsed() / 3.154E7);
     orbitDrawer.draw(render);
     gui.draw();
+    guiManager.drawArrow();
 
     window.display();
   }
