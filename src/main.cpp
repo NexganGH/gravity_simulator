@@ -14,7 +14,10 @@
 int main() {
   OrbitDrawer orbitDrawer;
 
-  sf::RenderWindow window(sf::VideoMode(800, 800), "Gravity Simulator");
+  auto height = sf::VideoMode::getDesktopMode().height - 250;
+
+  sf::RenderWindow window(sf::VideoMode(height, height), "Gravity Simulator", sf::Style::Titlebar);
+  window.setPosition(sf::Vector2i(window.getPosition().x, 50));
 
   auto configurations = getConfigurations();
   auto conf = configurations[0];
