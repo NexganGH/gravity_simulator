@@ -44,8 +44,14 @@ struct Vector {
       this->y = y + v.y;
       return *this;
   }
+
+  bool operator==(const Vector& b){
+  if((*this).x==b.x && (*this).y==b.y){return true;}
+  return false;
+}
   
 };
+
 
 // D//overload operatore somma per vector
 Vector operator+(Vector a, Vector b) { return {a.x + b.x, a.y + b.y}; }

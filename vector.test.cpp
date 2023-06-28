@@ -39,7 +39,25 @@ TEST_CASE("testing Vector class") {
     CHECK(e.distance(e)==0);
   }
 
-  
+  SUBCASE("Testing versor function"){
+    //TEst con Vector{0,0}??
+Vector a{1,1};
+Vector b{5,0};
+Vector c{0,3};
+Vector d{-2,0};
+Vector e{0,-3};
+Vector f{3,3};
+CHECK(a.versor()=={1,1});
+CHECK(b.versor()=={1,0});
+
+
+
+
+
+
+  }
+
+
 
   ;
 }
