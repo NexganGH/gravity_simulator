@@ -66,6 +66,19 @@ int main() {
       (*it)->resetForces();
     }
 
+    for (auto it = bodies.begin(); it != bodies.end() - 1; ++it) {
+      for (auto is = it + 1; is != bodies.end(); ++is) {
+        if (it != is) ph.applyGravity(*it, *is);
+      }
+    }
+
+    for (auto it = bodies.begin(); it != bodies.end(); ++it) {
+      ph.ev(*it, dt.asSeconds());
+    }
+    for (auto it = bodies.begin(); it != bodies.end(); ++it) {
+      (*it)->resetForces();
+    }
+
     guiManager.setYearsElapsed(ph.getSecondsElapsed() / 3.154E7);
     orbitDrawer.draw(render);
     gui.draw();
