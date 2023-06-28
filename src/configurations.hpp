@@ -12,27 +12,74 @@ const float EARTH_SPEED = 30.24E3;
 const float EARTH_MASS = 5.9722E24;
 const float SUN_MASS = 1.98855E30;
 
+const float MERCURY_AFELIO=69.8E9;
+const float MERCURY_AFELIO_SPEED=39.0E3;
+const float MERCURY_MASS= 0.055*EARTH_MASS;
+
+const float VENUS_AFELIO=109.8E9;
+const float VENUS_AFELIO_SPEED=34.78E3;
+const float VENUS_MASS= 0.815*EARTH_MASS;
+
+const float MARS_AFELIO=249.261E9;
+const float MARS_AFELIO_SPEED=21.97E3;
+const float MARS_MASS= 0.1*EARTH_MASS;
+
+const float JUPITER_AFELIO=816.363E9;
+const float JUPITER_AFELIO_SPEED=12.44E3;
+const float JUPITER_MASS= 318*EARTH_MASS;
+
+const float NEPTUNE_AFELIO=30.34*EARTH_SUN_DISTANCE;
+const float NEPTUNE_AFELIO_SPEED=5.37E3;
+const float NEPTUNE_MASS= 17*EARTH_MASS;
+
+
 std::vector<std::shared_ptr<Configuration>> getConfigurations() {
   std::vector<std::shared_ptr<Configuration>> list;
 
 
   // Creating earth and sun
-  auto earthAndSun = new Configuration("Earth & Sun", 2 * EARTH_SUN_DISTANCE + EARTH_SUN_DISTANCE, 500000);
+  auto earthAndSun = new Configuration("Earth & Sun", 2 * MARS_AFELIO + MARS_AFELIO, 10000000);
   //auto height = renderer.getUniverseHeight();
 
-  auto height = 2 * EARTH_SUN_DISTANCE + EARTH_SUN_DISTANCE;
+  auto height = 2*MARS_AFELIO  + EARTH_SUN_DISTANCE;//
 
   std::unique_ptr<Body> sun = std::make_unique<Planet>(
-      Vector{0.5 * 1E5 + EARTH_SUN_DISTANCE + EARTH_SUN_DISTANCE / 2,
+      Vector{0.5 * 1E5 + MARS_AFELIO + MARS_AFELIO / 2,
              height / 2},
       Vector{0, 0}, SUN_MASS);
   std::unique_ptr<Body> earth = std::make_unique<Planet>(
-      Vector{0.5 * 1E5 + EARTH_SUN_DISTANCE * 2 + EARTH_SUN_DISTANCE / 2,
+      Vector{0.5 * 1E5 + MARS_AFELIO + MARS_AFELIO / 2+EARTH_SUN_DISTANCE,
              height / 2},
       Vector{0, -EARTH_SPEED}, EARTH_MASS);
+  std::unique_ptr<Body> mercury = std::make_unique<Planet>(
+      Vector{0.5 * 1E5 + MARS_AFELIO + MARS_AFELIO / 2- MERCURY_AFELIO,
+             height / 2},
+      Vector{0, MERCURY_AFELIO_SPEED}, MERCURY_MASS);
+  std::unique_ptr<Body> venus = std::make_unique<Planet>(
+      Vector{0.5 * 1E5 + MARS_AFELIO + MARS_AFELIO / 2- VENUS_AFELIO,
+             height / 2},
+      Vector{0, VENUS_AFELIO_SPEED}, VENUS_MASS);
+      std::unique_ptr<Body> mars = std::make_unique<Planet>(
+      Vector{0.5 * 1E5 + MARS_AFELIO + MARS_AFELIO / 2- MARS_AFELIO,
+             height / 2},
+      Vector{0, MARS_AFELIO_SPEED}, MARS_MASS);
+  // std::unique_ptr<Body> jupiter = std::make_unique<Planet>(
+  //     Vector{0.5 * 1E5 + JUPITER_AFELIO + JUPITER_AFELIO / 2- JUPITER_AFELIO,
+  //            height / 2},
+  //     Vector{0, JUPITER_AFELIO_SPEED}, JUPITER_MASS);
+  // std::unique_ptr<Body> neptune = std::make_unique<Planet>(
+  //     Vector{0.5 * 1E5 + NEPTUNE_AFELIO + NEPTUNE_AFELIO / 2- NEPTUNE_AFELIO,
+  //            height / 2},
+  //     Vector{0, NEPTUNE_AFELIO_SPEED}, NEPTUNE_MASS);
+  
 
   earthAndSun->addBody(sun);
   earthAndSun->addBody(earth);
+  earthAndSun->addBody(mercury);
+  earthAndSun->addBody(venus);
+  earthAndSun->addBody(mars);
+  //earthAndSun->addBody(neptune);
+
   list.push_back(std::unique_ptr<Configuration>(earthAndSun));
   
 
