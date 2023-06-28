@@ -13,11 +13,11 @@ const float EARTH_MASS = 5.9722E24;
 const float SUN_MASS = 1.98855E30;
 
 std::vector<Configuration*> getConfigurations() {
-  std::vector<Configuration*> configurations;
+  std::vector<Configuration*> list;
 
 
   // Creating earth and sun
-  auto configuration = new Configuration("Earth & Sun", 2 * EARTH_SUN_DISTANCE + EARTH_SUN_DISTANCE, 500000);
+  auto earthAndSun = new Configuration("Earth & Sun", 2 * EARTH_SUN_DISTANCE + EARTH_SUN_DISTANCE, 500000);
   //auto height = renderer.getUniverseHeight();
 
   auto height = 2 * EARTH_SUN_DISTANCE + EARTH_SUN_DISTANCE;
@@ -31,11 +31,14 @@ std::vector<Configuration*> getConfigurations() {
              height / 2},
       Vector{0, -EARTH_SPEED}, EARTH_MASS);
 
-  configuration->addBody(sun);
-  configuration->addBody(earth);
-  configurations.push_back(configuration);
+  earthAndSun->addBody(sun);
+  earthAndSun->addBody(earth);
+  list.push_back(earthAndSun);
+  
 
-  return configurations;
+  // Add other configurations
+
+  return list;
 }
 
 // std::unique_ptr<Renderer> earthAndSun(std::vector<std::unique_ptr<Body>>& bodies,

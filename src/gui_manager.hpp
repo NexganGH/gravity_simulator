@@ -29,7 +29,7 @@ class GuiManager {
              std::vector<std::unique_ptr<Body>>& bodies, Renderer& renderer)
       : _gui(gui), _ph(ph), _bodies(bodies), _renderer(renderer) {}
 
-  void controlButtons() {
+  void createControlButtons() {
     tgui::Button::Ptr play = tgui::Button::create(">");
     play->setPosition(50, 50);
     play->setSize(50, 50);
@@ -50,7 +50,7 @@ class GuiManager {
     _gui.add(_timeLabel);
   }
 
-  void setTimeElapsed(double timeElapsed) {
+  void setYearsElapsed(double timeElapsed) {
     _timeLabel->setText("Time elapsed: " + std::to_string(timeElapsed) +
                         " years");
   }
@@ -66,7 +66,6 @@ class GuiManager {
     _massInserter->setPosition(event.mouseButton.x, event.mouseButton.y);
 
     _massInserter->onReturnKeyPress([=]() {
-
       // std::cout << _massInserter->getAbsolutePosition().y << "\n";
       Vector pos = {_massInserter->getPosition().x,
                     _massInserter->getPosition().y};

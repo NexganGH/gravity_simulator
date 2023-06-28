@@ -19,9 +19,6 @@ class Configuration {
  public:
   Configuration(std::string name, double universeWidth, double timeScale)
       : _name(name), _universeWidth(universeWidth), _timeScale(timeScale) {
-    // add checks
-    //std::vector<std::unique_ptr<Body>> bodies;
-    //_bodies = new std::vector<std::unique_ptr<Body>>();
   }
 
   void addBody(std::unique_ptr<Body>& body) {

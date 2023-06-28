@@ -46,14 +46,13 @@ class Renderer {
     auto rect = shape.getLocalBounds();
     shape.setPosition(
         sf::Vector2f(pos.x - rect.width / 2, pos.y - rect.height / 2));
-    // Must make it centered
     _window.draw(shape);
   }
 
   Vector screenToReal(Vector screen) { return _scale * screen; }
 
-  Renderer(const Renderer& renderer) : _window(renderer._window), _scale(renderer._scale) {
-  }
+  Renderer(const Renderer& renderer)
+      : _window(renderer._window), _scale(renderer._scale) {}
 };
 
 #endif

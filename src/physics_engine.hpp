@@ -28,7 +28,7 @@ class PhysicsEngine {
 
   void toggleRunning() { _running = !_running; }
 
-  double getTimeElapsed() { return _timeElapsed; }
+  double getSecondsElapsed() { return _timeElapsed; }
 
   // MODIFICHE//
   /* TODO:
@@ -64,6 +64,7 @@ class PhysicsEngine {
     // Vector firstDeri
 
     b1->addForce(gForce, {0, 0}, {0, 0});
+    b2->addForce(-gForce, {0, 0}, {0, 0});
 
     // TODO: Reimplement derivatives.
 
