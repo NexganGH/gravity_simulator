@@ -12,12 +12,19 @@
 #include "renderer.hpp"
 
 int main() {
-  std::vector<std::unique_ptr<Body>> bodies;
-  PhysicsEngine ph(500000);
+  // std::vector<std::unique_ptr<Body>> bodies;
+  // PhysicsEngine ph(500000);
   OrbitDrawer orbitDrawer;
 
   sf::RenderWindow window(sf::VideoMode(1500, 1500), "Gravity Simulator");
-  auto render = earthAndSun(bodies, window);
+  //auto render = earthAndSun(bodies, window);
+
+  auto configurations = getConfigurations();
+  auto conf = configurations.at(0);
+
+  std::vector<std::unique_ptr<Body>>& bodies = conf->getBodies();
+  auto ph = conf->getPhysicsEngine();
+  auto render = conf->getRenderer(window);
 
   tgui::Gui gui{window};
   GuiManager guiManager{gui, ph, bodies, render};
@@ -57,10 +64,7 @@ int main() {
         // se gli iteratori sono uguali puntano allo stesso pianeta per cui non
         // posso calcolare la forza del pianeta che agisce su se stesso per cui
         // gli faccio saltare se stesso
-        if (it == is) {
-          continue;
-        }
-        ph.applyGravity(*it, *is);
+        if (it != is) ph.applyGravity(*it, *is);
       }
     }
 

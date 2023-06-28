@@ -66,7 +66,6 @@ class GuiManager {
     _massInserter->setPosition(event.mouseButton.x, event.mouseButton.y);
 
     _massInserter->onReturnKeyPress([=]() {
-      std::cout << "test";
 
       // std::cout << _massInserter->getAbsolutePosition().y << "\n";
       Vector pos = {_massInserter->getPosition().x,

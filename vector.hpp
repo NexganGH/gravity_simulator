@@ -40,9 +40,8 @@ struct Vector {
   }
 
   Vector& operator+=(const Vector& v){
-
-      this->x = v.x;
-      this->y = v.y;
+      this->x = x + v.x;
+      this->y = y + v.y;
       return *this;
   }
   

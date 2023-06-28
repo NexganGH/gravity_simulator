@@ -51,6 +51,9 @@ class Renderer {
   }
 
   Vector screenToReal(Vector screen) { return _scale * screen; }
+
+  Renderer(const Renderer& renderer) : _window(renderer._window), _scale(renderer._scale) {
+  }
 };
 
 #endif

@@ -18,7 +18,7 @@ class OrbitDrawer {
 
     void draw(Renderer& renderer) {
       for (auto point : _vectors) {
-        sf::CircleShape circle(5);
+        sf::CircleShape circle(2);
         circle.setFillColor(sf::Color::Green);
         circle.setPosition(point.toSfml());
         renderer.draw(circle); 
