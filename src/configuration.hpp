@@ -18,8 +18,7 @@ class Configuration {
 
  public:
   Configuration(std::string name, double universeWidth, double timeScale)
-      : _name(name), _universeWidth(universeWidth), _timeScale(timeScale) {
-  }
+      : _name(name), _universeWidth(universeWidth), _timeScale(timeScale) {}
 
   void addBody(std::unique_ptr<Body>& body) {
     _bodies.push_back(std::move(body));
@@ -36,9 +35,7 @@ class Configuration {
     return ph;
   }
 
-  std::vector<std::unique_ptr<Body>>& getBodies() {
-    return _bodies;
-  }
+  std::vector<std::unique_ptr<Body>>& getBodies() { return _bodies; }
 
   Configuration(const Configuration&) = delete;
   Configuration& operator=(Configuration&) = delete;

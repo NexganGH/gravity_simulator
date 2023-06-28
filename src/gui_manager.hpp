@@ -11,7 +11,6 @@
 #include "renderer.hpp"
 #include "vector.hpp"
 
-void handleReturnKey() { std::cout << "test"; }
 class GuiManager {
  private:
   tgui::Gui& _gui;
@@ -56,15 +55,11 @@ class GuiManager {
                         " years");
   }
 
-  void addCreatingMass(std::unique_ptr<Body>& body) {
-    //_bodies.push_back(std::move(_creatingBody));
-    //_creatingBody = _bodies.at(0);
-  }
-
   void rightButtonClicked(sf::Event event) {
     _massInserter = tgui::EditBox::create();
     _massInserter->setText("2");
-    _massInserter->setPosition(event.mouseButton.x, event.mouseButton.y);
+
+    _massInserter->setPosition((double) event.mouseButton.x, (double) event.mouseButton.y);
 
     _massInserter->onReturnKeyPress([=]() {
       // std::cout << _massInserter->getAbsolutePosition().y << "\n";
@@ -76,7 +71,6 @@ class GuiManager {
       _creatingBody = std::make_unique<Planet>(
           realPos, Vector{0, 0},
           _massInserter->getText().toFloat() * 5.9722E24);
-      // addCreatingMass(creatingBody);
       _gui.remove(_massInserter);
     });
 
@@ -86,16 +80,16 @@ class GuiManager {
 
   void leftButtonClicked(sf::Event event) {
     if (_creatingBody) {
-      Vector mousePos {event.mouseButton.x, event.mouseButton.y};
+      Vector mousePos{(double) event.mouseButton.x, (double) event.mouseButton.y};
       mousePos = _renderer.screenToReal(mousePos);
-      auto velocityVersor = (mousePos - _creatingBody->getPosition()) / (mousePos - _creatingBody->getPosition()).norm();
+      auto velocityVersor = (mousePos - _creatingBody->getPosition()) /
+                            (mousePos - _creatingBody->getPosition()).norm();
       _creatingBody->setVelocity(velocityVersor * 30E3);
       _bodies.push_back(std::move(_creatingBody));
     }
   }
 
   void drawArrow() {
-
     if (_creatingBody) {
       auto p1 = _renderer.realToScreen(_creatingBody->getPosition().toSfml());
       auto p2 = _renderer.getMousePosition();
