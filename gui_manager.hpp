@@ -7,6 +7,8 @@
 #include <vector>
 
 #include "physics_engine.hpp"
+#include "renderer.hpp"
+#include "vector.hpp"
 
 void handleReturnKey() { std::cout << "test"; }
 class GuiManager {
@@ -16,14 +18,16 @@ class GuiManager {
 
   tgui::Label::Ptr _timeLabel;
   std::vector<std::unique_ptr<Body>>& _bodies;
+  Renderer& _renderer;
 
   // Body that is currently being created.
   std::unique_ptr<Body> _creatingBody;
+  tgui::EditBox::Ptr _massInserter;
 
  public:
   GuiManager(tgui::Gui& gui, PhysicsEngine& ph,
-             std::vector<std::unique_ptr<Body>>& bodies)
-      : _gui(gui), _ph(ph), _bodies(bodies) {}
+             std::vector<std::unique_ptr<Body>>& bodies, Renderer& renderer)
+      : _gui(gui), _ph(ph), _bodies(bodies), _renderer(renderer) {}
 
   void controlButtons() {
     tgui::Button::Ptr play = tgui::Button::create(">");
@@ -51,17 +55,30 @@ class GuiManager {
                         " years");
   }
 
+  void addCreatingMass() {
+    _bodies.push_back(std::move(_creatingBody));
+    std::cout << "test";
+  }
+
   void rightButtonClicked(sf::Event event) {
-    auto _massInserter = tgui::EditBox::create();
+    _massInserter = tgui::EditBox::create();
     _massInserter->setText("2");
     _massInserter->setPosition(event.mouseButton.x, event.mouseButton.y);
 
     _massInserter->onReturnKeyPress([=]() {
-      _creatingBody = std::make_unique<Planet>(
-          _massInserter->getPosition().x, _massInserter->getPosition().y,
-          _massInserter->getText().toFloat() * 5.9722E24);
-          //this.
+      std::cout << "test";
 
+      // std::cout << _massInserter->getAbsolutePosition().y << "\n";
+      Vector pos = {_massInserter->getPosition().x,
+                    _massInserter->getPosition().y};
+      // Must be converted to real (universe)'s coordinate
+      Vector realPos = _renderer.screenToReal(pos);
+
+      _creatingBody = std::make_unique<Planet>(
+          realPos, Vector{0, 0},
+          _massInserter->getText().toFloat() * 5.9722E24);
+      addCreatingMass();
+      _gui.remove(_massInserter);
     });
 
     _massInserter->onUnfocus([=]() { _gui.remove(_massInserter); });

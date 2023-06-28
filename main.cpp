@@ -20,7 +20,7 @@ int main() {
   auto render = earthAndSun(bodies, window);
 
   tgui::Gui gui{window};
-  GuiManager guiManager{gui, ph, bodies};
+  GuiManager guiManager{gui, ph, bodies, render};
   guiManager.controlButtons();
 
   window.setFramerateLimit(60);
@@ -58,10 +58,7 @@ int main() {
         // posso calcolare la forza del pianeta che agisce su se stesso per cui
         // gli faccio saltare se stesso
         if (it == is) {
-          is += 1;
-          if (is >= bodies.end()) {
-            break;
-          }
+          continue;
         }
         ph.applyGravity(*it, *is);
       }

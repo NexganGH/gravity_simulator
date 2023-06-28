@@ -63,7 +63,7 @@ class PhysicsEngine {
                       G * m1 * m2 / (pow(r.norm(), 2)) * oVersor;
     // Vector firstDeri
 
-    b1->addForce(gForce, firstDer, {0, 0});
+    b1->addForce(gForce, {0, 0}, {0, 0});
 
     // TODO: Reimplement derivatives.
 
@@ -135,7 +135,7 @@ class PhysicsEngine {
     b1->setPosition(newPosition);
 
     auto newVelocity =
-        vel + acc * dt ;//+ 0.5 * acc1 * pow(dt, 2) + (1 / 6) * acc2 * pow(dt, 3);
+        vel + acc * dt + 0.5 * acc1 * pow(dt, 2);// + (1 / 6) * acc2 * pow(dt, 3);
 
     // vel.x = vel.x + acc.x * dt + 0.5 * acc1.x * dt * dt;
     // vel.y = vel.y + acc.y * dt + 0.5 * acc1.y * dt * dt;
