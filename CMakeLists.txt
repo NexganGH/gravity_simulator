@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(gas VERSION 0.1.0 LANGUAGES CXX)
+project(gravity VERSION 0.1.0 LANGUAGES CXX)
 
 # abilita il supporto per i test, tra cui l'opzione BUILD_TESTING usata sotto
 include(CTest)
@@ -22,7 +22,7 @@ string(APPEND CMAKE_EXE_LINKER_FLAGS_DEBUG " -fsanitize=address,undefined -fno-o
 
 
 find_package(SFML 2.5 COMPONENTS system window graphics)
-add_executable(gravity main.cpp)
+add_executable(gravity src/main.cpp)
 
 target_link_libraries(gravity PRIVATE tgui sfml-graphics sfml-system sfml-window)
 
