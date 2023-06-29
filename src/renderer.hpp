@@ -38,12 +38,8 @@ class Renderer {
 
   void draw(sf::Shape& shape) {
     auto pos = realToScreen(shape.getPosition());
-    // std::cout << 1/_scale << std::endl;
-    // shape.setScale(1/_scale, 1/_scale);
-    // shape.setScale(0.1f, 0.1f);
 
     auto rect = shape.getLocalBounds();
-    std::cout << "Rect width: " << rect.width << std::endl;
     shape.setPosition(
         sf::Vector2f(pos.x - rect.width / 2, pos.y - rect.height / 2));
     _window.draw(shape);

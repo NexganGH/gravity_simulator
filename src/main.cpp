@@ -14,7 +14,7 @@
 int main() {
   OrbitDrawer orbitDrawer;
 
-  auto height = sf::VideoMode::getDesktopMode().height - 50;
+  auto height = sf::VideoMode::getDesktopMode().height - 100;
 
   sf::RenderWindow window(sf::VideoMode(height, height), "Gravity Simulator",
                           sf::Style::Titlebar);
@@ -33,6 +33,7 @@ int main() {
 
   window.setFramerateLimit(60);
 
+  double realSecondsPassed{0};
   sf::Clock deltaClock;
   while (window.isOpen()) {
     sf::Time dt = deltaClock.restart();
@@ -59,15 +60,19 @@ int main() {
     ph.evolve(bodies, dt.asSeconds());
 
     for (auto it = bodies.begin(); it != bodies.end(); ++it) {
-      orbitDrawer.addPoint((*it)->getPosition());
+      orbitDrawer.addPoint((*it)->getPosition(), realSecondsPassed);
       render.draw(*it);
     }
 
-    guiManager.setYearsElapsed(ph.getSecondsElapsed() / 3.154E7);
-    orbitDrawer.draw(render);
+    // This is not correct, must be fixed.
+    auto nIterations = 1 / dt.asSeconds();
+    guiManager.setYearsElapsed(ph.getSecondsElapsed() / 3.154E7, nIterations * ph.getTimeScale());
+    orbitDrawer.draw(render, realSecondsPassed);
     gui.draw();
     guiManager.drawArrow();
 
     window.display();
+
+    realSecondsPassed += dt.asSeconds();
   }
 }

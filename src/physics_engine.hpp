@@ -37,8 +37,6 @@ class PhysicsEngine {
                        (1 / 24) * acc2 * pow(dt, 4);
 
     b1->setPosition(newPosition);
-
-    _timeElapsed += dt;
   }
 
   void secondStep(std::unique_ptr<Body> &b1, double dt) {
@@ -89,6 +87,10 @@ class PhysicsEngine {
     assert(_timeScale >= 0);
   }
 
+  double getTimeScale() {
+    return _timeScale;
+  }
+
   void setTimeScale(double timeScale) {
     _timeScale = timeScale;
     assert(_timeScale >= 0);
@@ -113,7 +115,8 @@ class PhysicsEngine {
       (*it)->resetForces();
     }
 
-    // Forces must be recalculated, as well as new positions (see [Leapfrog integration](https://en.wikipedia.org/wiki/Leapfrog_integration))
+    // Forces must be recalculated, as well as new positions (see [Leapfrog
+    // integration](https://en.wikipedia.org/wiki/Leapfrog_integration))
     for (auto it = bodies.begin(); it != bodies.end(); ++it) {
       for (auto is = it + 1; is < bodies.end(); ++is) {
         if (it != is) applyGravity(*it, *is);
@@ -121,6 +124,8 @@ class PhysicsEngine {
       secondStep(*it, dt);
       (*it)->resetForces();
     }
+
+    _timeElapsed += dt;
   }
 };
 

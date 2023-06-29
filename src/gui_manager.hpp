@@ -17,6 +17,7 @@ class GuiManager {
   PhysicsEngine& _ph;
 
   tgui::Label::Ptr _timeLabel;
+  tgui::Label::Ptr _speed;
   std::vector<std::unique_ptr<Body>>& _bodies;
   Renderer& _renderer;
 
@@ -31,7 +32,7 @@ class GuiManager {
 
   void createControlButtons() {
     tgui::Button::Ptr play = tgui::Button::create(">");
-    play->setPosition(50, 50);
+    play->setPosition(50, 25);
     play->setSize(50, 50);
     play->setEnabled(true);
     play->onPress.connect([=]() {
@@ -43,16 +44,25 @@ class GuiManager {
 
     _timeLabel = tgui::Label::create();
     _timeLabel->setText("Time elapsed: 0.0 years");
-    _timeLabel->setPosition(50, 150);
+    _timeLabel->setPosition(50, 75);
     _timeLabel->setTextSize(18);
     auto renderer = _timeLabel->getSharedRenderer();
     renderer->setTextColor(tgui::Color::White);
     _gui.add(_timeLabel);
+
+    _speed = tgui::Label::create();
+    _speed->setText("Simulation speed: - days/s");
+    _speed->setPosition(50, 125);
+    _speed->setTextSize(18);
+    _gui.add(_speed);
   }
 
-  void setYearsElapsed(double timeElapsed) {
+  void setYearsElapsed(double timeElapsed, double secondsPerIteration) {
     _timeLabel->setText("Time elapsed: " + std::to_string(timeElapsed) +
                         " years");
+
+
+    _speed->setText("Simulation speed: " + std::to_string(secondsPerIteration / 86400) +" days/s");
   }
 
   void rightButtonClicked(sf::Event event) {
@@ -72,7 +82,8 @@ class GuiManager {
       _creatingBody = std::make_unique<Planet>(
           realPos, Vector{0, 0},
           _massInserter->getText().toFloat() * 5.9722E24);
-      tgui::Timer::scheduleCallback([=] { _gui.remove(_massInserter); });
+      _massInserter->onUnfocus.disconnectAll();
+      _gui.remove(_massInserter);
       //_gui.remove(_massInserter);
     });
 
