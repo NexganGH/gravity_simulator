@@ -27,18 +27,21 @@ target_link_libraries(gravity PRIVATE tgui sfml-graphics sfml-system sfml-window
 
 #target_include_directories(gas PRIVATE "${PROJECT_BINARY_DIR}")
 target_compile_features(gravity PRIVATE cxx_std_17)
-install(TARGETS gravity )
+install(TARGETS gravity)
 #add_subdirectory(SFML)
 
 
 # se il testing e' abilitato...
-#   per disabilitare il testing, passare -DBUILD_TESTING=OFF a cmake durante la fase di configurazione
+# per disabilitare il testing, passare -DBUILD_TESTING=OFF a cmake durante la fase di configurazione
 if (BUILD_TESTING)
 
 # aggiungi l'eseguibile statistics.t
-add_executable(vector.t test/vector.test.cpp)
+add_subdirectory(test/doctest.h)
+add_executable(tests test/vector.test.cpp)
+target_link_libraries(tests PRIVATE doctest::doctest)
+
 # aggiungi l'eseguibile statistics.t alla lista dei test
-add_test(NAME vector.t COMMAND vector.t)
+add_test(NAME tests COMMAND tests)
 
 endif()
 
