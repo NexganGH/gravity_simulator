@@ -50,7 +50,7 @@ class Body {
     _forceSecondDeriv = {0, 0};
   }
 
-  virtual std::unique_ptr<sf::Shape> getShape() const = 0;
+  virtual std::unique_ptr<sf::Shape> getShape(double scale) const = 0;
 };
 
 class Planet : public Body {
@@ -58,15 +58,16 @@ class Planet : public Body {
   Planet(Vector position, Vector velocity, double mass)
       : Body(position, velocity, mass) {}
 
-  std::unique_ptr<sf::Shape> getShape() const override {
+  std::unique_ptr<sf::Shape> getShape(double scale) const override {
     auto circle = std::make_unique<sf::CircleShape>(5);
     circle->setFillColor(sf::Color::Blue);
 
     // Making body's size proportional to mass.
-    auto radius = pow(getMass(), 0.05);
-    circle->setRadius(radius);
-    circle->setPosition(_position.x - radius, _position.y - radius);
-    // circle->setPosition(_position.x, _position.y);
+    auto radius = pow(getMass(), 0.08) * 1E8;
+    std::cout<<"Radius is " << radius << ", from mass " << getMass() << " " <<  std::endl;
+    std::cout<<"Rescaled is " << radius/scale << std::endl;
+    circle->setRadius(radius / scale);
+    circle->setPosition(_position.x, _position.y);
     return circle;
   }
 };

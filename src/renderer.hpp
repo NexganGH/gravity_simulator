@@ -21,8 +21,6 @@ class Renderer {
 
   double realToScreen(double real) { return real / _scale; }
 
-  
-
  public:
   Renderer(sf::RenderWindow& window, double scale)
       : _window(window), _scale(scale) {
@@ -36,20 +34,22 @@ class Renderer {
 
   double getUniverseHeight() { return _window.getView().getSize().y * _scale; }
 
-  void draw(std::unique_ptr<Body>& body) { draw(*(body->getShape())); }
+  void draw(std::unique_ptr<Body>& body) { draw(*(body->getShape(_scale))); }
 
   void draw(sf::Shape& shape) {
     auto pos = realToScreen(shape.getPosition());
+    // std::cout << 1/_scale << std::endl;
+    // shape.setScale(1/_scale, 1/_scale);
+    // shape.setScale(0.1f, 0.1f);
 
     auto rect = shape.getLocalBounds();
+    std::cout << "Rect width: " << rect.width << std::endl;
     shape.setPosition(
         sf::Vector2f(pos.x - rect.width / 2, pos.y - rect.height / 2));
     _window.draw(shape);
   }
 
-  void drawGui(sf::VertexArray& shape) {
-    _window.draw(shape);
-  }
+  void drawGui(sf::VertexArray& shape) { _window.draw(shape); }
 
   Vector screenToReal(Vector screen) { return _scale * screen; }
 
