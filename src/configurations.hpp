@@ -17,8 +17,8 @@ const float MERCURY_AFELIO_SPEED=39.0E3;
 const float MERCURY_MASS= 0.055*EARTH_MASS;
 
 // const float MOON_AFELIO=405500;
-// const float MOON_AFELIO_SPEED=1.022E3;
-// const float MOON_MASS= 0.0123*EARTH_MASS;
+// const float MOON_AFELIO_SPEED=30E3;//0.970E3;
+// const float MOON_MASS= 7.3476E22;
 
 const float VENUS_AFELIO=109.8E9;
 const float VENUS_AFELIO_SPEED=34.78E3;
@@ -69,10 +69,10 @@ std::vector<std::shared_ptr<Configuration>> getConfigurations() {
       Vector{0, MARS_AFELIO_SPEED}, MARS_MASS);
 
 
-  // std::unique_ptr<Body> moon = std::make_unique<Planet>(
-  //     Vector{0.5 * 1E5 + MARS_AFELIO + MARS_AFELIO / 2+EARTH_SUN_DISTANCE+MOON_AFELIO,
-  //            height / 2},
-  //     Vector{0, -MOON_AFELIO_SPEED}, MOON_MASS);
+//   std::unique_ptr<Body> moon = std::make_unique<Planet>(
+//       Vector{0.5 * 1E5 + MARS_AFELIO + MARS_AFELIO / 2+EARTH_SUN_DISTANCE+MOON_AFELIO,
+//              height / 2},
+//       Vector{0, -MOON_AFELIO_SPEED-EARTH_SPEED}, MOON_MASS);
   // std::unique_ptr<Body> jupiter = std::make_unique<Planet>(
   //     Vector{0.5 * 1E5 + JUPITER_AFELIO + JUPITER_AFELIO / 2- JUPITER_AFELIO,
   //            height / 2},
@@ -88,7 +88,7 @@ std::vector<std::shared_ptr<Configuration>> getConfigurations() {
   earthAndSun->addBody(mercury);
   earthAndSun->addBody(venus);
   earthAndSun->addBody(mars);
-  // earthAndSun->addBody(moon);
+//   earthAndSun->addBody(moon);
 
   //earthAndSun->addBody(neptune);
 
@@ -99,6 +99,13 @@ std::vector<std::shared_ptr<Configuration>> getConfigurations() {
 
   return list;
 }
+
+
+
+
+
+
+
 
 // std::unique_ptr<Renderer> earthAndSun(std::vector<std::unique_ptr<Body>>& bodies,
 //                      sf::RenderWindow& window) {
@@ -207,6 +214,50 @@ std::vector<std::shared_ptr<Configuration>> getConfigurations() {
 
 //   bodies.push_back(std::move(p1));
 //   bodies.push_back(std::move(p2));
+// }
+
+
+
+
+//TERRA LUNA RELATIVISTICHE
+// std::vector<std::shared_ptr<Configuration>> getConfigurations() {
+//   std::vector<std::shared_ptr<Configuration>> list;
+
+
+//   // Creating earth and sun
+//   auto earthAndSun = new Configuration("Earth & Sun", 2 * MOON_AFELIO + MOON_AFELIO, 50);
+//   //auto height = renderer.getUniverseHeight();
+
+//   auto height = 2*MOON_AFELIO  + MOON_AFELIO;//
+
+ 
+//   std::unique_ptr<Body> earth = std::make_unique<Planet>(
+//       Vector{0.5 * 1E5 + MOON_AFELIO + MOON_AFELIO / 2,
+//              height / 2},
+//       Vector{0, 0}, EARTH_MASS);
+  
+
+
+//   std::unique_ptr<Body> moon = std::make_unique<Planet>(
+//       Vector{0.5 * 1E5 + MOON_AFELIO + MOON_AFELIO / 2+MOON_AFELIO,
+//              height / 2},
+//       Vector{0, -MOON_AFELIO_SPEED}, MOON_MASS);
+  
+  
+
+  
+//   earthAndSun->addBody(earth);
+  
+//   earthAndSun->addBody(moon);
+
+//   //earthAndSun->addBody(neptune);
+
+//   list.push_back(std::unique_ptr<Configuration>(earthAndSun));
+  
+
+  
+
+//   return list;
 // }
 
 #endif
