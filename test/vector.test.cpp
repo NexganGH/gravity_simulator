@@ -1,7 +1,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "vector.hpp"
 
-#include "body.hpp"
 #include "doctest.h"
 
 TEST_CASE("testing Vector class") {
