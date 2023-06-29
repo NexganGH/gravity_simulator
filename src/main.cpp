@@ -14,15 +14,16 @@
 int main() {
   OrbitDrawer orbitDrawer;
 
-  auto height = sf::VideoMode::getDesktopMode().height - 250;
+  auto height = sf::VideoMode::getDesktopMode().height - 50;
 
-  sf::RenderWindow window(sf::VideoMode(height, height), "Gravity Simulator", sf::Style::Titlebar);
+  sf::RenderWindow window(sf::VideoMode(height, height), "Gravity Simulator",
+                          sf::Style::Titlebar);
   window.setPosition(sf::Vector2i(window.getPosition().x, 50));
 
   auto configurations = getConfigurations();
   auto conf = configurations[0];
 
-  std::vector<std::unique_ptr<Body>>& bodies = conf->getBodies();
+  std::vector<std::unique_ptr<Body>> bodies = std::move(conf->getBodies());
   auto ph = conf->getPhysicsEngine();
   auto render = conf->getRenderer(window);
 
@@ -55,33 +56,11 @@ int main() {
 
     window.clear();
 
-    for (auto it = bodies.begin(); it != bodies.end() - 1; ++it) {
-      for (auto is = it + 1; is != bodies.end(); ++is) {
-        if (it != is) ph.applyGravity(*it, *is);
-      }
-    }
+    ph.evolve(bodies, dt.asSeconds());
 
     for (auto it = bodies.begin(); it != bodies.end(); ++it) {
-      ph.evolve(*it, dt.asSeconds());
       orbitDrawer.addPoint((*it)->getPosition());
       render.draw(*it);
-    }
-
-    for (auto it = bodies.begin(); it != bodies.end(); ++it) {
-      (*it)->resetForces();
-    }
-
-    for (auto it = bodies.begin(); it != bodies.end() - 1; ++it) {
-      for (auto is = it + 1; is != bodies.end(); ++is) {
-        if (it != is) ph.applyGravity(*it, *is);
-      }
-    }
-
-    for (auto it = bodies.begin(); it != bodies.end(); ++it) {
-      ph.ev(*it, dt.asSeconds());
-    }
-    for (auto it = bodies.begin(); it != bodies.end(); ++it) {
-      (*it)->resetForces();
     }
 
     guiManager.setYearsElapsed(ph.getSecondsElapsed() / 3.154E7);
