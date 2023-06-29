@@ -16,6 +16,10 @@ const float MERCURY_AFELIO=69.8E9;
 const float MERCURY_AFELIO_SPEED=39.0E3;
 const float MERCURY_MASS= 0.055*EARTH_MASS;
 
+// const float MOON_AFELIO=405500;
+// const float MOON_AFELIO_SPEED=1.022E3;
+// const float MOON_MASS= 0.0123*EARTH_MASS;
+
 const float VENUS_AFELIO=109.8E9;
 const float VENUS_AFELIO_SPEED=34.78E3;
 const float VENUS_MASS= 0.815*EARTH_MASS;
@@ -63,6 +67,12 @@ std::vector<std::shared_ptr<Configuration>> getConfigurations() {
       Vector{0.5 * 1E5 + MARS_AFELIO + MARS_AFELIO / 2- MARS_AFELIO,
              height / 2},
       Vector{0, MARS_AFELIO_SPEED}, MARS_MASS);
+
+
+  // std::unique_ptr<Body> moon = std::make_unique<Planet>(
+  //     Vector{0.5 * 1E5 + MARS_AFELIO + MARS_AFELIO / 2+EARTH_SUN_DISTANCE+MOON_AFELIO,
+  //            height / 2},
+  //     Vector{0, -MOON_AFELIO_SPEED}, MOON_MASS);
   // std::unique_ptr<Body> jupiter = std::make_unique<Planet>(
   //     Vector{0.5 * 1E5 + JUPITER_AFELIO + JUPITER_AFELIO / 2- JUPITER_AFELIO,
   //            height / 2},
@@ -78,6 +88,8 @@ std::vector<std::shared_ptr<Configuration>> getConfigurations() {
   earthAndSun->addBody(mercury);
   earthAndSun->addBody(venus);
   earthAndSun->addBody(mars);
+  // earthAndSun->addBody(moon);
+
   //earthAndSun->addBody(neptune);
 
   list.push_back(std::unique_ptr<Configuration>(earthAndSun));
