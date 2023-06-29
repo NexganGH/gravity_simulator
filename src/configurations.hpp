@@ -68,7 +68,7 @@ std::vector<std::shared_ptr<Configuration>> getConfigurations() {
              height / 2},
       Vector{0, MARS_AFELIO_SPEED}, MARS_MASS);
 
-  
+
   // std::unique_ptr<Body> moon = std::make_unique<Planet>(
   //     Vector{0.5 * 1E5 + MARS_AFELIO + MARS_AFELIO / 2+EARTH_SUN_DISTANCE+MOON_AFELIO,
   //            height / 2},
