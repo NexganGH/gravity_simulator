@@ -22,7 +22,7 @@ int main() {
   auto configurations = getConfigurations();
   auto conf = configurations[0];
 
-  std::vector<std::unique_ptr<Body>>& bodies = conf->getBodies();
+  std::vector<std::unique_ptr<Body>> bodies = std::move(conf->getBodies());
   auto ph = conf->getPhysicsEngine();
   auto render = conf->getRenderer(window);
 

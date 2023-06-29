@@ -59,7 +59,8 @@ class GuiManager {
     _massInserter = tgui::EditBox::create();
     _massInserter->setText("2");
 
-    _massInserter->setPosition((double) event.mouseButton.x, (double) event.mouseButton.y);
+    _massInserter->setPosition((double)event.mouseButton.x,
+                               (double)event.mouseButton.y);
 
     _massInserter->onReturnKeyPress([=]() {
       // std::cout << _massInserter->getAbsolutePosition().y << "\n";
@@ -71,7 +72,8 @@ class GuiManager {
       _creatingBody = std::make_unique<Planet>(
           realPos, Vector{0, 0},
           _massInserter->getText().toFloat() * 5.9722E24);
-      _gui.remove(_massInserter);
+      tgui::Timer::scheduleCallback([=] { _gui.remove(_massInserter); });
+      //_gui.remove(_massInserter);
     });
 
     _massInserter->onUnfocus([=]() { _gui.remove(_massInserter); });
@@ -80,7 +82,7 @@ class GuiManager {
 
   void leftButtonClicked(sf::Event event) {
     if (_creatingBody) {
-      Vector mousePos{(double) event.mouseButton.x, (double) event.mouseButton.y};
+      Vector mousePos{(double)event.mouseButton.x, (double)event.mouseButton.y};
       mousePos = _renderer.screenToReal(mousePos);
       auto velocityVersor = (mousePos - _creatingBody->getPosition()) /
                             (mousePos - _creatingBody->getPosition()).norm();
