@@ -54,7 +54,18 @@ TEST_CASE("testing Vector class") {
     CHECK(f.versor()==Vector{1,1});
   }
 
-  
+  SUBCASE("Testing the toSfrml function"){
+    Vector a{1, 1};
+    CHECK(a.toSfml()==sf::Vector2f{1,1});
+    
+
+
+
+
+
+  }
+
+
 
   
 }
