@@ -20,15 +20,18 @@ class GuiManager {
   tgui::Label::Ptr _speed;
   std::vector<std::unique_ptr<Body>>& _bodies;
   Renderer& _renderer;
+  //added
+ const std::vector<Cuple_Vector> _initial_states;
 
   // Body that is currently being created.
   std::unique_ptr<Body> _creatingBody;
   tgui::EditBox::Ptr _massInserter;
 
  public:
+ //added modified constructor
   GuiManager(tgui::Gui& gui, PhysicsEngine& ph,
-             std::vector<std::unique_ptr<Body>>& bodies, Renderer& renderer)
-      : _gui(gui), _ph(ph), _bodies(bodies), _renderer(renderer) {}
+             std::vector<std::unique_ptr<Body>>& bodies, Renderer& renderer, const std::vector<Cuple_Vector> initialStates)
+      : _gui(gui), _ph(ph), _bodies(bodies), _renderer(renderer), _initial_states(initialStates) {}
 
   void createControlButtons() {
     tgui::Button::Ptr play = tgui::Button::create(">");
@@ -41,6 +44,25 @@ class GuiManager {
       play->setText(_ph.isRunning() ? "||" : ">");
     });
     _gui.add(play);
+
+    tgui::Button::Ptr reset = tgui::Button::create("reset");
+    reset->setPosition(100, 25);
+    reset->setSize(50, 50);
+    reset->setEnabled(true);
+    reset->onPress.connect([=]() {
+      if (_ph.isRunning()) {
+        _ph.toggleRunning();
+        play->setText(">");
+      }
+      _ph.resetTimeElapsed();
+//added inserisco le posizioni salvate iniziali nei paineti che si trovano in _bodies
+      for(int i{0}; i<_initial_states.size(); ++i){
+        (_bodies[i])->setPosition((_initial_states[i]).pos);
+        (_bodies[i])->setPosition((_initial_states[i]).vel);
+      }
+
+    });
+    _gui.add(reset);
 
     _timeLabel = tgui::Label::create();
     _timeLabel->setText("Time elapsed: 0.0 years");
@@ -61,8 +83,8 @@ class GuiManager {
     _timeLabel->setText("Time elapsed: " + std::to_string(timeElapsed) +
                         " years");
 
-
-    _speed->setText("Simulation speed: " + std::to_string(secondsPerIteration / 86400) +" days/s");
+    _speed->setText("Simulation speed: " +
+                    std::to_string(secondsPerIteration / 86400) + " days/s");
   }
 
   void rightButtonClicked(sf::Event event) {

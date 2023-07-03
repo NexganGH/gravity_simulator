@@ -44,6 +44,11 @@ struct Vector {
     return (*this).x == b.x && (*this).y == b.y;
   }
 };
+//creo una struct di vettori
+struct Cuple_Vector{
+  Vector pos;
+  Vector vel;
+};
 
 // D//overload operatore somma per vector
 Vector operator+(Vector a, Vector b) { return {a.x + b.x, a.y + b.y}; }

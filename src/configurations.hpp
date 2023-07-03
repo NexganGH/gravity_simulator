@@ -88,6 +88,8 @@ std::vector<std::shared_ptr<Configuration>> getConfigurations() {
   earthAndSun->addBody(mercury);
   earthAndSun->addBody(venus);
   earthAndSun->addBody(mars);
+  //added
+  earthAndSun->save_initial_states();
 //   earthAndSun->addBody(moon);
 
   //earthAndSun->addBody(neptune);

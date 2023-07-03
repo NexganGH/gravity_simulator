@@ -27,9 +27,11 @@ int main() {
 
   auto ph = conf->getPhysicsEngine();
   auto render = conf->getRenderer(window);
+  //added
+  auto initial_states=conf->get_vector_of_itial_states();
 
   tgui::Gui gui{window};
-  GuiManager guiManager{gui, ph, bodies, render};
+  GuiManager guiManager{gui, ph, bodies, render, initial_states};//added
   guiManager.createControlButtons();
 
   window.setFramerateLimit(60);
