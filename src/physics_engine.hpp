@@ -32,13 +32,11 @@ class PhysicsEngine {
     b1->setVelocity(newVelocity);
 
     // implementazione eulero
-    auto newPosition = pos + vel * dt + 0.5 * acc * pow(dt, 2) +
-                       (1 / 6) * acc1 * pow(dt, 3) +
-                       (1 / 24) * acc2 * pow(dt, 4);
+    auto newPosition = pos + vel * dt + 0.5 * acc * std::pow(dt, 2) +
+                       (1 / 6) * acc1 * std::pow(dt, 3) +
+                       (1 / 24) * acc2 * std::pow(dt, 4);
 
     b1->setPosition(newPosition);
-
-    _timeElapsed += dt;
   }
 
   void secondStep(std::unique_ptr<Body> &b1, double dt) {
@@ -89,6 +87,10 @@ class PhysicsEngine {
     assert(_timeScale >= 0);
   }
 
+  double getTimeScale() {
+    return _timeScale;
+  }
+
   void setTimeScale(double timeScale) {
     _timeScale = timeScale;
     assert(_timeScale >= 0);
@@ -99,6 +101,10 @@ class PhysicsEngine {
   void toggleRunning() { _running = !_running; }
 
   double getSecondsElapsed() { return _timeElapsed; }
+  double TimeElapsed(){return _timeElapsed/_timeScale;}
+
+void resetTimeElapsed(){_timeElapsed=0;}
+
 
   void evolve(std::vector<std::unique_ptr<Body>> &bodies, double dt) {
     dt *= _timeScale * (_running ? 1 : 0);
@@ -113,7 +119,8 @@ class PhysicsEngine {
       (*it)->resetForces();
     }
 
-    // Forces must be recalculated, as well as new positions (see [Leapfrog integration](https://en.wikipedia.org/wiki/Leapfrog_integration))
+    // Forces must be recalculated, as well as new positions (see [Leapfrog
+    // integration](https://en.wikipedia.org/wiki/Leapfrog_integration))
     for (auto it = bodies.begin(); it != bodies.end(); ++it) {
       for (auto is = it + 1; is < bodies.end(); ++is) {
         if (it != is) applyGravity(*it, *is);
@@ -121,6 +128,8 @@ class PhysicsEngine {
       secondStep(*it, dt);
       (*it)->resetForces();
     }
+
+    _timeElapsed += dt;
   }
 };
 

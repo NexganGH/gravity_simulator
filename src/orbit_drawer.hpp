@@ -1,30 +1,42 @@
 #ifndef ORBIT_DRAWER_H
 #define ORBIT_DRAWER_H
 
-#include <vector>
 #include <SFML/Graphics.hpp>
-#include "vector.hpp"
 #include <iostream>
+#include <vector>
+
 #include "renderer.hpp"
+#include "vector.hpp"
 
 class OrbitDrawer {
-  private:
-    std::vector<Vector> _vectors;
-  public:
+ private:
+  struct OrbitPoint {
+    double time;
+    Vector point;
+  };
+  std::vector<OrbitPoint> _orbitPoints;
 
-    void addPoint(Vector p) {
-      _vectors.push_back(p);
+
+  const double DELETE_AFTER_SECONDS = 50;
+ public:
+  void addPoint(Vector p, double time) {
+    _orbitPoints.push_back(OrbitPoint{time, p});
+  }
+
+  void draw(Renderer& renderer, double time) {
+    auto toRemove = std::remove_if(_orbitPoints.begin(), _orbitPoints.end(),
+                                   [&](OrbitPoint data) {
+                                     return time - data.time > DELETE_AFTER_SECONDS;
+                                   });
+    _orbitPoints.erase(toRemove, _orbitPoints.end());
+
+    for (auto data : _orbitPoints) {
+      sf::CircleShape circle(2);
+      circle.setFillColor(sf::Color::Green);
+      circle.setPosition(data.point.toSfml());
+      renderer.draw(circle);
     }
-
-    void draw(Renderer& renderer) {
-      for (auto point : _vectors) {
-        sf::CircleShape circle(2);
-        circle.setFillColor(sf::Color::Green);
-        circle.setPosition(point.toSfml());
-        renderer.draw(circle); 
-      }
-    }
-
+  }
 };
 
 #endif

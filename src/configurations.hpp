@@ -42,7 +42,7 @@ std::vector<std::shared_ptr<Configuration>> getConfigurations() {
 
 
   // Creating earth and sun
-  auto earthAndSun = new Configuration("Earth & Sun", 2 * MARS_AFELIO + MARS_AFELIO, 1000000);
+  auto earthAndSun = new Configuration("Earth & Sun", 2 * MARS_AFELIO + MARS_AFELIO, 10000000);
   //auto height = renderer.getUniverseHeight();
 
   auto height = 2*MARS_AFELIO  + EARTH_SUN_DISTANCE;//
@@ -88,6 +88,8 @@ std::vector<std::shared_ptr<Configuration>> getConfigurations() {
   earthAndSun->addBody(mercury);
   earthAndSun->addBody(venus);
   earthAndSun->addBody(mars);
+  //added
+  earthAndSun->save_initial_states();
 //   earthAndSun->addBody(moon);
 
   //earthAndSun->addBody(neptune);

@@ -63,9 +63,7 @@ class Planet : public Body {
     circle->setFillColor(sf::Color::Blue);
 
     // Making body's size proportional to mass.
-    auto radius = pow(getMass(), 0.08) * 1E8;
-    std::cout<<"Radius is " << radius << ", from mass " << getMass() << " " <<  std::endl;
-    std::cout<<"Rescaled is " << radius/scale << std::endl;
+    auto radius = std::pow(getMass(), 0.08) * 1E8;
     circle->setRadius(radius / scale);
     circle->setPosition(_position.x, _position.y);
     return circle;

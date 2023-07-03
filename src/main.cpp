@@ -14,7 +14,7 @@
 int main() {
   OrbitDrawer orbitDrawer;
 
-  auto height = sf::VideoMode::getDesktopMode().height - 50;
+  auto height = sf::VideoMode::getDesktopMode().height - 100;
 
   sf::RenderWindow window(sf::VideoMode(height, height), "Gravity Simulator",
                           sf::Style::Titlebar);
@@ -23,16 +23,20 @@ int main() {
   auto configurations = getConfigurations();
   auto conf = configurations[0];
 
-  std::vector<std::unique_ptr<Body>> bodies = std::move(conf->getBodies());
+  auto bodies = std::move(conf->getBodies());
+
   auto ph = conf->getPhysicsEngine();
   auto render = conf->getRenderer(window);
+  //added
+  auto initial_states=conf->get_vector_of_itial_states();
 
   tgui::Gui gui{window};
-  GuiManager guiManager{gui, ph, bodies, render};
+  GuiManager guiManager{gui, ph, bodies, render, initial_states};//added
   guiManager.createControlButtons();
 
   window.setFramerateLimit(60);
 
+  
   sf::Clock deltaClock;
   while (window.isOpen()) {
     sf::Time dt = deltaClock.restart();
@@ -57,14 +61,18 @@ int main() {
     window.clear();
 
     ph.evolve(bodies, dt.asSeconds());
+    double TimeElapsed=ph.TimeElapsed();
 
     for (auto it = bodies.begin(); it != bodies.end(); ++it) {
-      orbitDrawer.addPoint((*it)->getPosition());
+      orbitDrawer.addPoint((*it)->getPosition(),
+                           TimeElapsed);
       render.draw(*it);
     }
 
-    guiManager.setYearsElapsed(ph.getSecondsElapsed() / 3.154E7);
-    orbitDrawer.draw(render);
+    // correct
+    guiManager.setYearsElapsed(ph.getSecondsElapsed() / 3.154E7,
+                               ph.getTimeScale());
+    orbitDrawer.draw(render, TimeElapsed);
     gui.draw();
     guiManager.drawArrow();
 
