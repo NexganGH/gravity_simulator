@@ -12,8 +12,6 @@ class Body {
   Vector _position;
   Vector _velocity;
   Vector _force;
-  Vector _forceFirstDeriv;
-  Vector _forceSecondDeriv;
   double _mass;
 
  public:
@@ -32,23 +30,11 @@ class Body {
 
   void setVelocity(Vector velocity) { _velocity = velocity; }
 
-  void addForce(Vector force, Vector firstDerivative, Vector secondDerivative) {
-    _force += force;
-    _forceFirstDeriv += firstDerivative;
-    _forceSecondDeriv += secondDerivative;
-  }
+  void addForce(Vector force) { _force += force; }
 
   Vector getAcceleration() const { return _force / _mass; }
 
-  Vector getAccelerationFirstDer() const { return _forceFirstDeriv / _mass; }
-
-  Vector getAccelerationSecondDer() const { return _forceSecondDeriv / _mass; }
-
-  void resetForces() {
-    _force = {0, 0};
-    _forceFirstDeriv = {0, 0};
-    _forceSecondDeriv = {0, 0};
-  }
+  void resetForce() { _force = {0, 0}; }
 
   virtual std::unique_ptr<sf::Shape> getShape(double scale) const = 0;
 };
@@ -59,6 +45,8 @@ class Planet : public Body {
       : Body(position, velocity, mass) {}
 
   std::unique_ptr<sf::Shape> getShape(double scale) const override {
+    assert(scale > 0);
+
     auto circle = std::make_unique<sf::CircleShape>(5);
     circle->setFillColor(sf::Color::Blue);
 
