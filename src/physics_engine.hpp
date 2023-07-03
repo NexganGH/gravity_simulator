@@ -32,9 +32,9 @@ class PhysicsEngine {
     b1->setVelocity(newVelocity);
 
     // implementazione eulero
-    auto newPosition = pos + vel * dt + 0.5 * acc * pow(dt, 2) +
-                       (1 / 6) * acc1 * pow(dt, 3) +
-                       (1 / 24) * acc2 * pow(dt, 4);
+    auto newPosition = pos + vel * dt + 0.5 * acc * std::pow(dt, 2) +
+                       (1 / 6) * acc1 * std::pow(dt, 3) +
+                       (1 / 24) * acc2 * std::pow(dt, 4);
 
     b1->setPosition(newPosition);
   }
