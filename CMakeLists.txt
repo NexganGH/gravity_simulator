@@ -4,7 +4,6 @@ project(gravity VERSION 0.1.0 LANGUAGES CXX)
 # abilita il supporto per i test, tra cui l'opzione BUILD_TESTING usata sotto
 include(CTest)
 
-
 # set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # # richiedi l'uso di C++17, senza estensioni non-standard offerte dal compilatore usato 
@@ -19,7 +18,6 @@ string(APPEND CMAKE_CXX_FLAGS " -Wall -Wextra")
 string(APPEND CMAKE_CXX_FLAGS_DEBUG " -fsanitize=address,undefined -fno-omit-frame-pointer")
 string(APPEND CMAKE_EXE_LINKER_FLAGS_DEBUG " -fsanitize=address,undefined -fno-omit-frame-pointer")
 
-
 find_package(SFML 2.5 COMPONENTS system window graphics)
 add_executable(gravity src/main.cpp)
 
@@ -30,18 +28,16 @@ target_compile_features(gravity PRIVATE cxx_std_17)
 install(TARGETS gravity)
 #add_subdirectory(SFML)
 
-
 # se il testing e' abilitato...
 # per disabilitare il testing, passare -DBUILD_TESTING=OFF a cmake durante la fase di configurazione
-#if (BUILD_TESTING)
+if (BUILD_TESTING)
+if (BUILD_TESTING)
 
-# aggiungi l'eseguibile statistics.t
-#add_subdirectory(test/doctest.h)
-#add_executable(tests test/vector.test.cpp)
-#target_link_libraries(tests PRIVATE doctest::doctest)
+    # aggiungi l'eseguibile tests
+    add_executable(tests test/vector.test.cpp )
+    target_include_directories(tests PRIVATE src)
 
-# aggiungi l'eseguibile statistics.t alla lista dei test
-#add_test(NAME tests COMMAND tests)
+    # aggiungi l'eseguibile statistics.t alla lista dei test
+    add_test(NAME tests COMMAND tests)
 
-#endif()
-
+endif()
