@@ -24,7 +24,7 @@ class OrbitDrawer {
     _orbitPoints.push_back(OrbitPoint{time, p});
   }
 
-  void draw(Renderer& renderer, double time) {
+  void draw(std::unique_ptr<Renderer>& renderer, double time) {
     auto toRemove = std::remove_if(
         _orbitPoints.begin(), _orbitPoints.end(), [&](OrbitPoint data) {
           return time - data.time > DELETE_AFTER_SECONDS;
@@ -35,7 +35,7 @@ class OrbitDrawer {
       sf::CircleShape circle(2);
       circle.setFillColor(sf::Color::Green);
       circle.setPosition(data.point.toSfml());
-      renderer.draw(circle);
+      renderer->draw(circle);
     }
   }
 };

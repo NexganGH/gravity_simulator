@@ -29,9 +29,9 @@ class Renderer {
     assert(_scale > 0);
   }
 
-  static Renderer fromUniverseWidth(sf::RenderWindow& window,
+  static std::unique_ptr<Renderer> fromUniverseWidth(sf::RenderWindow& window,
                                     double universeWidth) {
-    return Renderer(window, universeWidth / window.getView().getSize().x);
+    return std::make_unique<Renderer>(window, universeWidth / window.getView().getSize().x);
   }
 
   double getUniverseHeight() { return _window.getView().getSize().y * _scale; }

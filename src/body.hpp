@@ -37,6 +37,8 @@ class Body {
   void resetForce() { _force = {0, 0}; }
 
   virtual std::unique_ptr<sf::Shape> getShape(double scale) const = 0;
+
+  virtual std::unique_ptr<Body> clone() const = 0;
 };
 
 class Planet : public Body {
@@ -55,6 +57,10 @@ class Planet : public Body {
     circle->setRadius(radius / scale);
     circle->setPosition(_position.x, _position.y);
     return circle;
+  }
+  
+  std::unique_ptr<Body> clone() const override {
+    return std::make_unique<Planet>(*this);
   }
 };
 

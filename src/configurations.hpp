@@ -6,6 +6,7 @@
 #include "body.hpp"
 #include "configuration.hpp"
 #include "renderer.hpp"
+#include "SFML/Graphics.hpp"
 
 const float EARTH_SUN_DISTANCE = 149597870700;
 const float EARTH_SPEED = 30.24E3;
@@ -37,12 +38,12 @@ const float NEPTUNE_AFELIO_SPEED=5.37E3;
 const float NEPTUNE_MASS= 17*EARTH_MASS;
 
 
-std::vector<std::shared_ptr<Configuration>> getConfigurations() {
+std::vector<std::shared_ptr<Configuration>> getConfigurations(sf::RenderWindow& window) {
   std::vector<std::shared_ptr<Configuration>> list;
 
 
   // Creating earth and sun
-  auto earthAndSun = new Configuration("Earth & Sun", 2 * MARS_AFELIO + MARS_AFELIO, 10000000);
+  auto earthAndSun = new Configuration("Earth & Sun", 2 * MARS_AFELIO + MARS_AFELIO, 10000000, window);
   //auto height = renderer.getUniverseHeight();
 
   auto height = 2*MARS_AFELIO  + EARTH_SUN_DISTANCE;//
@@ -89,7 +90,6 @@ std::vector<std::shared_ptr<Configuration>> getConfigurations() {
   earthAndSun->addBody(venus);
   earthAndSun->addBody(mars);
   //added
-  earthAndSun->save_initial_states();
 //   earthAndSun->addBody(moon);
 
   //earthAndSun->addBody(neptune);

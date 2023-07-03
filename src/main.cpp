@@ -10,6 +10,7 @@
 #include "orbit_drawer.hpp"
 #include "physics_engine.hpp"
 #include "renderer.hpp"
+#include "simulation_state.hpp"
 
 int main() {
   OrbitDrawer orbitDrawer;
@@ -20,18 +21,13 @@ int main() {
                           sf::Style::Titlebar);
   window.setPosition(sf::Vector2i(window.getPosition().x, 50));
 
-  auto configurations = getConfigurations();
+  auto configurations = getConfigurations(window);
   auto conf = configurations[0];
 
-  auto bodies = std::move(conf->getBodies());
-
-  auto ph = conf->getPhysicsEngine();
-  auto render = conf->getRenderer(window);
-  // added
-  auto initial_states = conf->get_vector_of_itial_states();
+  SimulationState state(conf);
 
   tgui::Gui gui{window};
-  GuiManager guiManager{gui, ph, bodies, render, initial_states};  // added
+  GuiManager guiManager(gui, state);  // added
   guiManager.createControlButtons();
 
   window.setFramerateLimit(60);
@@ -59,18 +55,20 @@ int main() {
 
     window.clear();
 
-    ph.evolve(bodies, dt.asSeconds());
-    double TimeElapsed = ph.getRealSecondsElapsed();
+    auto& ph = state.getPhysicsEngine();
+    auto& bodies = state.getBodies();
+    ph->evolve(state.getBodies(), dt.asSeconds());
+    double timeElapsed = ph->getRealSecondsElapsed();
 
     for (auto it = bodies.begin(); it != bodies.end(); ++it) {
-      orbitDrawer.addPoint((*it)->getPosition(), TimeElapsed);
-      render.draw(*it);
+      orbitDrawer.addPoint((*it)->getPosition(), timeElapsed);
+      state.getRenderer()->draw(*it);
     }
 
     // correct
-    guiManager.setYearsElapsed(ph.getSimulationSecondsElapsed() / 3.154E7,
-                               ph.getTimeScale());
-    orbitDrawer.draw(render, TimeElapsed);
+    guiManager.setYearsElapsed(ph->getSimulationSecondsElapsed() / 3.154E7,
+                               ph->getTimeScale());
+    orbitDrawer.draw(state.getRenderer(), timeElapsed);
     gui.draw();
     guiManager.drawArrow();
 
