@@ -19,7 +19,34 @@
 \setlength{\parskip}{6pt}%
 
 \title{Simulatore del movimento dei pianeti in un sistema solare}
-\author{Nico Tortorici, Federico Mastroforti, Luca Tesei, Gioele Mancino}
+\author{Gioele Mancino, Federico Mastroforti, Luca Tesei, Nico Tortorici}
 
 \begin{document}
 \maketitle
+\section{Il Progetto}
+\subsection{Istruzioni per la compilazione}
+All'interno del compilatore è necessario scaricare la repository online utile per la creazione della GUI:
+\begin{verbatim}
+   $ sudo add-apt-repository ppa:texus/tgui
+   $ sudo apt-get update
+   $ sudo apt-get install libtgui-1.0-dev
+    \end{verbatim}
+Poi possiamo compilare tramite CMake usando questi comandi:
+\begin{verbatim}
+    $ cmake -S. -B build
+    $ cmake --build build
+    $ build/gravity
+     \end{verbatim} 
+
+\subsection{Obiettivo del simulatore}
+Si vuole creare un programma in grado di calcolare in tempo reale e rappresentare tramite
+un'interfaccia il movimento di alcuni corpi celesti e le interazioni tra loro. è inoltre possibile aggiungere nuovi pianeti direttamente all'interno della simulazione che interagiranno con quelli già presenti.
+
+\subsection{User interaction}
+\section{Strumenti di sviluppo}
+\subsection{CMake}
+\subsection{ClangFormat}
+\subsection{Git e Github}
+\section{Strategie utilizzate}
+
+\end{document}
