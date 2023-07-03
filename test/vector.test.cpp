@@ -86,14 +86,13 @@ TEST_CASE("testing Vector class") {
     Vector c{0, 0};
     CHECK((a==a)==true);
     CHECK((a==b)==false);
-    CHECK((c==c)==true)
+    CHECK((c==c)==true);
   }
 
   SUBCASE("Testing operator +"){
     Vector a{0, 0};
     Vector b{0, 1};
     Vector c{1, 0};
-    Vector d{1, 1};
     Vector e{0, -1};
     CHECK((a+a)==Vector{0,0});
     CHECK((b+b)==Vector{0,2});
@@ -105,8 +104,6 @@ TEST_CASE("testing Vector class") {
 
   SUBCASE("Testing operator -"){
     Vector a{0, 0};
-    Vector b{0, 1};
-    Vector c{1, 0};
     Vector d{1, 1};
     Vector e{0, -1};
     CHECK((a-a)==Vector{0,0});
