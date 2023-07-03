@@ -59,7 +59,7 @@ int main() {
     window.clear();
 
     ph.evolve(bodies, dt.asSeconds());
-    double TimeElapsed=PhysicsEngine::TimeElapsed(ph);
+    double TimeElapsed=ph.TimeElapsed();
 
     for (auto it = bodies.begin(); it != bodies.end(); ++it) {
       orbitDrawer.addPoint((*it)->getPosition(),
