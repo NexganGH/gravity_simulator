@@ -48,24 +48,14 @@ TEST_CASE("testing Vector class") {
     Vector f{3, 3};
     CHECK(a.versor() == Vector{1, 1});
     CHECK(b.versor() == Vector{1, 0});
-    CHECK(c.versor()==Vector{0,1});
-    CHECK(d.versor()==Vector{-1,0});
-    CHECK(e.versor()==Vector{0,-1});
-    CHECK(f.versor()==Vector{1,1});
+    CHECK(c.versor() == Vector{0, 1});
+    CHECK(d.versor() == Vector{-1, 0});
+    CHECK(e.versor() == Vector{0, -1});
+    CHECK(f.versor() == Vector{1, 1});
   }
 
-  SUBCASE("Testing the toSfrml function"){
+  SUBCASE("Testing the toSfrml function") {
     Vector a{1, 1};
-    CHECK(a.toSfml()==sf::Vector2f{1,1});
-    
-
-
-
-
-
+    CHECK(a.toSfml() == sf::Vector2f{1, 1});
   }
-
-
-
-  
 }
