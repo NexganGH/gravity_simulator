@@ -10,28 +10,25 @@
 #include "physics_engine.hpp"
 #include "renderer.hpp"
 #include "vector.hpp"
+#include "simulation_state.hpp"
 
 class GuiManager {
  private:
   tgui::Gui& _gui;
-  PhysicsEngine& _ph;
+  SimulationState& _state;
 
   tgui::Label::Ptr _timeLabel;
   tgui::Label::Ptr _speed;
-  std::vector<std::unique_ptr<Body>>& _bodies;
-  Renderer& _renderer;
-  //added
- const std::vector<Cuple_Vector> _initial_states;
 
   // Body that is currently being created.
   std::unique_ptr<Body> _creatingBody;
   tgui::EditBox::Ptr _massInserter;
 
+  
+
  public:
- //added modified constructor
-  GuiManager(tgui::Gui& gui, PhysicsEngine& ph,
-             std::vector<std::unique_ptr<Body>>& bodies, Renderer& renderer, const std::vector<Cuple_Vector> initialStates)
-      : _gui(gui), _ph(ph), _bodies(bodies), _renderer(renderer), _initial_states(initialStates) {}
+  GuiManager(tgui::Gui& gui, SimulationState& state)
+      : _gui(gui), _state(state) {}
 
   void createControlButtons() {
     tgui::Button::Ptr play = tgui::Button::create(">");
@@ -39,9 +36,10 @@ class GuiManager {
     play->setSize(50, 50);
     play->setEnabled(true);
     play->onPress.connect([=]() {
-      _ph.toggleRunning();
+      auto& ph = _state.getPhysicsEngine();
+      ph->toggleRunning();
 
-      play->setText(_ph.isRunning() ? "||" : ">");
+      play->setText(ph->isRunning() ? "||" : ">");
     });
     _gui.add(play);
 
@@ -50,17 +48,7 @@ class GuiManager {
     reset->setSize(50, 50);
     reset->setEnabled(true);
     reset->onPress.connect([=]() {
-      if (_ph.isRunning()) {
-        _ph.toggleRunning();
-        play->setText(">");
-      }
-      _ph.resetTimeElapsed();
-//added inserisco le posizioni salvate iniziali nei paineti che si trovano in _bodies
-      for(int i{0}; i<_initial_states.size(); ++i){
-        (_bodies[i])->setPosition((_initial_states[i]).pos);
-        (_bodies[i])->setPosition((_initial_states[i]).vel);
-      }
-
+      this->_state.reset();
     });
     _gui.add(reset);
 
@@ -99,7 +87,7 @@ class GuiManager {
       Vector pos = {_massInserter->getPosition().x,
                     _massInserter->getPosition().y};
       // Must be converted to real (universe)'s coordinate
-      Vector realPos = _renderer.screenToReal(pos);
+      Vector realPos = _state.getRenderer()->screenToReal(pos);
 
       _creatingBody = std::make_unique<Planet>(
           realPos, Vector{0, 0},
@@ -115,19 +103,22 @@ class GuiManager {
 
   void leftButtonClicked(sf::Event event) {
     if (_creatingBody) {
+
       Vector mousePos{(double)event.mouseButton.x, (double)event.mouseButton.y};
-      mousePos = _renderer.screenToReal(mousePos);
+      mousePos = _state.getRenderer()->screenToReal(mousePos);
       auto velocityVersor = (mousePos - _creatingBody->getPosition()) /
                             (mousePos - _creatingBody->getPosition()).norm();
       _creatingBody->setVelocity(velocityVersor * 30E3);
-      _bodies.push_back(std::move(_creatingBody));
+      _state.getBodies().push_back(std::move(_creatingBody));
     }
   }
 
   void drawArrow() {
     if (_creatingBody) {
-      auto p1 = _renderer.realToScreen(_creatingBody->getPosition().toSfml());
-      auto p2 = _renderer.getMousePosition();
+      auto& renderer = _state.getRenderer();
+
+      auto p1 = renderer->realToScreen(_creatingBody->getPosition().toSfml());
+      auto p2 = renderer->getMousePosition();
 
       sf::VertexArray line(sf::Lines, 2);
       line[0].position = p1;
@@ -135,7 +126,7 @@ class GuiManager {
       line[1].position = p2;
       line[1].color = sf::Color::White;
 
-      _renderer.drawGui(line);
+      renderer->drawGui(line);
     }
   }
 };
