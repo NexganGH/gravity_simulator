@@ -34,7 +34,7 @@ int main() {
 
   window.setFramerateLimit(60);
 
-  double realSecondsPassed{0};
+  
   sf::Clock deltaClock;
   while (window.isOpen()) {
     sf::Time dt = deltaClock.restart();
@@ -61,19 +61,19 @@ int main() {
     ph.evolve(bodies, dt.asSeconds());
 
     for (auto it = bodies.begin(); it != bodies.end(); ++it) {
-      orbitDrawer.addPoint((*it)->getPosition(), realSecondsPassed);
+      orbitDrawer.addPoint((*it)->getPosition(), ph.getSecondsElapsed()/ph.getTimeScale());
       render.draw(*it);
     }
 
     // This is not correct, must be fixed.
     //auto nIterations = 1 / dt.asSeconds();
     guiManager.setYearsElapsed(ph.getSecondsElapsed() / 3.154E7, ph.getTimeScale());
-    orbitDrawer.draw(render, realSecondsPassed);
+    orbitDrawer.draw(render,ph.getSecondsElapsed()/ph.getTimeScale() );
     gui.draw();
     guiManager.drawArrow();
 
     window.display();
 
-    realSecondsPassed += dt.asSeconds();
+    
   }
 }
