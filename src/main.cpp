@@ -23,7 +23,8 @@ int main() {
   auto configurations = getConfigurations();
   auto conf = configurations[0];
 
-  std::vector<std::unique_ptr<Body>> bodies = std::move(conf->getBodies());
+  auto bodies = std::move(conf->getBodies());
+
   auto ph = conf->getPhysicsEngine();
   auto render = conf->getRenderer(window);
 
@@ -65,8 +66,8 @@ int main() {
     }
 
     // This is not correct, must be fixed.
-    auto nIterations = 1 / dt.asSeconds();
-    guiManager.setYearsElapsed(ph.getSecondsElapsed() / 3.154E7, nIterations * ph.getTimeScale());
+    //auto nIterations = 1 / dt.asSeconds();
+    guiManager.setYearsElapsed(ph.getSecondsElapsed() / 3.154E7, ph.getTimeScale());
     orbitDrawer.draw(render, realSecondsPassed);
     gui.draw();
     guiManager.drawArrow();
