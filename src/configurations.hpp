@@ -43,7 +43,7 @@ std::vector<std::shared_ptr<Configuration>> getConfigurations(sf::RenderWindow& 
 
 
   // Creating earth and sun
-  auto earthAndSun = new Configuration("Earth & Sun", 2 * MARS_AFELIO + MARS_AFELIO, 10000000, window);
+  auto earthAndSun = new Configuration("Earth & Sun", 2 * MARS_AFELIO + MARS_AFELIO, 1000000, window);
   //auto height = renderer.getUniverseHeight();
 
   auto height = 2*MARS_AFELIO  + EARTH_SUN_DISTANCE;//
@@ -70,10 +70,10 @@ std::vector<std::shared_ptr<Configuration>> getConfigurations(sf::RenderWindow& 
       Vector{0, MARS_AFELIO_SPEED}, MARS_MASS);
 
 
-//   std::unique_ptr<Body> moon = std::make_unique<Planet>(
-//       Vector{0.5 * 1E5 + MARS_AFELIO + MARS_AFELIO / 2+EARTH_SUN_DISTANCE+MOON_AFELIO,
-//              height / 2},
-//       Vector{0, -MOON_AFELIO_SPEED-EARTH_SPEED}, MOON_MASS);
+  std::unique_ptr<Body> moon = std::make_unique<Planet>(
+      Vector{0.5 * 1E5 + MARS_AFELIO + MARS_AFELIO / 2+EARTH_SUN_DISTANCE+MOON_AFELIO,
+             height / 2},
+      Vector{0, -MOON_AFELIO_SPEED-EARTH_SPEED}, MOON_MASS);
   // std::unique_ptr<Body> jupiter = std::make_unique<Planet>(
   //     Vector{0.5 * 1E5 + JUPITER_AFELIO + JUPITER_AFELIO / 2- JUPITER_AFELIO,
   //            height / 2},
@@ -89,6 +89,7 @@ std::vector<std::shared_ptr<Configuration>> getConfigurations(sf::RenderWindow& 
   earthAndSun->addBody(mercury);
   earthAndSun->addBody(venus);
   earthAndSun->addBody(mars);
+  earthAndSun->addBody(moon);
   //added
 //   earthAndSun->addBody(moon);
 
