@@ -101,6 +101,8 @@ class PhysicsEngine {
   void toggleRunning() { _running = !_running; }
 
   double getSecondsElapsed() { return _timeElapsed; }
+  static double TimeElapsed(PhysicsEngine ph){return ph.getSecondsElapsed()/ph.getTimeScale();}
+
 
   void evolve(std::vector<std::unique_ptr<Body>> &bodies, double dt) {
     dt *= _timeScale * (_running ? 1 : 0);

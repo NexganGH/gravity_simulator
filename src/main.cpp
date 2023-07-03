@@ -59,21 +59,21 @@ int main() {
     window.clear();
 
     ph.evolve(bodies, dt.asSeconds());
+    double TimeElapsed=PhysicsEngine::TimeElapsed(ph);
 
     for (auto it = bodies.begin(); it != bodies.end(); ++it) {
-      orbitDrawer.addPoint((*it)->getPosition(), ph.getSecondsElapsed()/ph.getTimeScale());
+      orbitDrawer.addPoint((*it)->getPosition(),
+                           TimeElapsed);
       render.draw(*it);
     }
 
-    // This is not correct, must be fixed.
-    //auto nIterations = 1 / dt.asSeconds();
-    guiManager.setYearsElapsed(ph.getSecondsElapsed() / 3.154E7, ph.getTimeScale());
-    orbitDrawer.draw(render,ph.getSecondsElapsed()/ph.getTimeScale() );
+    // correct
+    guiManager.setYearsElapsed(ph.getSecondsElapsed() / 3.154E7,
+                               ph.getTimeScale());
+    orbitDrawer.draw(render, TimeElapsed);
     gui.draw();
     guiManager.drawArrow();
 
     window.display();
-
-    
   }
 }
