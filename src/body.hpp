@@ -19,7 +19,7 @@ class Body {
  public:
   Body(Vector position, Vector velocity, double mass)
       : _position{position}, _velocity{velocity}, _mass{mass} {
-    // TODO: Add class invariants.
+    assert(_mass>0);
   }
 
   double getMass() const { return _mass; }
