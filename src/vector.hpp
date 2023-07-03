@@ -65,6 +65,13 @@ Vector operator/(Vector v, double k) { return v * (1 / k); }
 
 double Vector::distance(Vector v2) { return (*this - v2).norm(); }
 
-Vector Vector::versor() { return (*this) / (*this).norm(); }
+Vector Vector::versor() {
+  auto norm = this->norm();
+
+  if (norm == 0)
+    throw std::invalid_argument("The vector does not have a valid versor (the vector is {0, 0}).");
+
+  return (*this) / norm; 
+}
 
 #endif

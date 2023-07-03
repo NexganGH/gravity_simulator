@@ -27,16 +27,15 @@ int main() {
 
   auto ph = conf->getPhysicsEngine();
   auto render = conf->getRenderer(window);
-  //added
-  auto initial_states=conf->get_vector_of_itial_states();
+  // added
+  auto initial_states = conf->get_vector_of_itial_states();
 
   tgui::Gui gui{window};
-  GuiManager guiManager{gui, ph, bodies, render, initial_states};//added
+  GuiManager guiManager{gui, ph, bodies, render, initial_states};  // added
   guiManager.createControlButtons();
 
   window.setFramerateLimit(60);
 
-  
   sf::Clock deltaClock;
   while (window.isOpen()) {
     sf::Time dt = deltaClock.restart();
@@ -61,16 +60,15 @@ int main() {
     window.clear();
 
     ph.evolve(bodies, dt.asSeconds());
-    double TimeElapsed=ph.TimeElapsed();
+    double TimeElapsed = ph.getRealSecondsElapsed();
 
     for (auto it = bodies.begin(); it != bodies.end(); ++it) {
-      orbitDrawer.addPoint((*it)->getPosition(),
-                           TimeElapsed);
+      orbitDrawer.addPoint((*it)->getPosition(), TimeElapsed);
       render.draw(*it);
     }
 
     // correct
-    guiManager.setYearsElapsed(ph.getSecondsElapsed() / 3.154E7,
+    guiManager.setYearsElapsed(ph.getSimulationSecondsElapsed() / 3.154E7,
                                ph.getTimeScale());
     orbitDrawer.draw(render, TimeElapsed);
     gui.draw();
