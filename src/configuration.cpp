@@ -4,11 +4,10 @@
 #include <iostream>
 #include <vector>
 
-#include "../include/body.hpp"
-#include "../include/physics_engine.hpp"
-#include "../include/renderer.hpp"
-#include "../include/configuration.hpp"
-#include "SFML/Graphics.hpp"
+#include "body.hpp"
+#include "physics_engine.hpp"
+#include "renderer.hpp"
+#include "configuration.hpp"
 
 
  
@@ -24,24 +23,19 @@
     _bodies.push_back(std::move(body));
   }
 
-  std::unique_ptr<Renderer> Configuration::createRenderer() {
+  std::unique_ptr<Renderer> Configuration::createRenderer() const {
     return Renderer::fromUniverseWidth(_window, _universeWidth);
   }
 
-  std::unique_ptr<PhysicsEngine> Configuration::createPhysicsEngine() {
+  std::unique_ptr<PhysicsEngine> Configuration::createPhysicsEngine() const {
     //PhysicsEngine ph(_timeScale);
     return std::make_unique<PhysicsEngine>(_timeScale);
   }
 
-  std::vector<std::unique_ptr<Body>> Configuration::createBodies() {
+  std::vector<std::unique_ptr<Body>> Configuration::createBodies() const {
     std::vector<std::unique_ptr<Body>> bodies;
     for (auto& body : _bodies) {
       bodies.push_back(body->clone());
     }
     return bodies;
   }
-
-  // Configuration::Configuration(const Configuration&) = delete;
-  // Configuration& Configuration::operator=(Configuration&) = delete;
-
-
