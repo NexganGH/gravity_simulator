@@ -1,5 +1,4 @@
-#ifndef GUI_MANAGER_H
-#define GUI_MANAGER_H
+
 
 #include <SFML/Graphics.hpp>
 #include <TGUI/TGUI.hpp>
@@ -7,30 +6,15 @@
 #include <iostream>
 #include <vector>
 
-#include "physics_engine.hpp"
-#include "renderer.hpp"
-#include "vector.hpp"
-#include "simulation_state.hpp"
+#include "../include/physics_engine.hpp"
+#include "../include/renderer.hpp"
+#include "../include/vector.hpp"
+#include "../include/simulation_state.hpp"
 
-class GuiManager {
- private:
-  tgui::Gui& _gui;
-  SimulationState& _state;
-
-  tgui::Label::Ptr _timeLabel;
-  tgui::Label::Ptr _speed;
-
-  // Body that is currently being created.
-  std::unique_ptr<Body> _creatingBody;
-  tgui::EditBox::Ptr _massInserter;
-
-  
-
- public:
-  GuiManager(tgui::Gui& gui, SimulationState& state)
+  GuiManager::GuiManager(tgui::Gui& gui, SimulationState& state)
       : _gui(gui), _state(state) {}
 
-  void createControlButtons() {
+  void GuiManager::createControlButtons() {
     tgui::Button::Ptr play = tgui::Button::create(">");
     play->setPosition(50, 25);
     play->setSize(50, 50);
@@ -67,7 +51,7 @@ class GuiManager {
     _gui.add(_speed);
   }
 
-  void setYearsElapsed(double timeElapsed, double secondsPerIteration) {
+  void GuiManager::setYearsElapsed(double timeElapsed, double secondsPerIteration) {
     _timeLabel->setText("Time elapsed: " + std::to_string(timeElapsed) +
                         " years");
 
@@ -75,7 +59,7 @@ class GuiManager {
                     std::to_string(secondsPerIteration / 86400) + " days/s");
   }
 
-  void rightButtonClicked(sf::Event event) {
+  void GuiManager::rightButtonClicked(sf::Event event) {
     _massInserter = tgui::EditBox::create();
     _massInserter->setText("2");
 
@@ -101,7 +85,7 @@ class GuiManager {
     _gui.add(_massInserter);
   }
 
-  void leftButtonClicked(sf::Event event) {
+  void GuiManager::leftButtonClicked(sf::Event event) {
     if (_creatingBody) {
 
       Vector mousePos{(double)event.mouseButton.x, (double)event.mouseButton.y};
@@ -113,7 +97,7 @@ class GuiManager {
     }
   }
 
-  void drawArrow() {
+  void GuiManager::drawArrow() {
     if (_creatingBody) {
       auto& renderer = _state.getRenderer();
 
@@ -129,6 +113,3 @@ class GuiManager {
       renderer->drawGui(line);
     }
   }
-};
-
-#endif

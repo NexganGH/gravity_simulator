@@ -1,12 +1,10 @@
-#ifndef VECTOR_H
-#define VECTOR_H
+
 
 #include <SFML/Graphics.hpp>
 #include <cmath>
+#include "../include/vector.hpp"
 
-struct Vector {
-  double x;
-  double y;
+
 
   /**
    * Calculates the euclidean norm of the vector.
@@ -14,7 +12,7 @@ struct Vector {
    * @return the norm of the vector.
    * @see [Euclidean norm](https://en.wikipedia.org/wiki/Euclidean_norm)
    */
-  double norm() const { return std::sqrt(std::pow(x, 2) + std::pow(y, 2)); }
+  double Vector::norm() const { return std::sqrt(std::pow(x, 2) + std::pow(y, 2)); }
 
   /**
    * Calculates the euclidean distance between this vector and `v2`.
@@ -22,7 +20,7 @@ struct Vector {
    * @return the distance of the vector.
    * @see [Euclidean distance](https://en.wikipedia.org/wiki/Euclidean_distance)
    */
-  double distance(Vector v2) const;
+
 
   /**
    * Calculates the versor (or unit vector) of this vector.
@@ -30,25 +28,21 @@ struct Vector {
    * @return the versor of the vector.
    * @see [Unit vector](https://en.wikipedia.org/wiki/Unit_vector)
    */
-  Vector versor() const ;
+  
 
-  sf::Vector2f toSfml() const { return sf::Vector2f(x, y); }
+  sf::Vector2f Vector::toSfml() const { return sf::Vector2f(x, y); }
 
-  Vector& operator+=(const Vector& v) {
+  Vector& Vector::operator+=(const Vector& v) {
     this->x = x + v.x;
     this->y = y + v.y;
     return *this;
   }
 
-  bool operator==(const Vector& b) const {
+  bool Vector::operator==(const Vector& b) const {
     return (*this).x == b.x && (*this).y == b.y;
   }
-};
-//creo una struct di vettori
-struct Cuple_Vector{
-  Vector pos;
-  Vector vel;
-};
+
+
 
 // D//overload operatore somma per vector
 Vector operator+(Vector a, Vector b) { return {a.x + b.x, a.y + b.y}; }
@@ -74,4 +68,3 @@ Vector Vector::versor() const {
   return (*this) / norm; 
 }
 
-#endif

@@ -3,9 +3,9 @@
 
 #include <vector>
 
-#include "body.hpp"
-#include "configuration.hpp"
-#include "renderer.hpp"
+#include "../include/body.hpp"
+#include "../include/configuration.hpp"
+#include "../include/renderer.hpp"
 #include "SFML/Graphics.hpp"
 
 const float EARTH_SUN_DISTANCE = 149597870700;

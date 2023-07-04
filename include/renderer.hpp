@@ -26,6 +26,7 @@ class Renderer {
  public:
   Renderer(sf::RenderWindow& window, double scale);
 
+//qui ho dovuto togliere lo static 
   static std::unique_ptr<Renderer> fromUniverseWidth(sf::RenderWindow& window,
                                     double universeWidth);
 
