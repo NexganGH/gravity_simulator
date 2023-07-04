@@ -4,13 +4,13 @@
 #include <iostream>
 #include <vector>
 
-#include "../include/body.hpp"
-#include "../include/configurations.hpp"
-#include "../include/gui_manager.hpp"
-#include "../include/orbit_drawer.hpp"
-#include "../include/physics_engine.hpp"
-#include "../include/renderer.hpp"
-#include "../include/simulation_state.hpp"
+#include "body.hpp"
+#include "configurations.hpp"
+#include "gui_manager.hpp"
+#include "orbit_drawer.hpp"
+#include "physics_engine.hpp"
+#include "renderer.hpp"
+#include "simulation_state.hpp"
 
 int main() {
   OrbitDrawer orbitDrawer;

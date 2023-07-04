@@ -4,7 +4,6 @@
 #include <vector>
 
 #include "configuration.hpp"
-#include "gui_manager.hpp"
 #include "physics_engine.hpp"
 #include "renderer.hpp"
 

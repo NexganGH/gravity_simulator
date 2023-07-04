@@ -1,15 +1,14 @@
-
-
 #include <SFML/Graphics.hpp>
 #include <TGUI/TGUI.hpp>
 #include <cmath>
 #include <iostream>
 #include <vector>
 
-#include "../include/physics_engine.hpp"
-#include "../include/renderer.hpp"
-#include "../include/vector.hpp"
-#include "../include/simulation_state.hpp"
+#include "gui_manager.hpp"
+#include "physics_engine.hpp"
+#include "renderer.hpp"
+#include "vector.hpp"
+#include "simulation_state.hpp"
 
   GuiManager::GuiManager(tgui::Gui& gui, SimulationState& state)
       : _gui(gui), _state(state) {}

@@ -10,6 +10,7 @@ include(CTest)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS ON)
+set(TGUI_BACKEND SFML_GRAPHICS)
 
 # # abilita warning
 string(APPEND CMAKE_CXX_FLAGS " -Wall -Wextra")
@@ -23,10 +24,18 @@ include_directories(include)
 # Add the source files in the src/ directory
 file(GLOB_RECURSE SRC_FILES src/*.cpp)
 
-find_package(SFML 2.5 COMPONENTS system window graphics)
-add_executable(gravity src/main.cpp src/body.cpp src/configuration.cpp src/configurations.cpp src/orbit_drawer.cpp src/physics_engine.cpp src/renderer.cpp src/simulation_state.cpp src/vector.cpp src/simulation_state.cpp src/gui_manager.cpp)
+find_package(SFML 2.5 COMPONENTS system window graphics REQUIRED)
 
-target_link_libraries(gravity PRIVATE tgui sfml-graphics sfml-system sfml-window)
+
+#find_package(TGUI 0.10 REQUIRED)
+
+#add_executable(gravity src/main.cpp src/body.cpp src/configuration.cpp src/configurations.cpp src/orbit_drawer.cpp src/physics_engine.cpp src/renderer.cpp src/simulation_state.cpp src/vector.cpp src/simulation_state.cpp src/gui_manager.cpp)
+
+include_directories(include)
+add_executable(gravity ${SRC_FILES})
+
+target_link_libraries(gravity PRIVATE sfml-graphics sfml-system sfml-window tgui)
+#target_link_libraries(gravity PRIVATE TGUI::TGUI)
 
 #target_include_directories(gas PRIVATE "${PROJECT_BINARY_DIR}")
 target_compile_features(gravity PRIVATE cxx_std_17)
