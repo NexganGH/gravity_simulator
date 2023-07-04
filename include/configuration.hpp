@@ -23,10 +23,10 @@ class Configuration {
 
   void addBody(std::unique_ptr<Body>& body);
 
-  std::unique_ptr<Renderer> createRenderer();
-  std::unique_ptr<PhysicsEngine> createPhysicsEngine();
+  std::unique_ptr<Renderer> createRenderer() const;
+  std::unique_ptr<PhysicsEngine> createPhysicsEngine() const;
 
-  std::vector<std::unique_ptr<Body>> createBodies();
+  std::vector<std::unique_ptr<Body>> createBodies() const;
 
   Configuration(const Configuration&) = delete;
   Configuration& operator=(Configuration&) = delete;
