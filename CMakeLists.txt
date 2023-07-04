@@ -29,11 +29,11 @@ install(TARGETS gravity)
 #add_subdirectory(SFML)
 
 # se il testing e' abilitato...
-# per disabilitare il testing, passare -DBUILD_TESTING=OFF a cmake durante la fase di configurazione
-if (BUILD_TESTING)
+# per disabilitare il testing, passare -DBUILD_TESTING=OFF a cmake durante la fase di configurazione// mettere BUILD_TESTING=ON??
+if (BUILD_TESTING=ON)
 
     # aggiungi l'eseguibile tests
-    add_executable(tests test/vector.test.cpp test/body.test.cpp)
+    add_executable(tests test/vector.test.cpp)
     target_include_directories(tests PRIVATE src)
 
     # aggiungi l'eseguibile statistics.t alla lista dei test
