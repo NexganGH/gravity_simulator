@@ -4,3 +4,28 @@
 
 #include "doctest.h"
 #include "configuration.hpp"
+
+TEST_CASE("Testing configuration function"){
+    SUBCASE("Testing "){
+
+
+        
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
