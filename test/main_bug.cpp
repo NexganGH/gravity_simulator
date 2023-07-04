@@ -2,7 +2,7 @@
 #include <TGUI/Backend/SFML-Graphics.hpp>
 #include <TGUI/TGUI.hpp>
 
-#include "../src/vector.hpp"
+#include "../include/vector.hpp"
 
 class GuiManager {
   tgui::Gui& _gui;

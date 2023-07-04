@@ -1,6 +1,6 @@
 #ifndef DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-#include "vector.hpp"
+#include "../include/vector.hpp"
 
 #include "doctest.h"
 
