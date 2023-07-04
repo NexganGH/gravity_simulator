@@ -28,6 +28,11 @@ target_compile_features(gravity PRIVATE cxx_std_17)
 install(TARGETS gravity)
 #add_subdirectory(SFML)
 
+#including header file direcotry
+include_directories(include)
+# Add the source files in the src/ directory
+file(GLOB_RECURSE SRC_FILES src/*.cpp)
+
 # se il testing e' abilitato...
 # per disabilitare il testing, passare -DBUILD_TESTING=OFF a cmake durante la fase di configurazione
 if (BUILD_TESTING)
