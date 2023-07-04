@@ -41,7 +41,7 @@
     return bodies;
   }
 
-  Configuration::Configuration(const Configuration&) = delete;
-  Configuration& Configuration::operator=(Configuration&) = delete;
+  // Configuration::Configuration(const Configuration&) = delete;
+  // Configuration& Configuration::operator=(Configuration&) = delete;
 
 

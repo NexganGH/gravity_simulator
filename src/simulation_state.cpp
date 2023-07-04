@@ -20,15 +20,11 @@
     _renderer = _configuration->createRenderer();
   }
 
-  // void configure(std::shared_ptr<Configuration> conf) {
-  //   _configuration = conf;
-  // }
-
   std::vector<std::unique_ptr<Body>>& SimulationState::getBodies() { return _bodies; }
   std::unique_ptr<PhysicsEngine>& SimulationState::getPhysicsEngine() { return _physicsEngine; }
   std::unique_ptr<Renderer>& SimulationState::getRenderer() { return _renderer; }
 
-  SimulationState::SimulationState(const SimulationState&) = delete;
-  SimulationState& SimulationState::operator=(SimulationState&) = delete;
+  // SimulationState::SimulationState(const SimulationState&) = delete;
+  // SimulationState& SimulationState::operator=(SimulationState&) = delete;
 
 

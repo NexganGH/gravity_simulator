@@ -18,8 +18,13 @@ string(APPEND CMAKE_CXX_FLAGS " -Wall -Wextra")
 string(APPEND CMAKE_CXX_FLAGS_DEBUG " -fsanitize=address,undefined -fno-omit-frame-pointer")
 string(APPEND CMAKE_EXE_LINKER_FLAGS_DEBUG " -fsanitize=address,undefined -fno-omit-frame-pointer")
 
+#including header file direcotry
+include_directories(include)
+# Add the source files in the src/ directory
+file(GLOB_RECURSE SRC_FILES src/*.cpp)
+
 find_package(SFML 2.5 COMPONENTS system window graphics)
-add_executable(gravity src/main.cpp)
+add_executable(gravity src/main.cpp src/body.cpp src/configuration.cpp src/configurations.cpp src/orbit_drawer.cpp src/physics_engine.cpp src/renderer.cpp src/simulation_state.cpp src/vector.cpp src/simulation_state.cpp src/gui_manager.cpp)
 
 target_link_libraries(gravity PRIVATE tgui sfml-graphics sfml-system sfml-window)
 
@@ -28,10 +33,7 @@ target_compile_features(gravity PRIVATE cxx_std_17)
 install(TARGETS gravity)
 #add_subdirectory(SFML)
 
-#including header file direcotry
-include_directories(include)
-# Add the source files in the src/ directory
-file(GLOB_RECURSE SRC_FILES src/*.cpp)
+
 
 # se il testing e' abilitato...
 # per disabilitare il testing, passare -DBUILD_TESTING=OFF a cmake durante la fase di configurazione
