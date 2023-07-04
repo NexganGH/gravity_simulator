@@ -1,4 +1,3 @@
-#ifndef DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "vector.hpp"
 
@@ -173,4 +172,3 @@ TEST_CASE("testing Vector class") {
   
 }
 
-#endif

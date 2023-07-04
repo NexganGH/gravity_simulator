@@ -33,7 +33,7 @@ install(TARGETS gravity)
 if (BUILD_TESTING)
 
     # aggiungi l'eseguibile tests
-    add_executable(tests test/vector.test.cpp )
+    add_executable(tests test/vector.test.cpp test/body.test.cpp)
     target_include_directories(tests PRIVATE src)
 
     # aggiungi l'eseguibile statistics.t alla lista dei test

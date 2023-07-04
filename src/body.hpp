@@ -21,21 +21,21 @@ class Body {
     assert(_mass>0);
   }
 
-  double getMass() const { return _mass; }
+  double getMass() const { return _mass; } //
 
-  Vector getPosition() const { return _position; }
+  Vector getPosition() const { return _position; }//
 
-  void setPosition(Vector v) { _position = v; }
+  void setPosition(Vector v) { _position = v; }//
 
-  Vector getVelocity() const { return _velocity; }
+  Vector getVelocity() const { return _velocity; }//
 
-  void setVelocity(Vector velocity) { _velocity = velocity; }
+  void setVelocity(Vector velocity) { _velocity = velocity; }//
 
-  void addForce(Vector force) { _force += force; }
+  void addForce(Vector force) { _force += force; }//
 
-  Vector getAcceleration() const { return _force / _mass; }
+  Vector getAcceleration() const { return _force / _mass; }// chekc if the mass is different from zero, already tested if the mass is non positive
 
-  void resetForce() { _force = {0, 0}; }
+  void resetForce() { _force = {0, 0}; }//
 
   virtual std::unique_ptr<sf::Shape> getShape(double scale) const = 0;
 
