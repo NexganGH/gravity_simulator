@@ -1,5 +1,3 @@
-
-
 #include "orbit_drawer.hpp"
 
 #include <SFML/Graphics.hpp>
