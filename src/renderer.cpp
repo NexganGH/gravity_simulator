@@ -19,7 +19,7 @@
   Renderer::Renderer(sf::RenderWindow& window, double scale)
       : _window(window), _scale(scale) {
     assert(_scale > 0);
-  }
+  } 
 
   std::unique_ptr<Renderer> Renderer::fromUniverseWidth(sf::RenderWindow& window,
                                     double universeWidth) {
