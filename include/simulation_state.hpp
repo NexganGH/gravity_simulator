@@ -7,6 +7,8 @@
 #include "physics_engine.hpp"
 #include "renderer.hpp"
 
+namespace gs {
+
 class SimulationState {
  private:
   std::shared_ptr<Configuration> _configuration;
@@ -26,5 +28,7 @@ class SimulationState {
   SimulationState(const SimulationState&) = delete;
   SimulationState& operator=(SimulationState&) = delete;
 };
+
+};  // namespace gs
 
 #endif

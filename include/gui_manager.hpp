@@ -13,6 +13,8 @@
 #include "simulation_state.hpp"
 #include "vector.hpp"
 
+namespace gs {
+
 class GuiManager {
  private:
   tgui::Gui _gui;
@@ -55,6 +57,8 @@ class GuiManager {
    * Draw the gui.
   */
   void draw();
+};
+
 };
 
 #endif

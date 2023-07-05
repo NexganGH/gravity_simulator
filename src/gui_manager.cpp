@@ -11,6 +11,8 @@
 #include "simulation_state.hpp"
 #include "vector.hpp"
 
+namespace gs {
+
 GuiManager::GuiManager(sf::RenderWindow& window, SimulationState& state)
     : _gui(tgui::Gui(window)), _state(state) {}
 
@@ -123,3 +125,5 @@ void GuiManager::draw() {
     renderer->drawGui(line);
   }
 }
+
+};

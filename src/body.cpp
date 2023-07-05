@@ -6,13 +6,15 @@
 #include <cmath>
 #include <iostream>
 
-#include "vector.hpp"
 #include "body.hpp"
- 
-  Body::Body(Vector position, Vector velocity, double mass)
-      : _position{position}, _velocity{velocity}, _mass{mass} {
-    assert(_mass>0);
-  }
+#include "vector.hpp"
+
+namespace gs {
+
+Body::Body(Vector position, Vector velocity, double mass)
+    : _position{position}, _velocity{velocity}, _mass{mass} {
+  assert(_mass > 0);
+}
 
 double Body::getMass() const { return _mass; }
 
@@ -50,3 +52,5 @@ std::unique_ptr<sf::Shape> Planet::getShape(double scale) const {
 std::unique_ptr<Body> Planet::clone() const {
   return std::make_unique<Planet>(*this);
 }
+
+};  // namespace gs
