@@ -1,10 +1,8 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-#include "../include/body.hpp"
 #include <SFML/Graphics.hpp>
 
 #include "doctest.h"
-#include "../include/configurations.hpp"
-#include "../include/configuration.hpp"
+#include "configurations.hpp"
 
 TEST_CASE("Testing getConfigurations function"){ 
 const float EARTH_SUN_DISTANCE = 149597870700;

@@ -47,12 +47,20 @@ install(TARGETS gravity)
 # se il testing e' abilitato...
 # per disabilitare il testing, passare -DBUILD_TESTING=OFF a cmake durante la fase di configurazione
 if (BUILD_TESTING)
+    file(GLOB_RECURSE TEST_FILES test/*.cpp)
+    list(REMOVE_ITEM TEST_FILES "${CMAKE_SOURCE_DIR}/test/doctest.h")  # Exclude doctest.h from the test files
 
-    # aggiungi l'eseguibile tests
-    add_executable(tests test/vector.test.cpp vector.cpp)
-    target_include_directories(tests PRIVATE src)
+    file(GLOB_RECURSE SRC_FILES_TEST src/*.cpp)
+    list(REMOVE_ITEM SRC_FILES_TEST "src/main.cpp")
+    
+    add_executable(tests "test/body.test.cpp")
+    target_sources(tests PRIVATE ${SRC_FILES_TEST})
 
-    # aggiungi l'eseguibile statistics.t alla lista dei test
-    add_test(NAME tests COMMAND tests)
+    target_link_libraries(tests PRIVATE sfml-graphics sfml-system sfml-window tgui)
+    install(TARGETS tests)
+    add_test(
+        NAME MyTest
+        COMMAND tests)
+    #add_test(NAME tests COMMAND tests)
 
 endif()

@@ -1,10 +1,9 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
-#include "../include/body.hpp"
+#include "body.hpp"
 #include <SFML/Graphics.hpp>
 
 #include "doctest.h"
-#include "../include/vector.hpp"
 
 TEST_CASE("testing Body class") {
   Planet p1(Vector{0, 0}, Vector{0, 0}, 1);
