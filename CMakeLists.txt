@@ -51,16 +51,17 @@ if (BUILD_TESTING)
     list(REMOVE_ITEM TEST_FILES "${CMAKE_SOURCE_DIR}/test/doctest.h")  # Exclude doctest.h from the test files
 
     file(GLOB_RECURSE SRC_FILES_TEST src/*.cpp)
-    list(REMOVE_ITEM SRC_FILES_TEST "src/main.cpp")
+    list(REMOVE_ITEM SRC_FILES_TEST "${CMAKE_SOURCE_DIR}/src/main.cpp")
     
-    add_executable(tests "test/body.test.cpp")
-    target_sources(tests PRIVATE ${SRC_FILES_TEST})
+    #add_executable(tests "test/body.test.cpp")
+    #target_sources(tests PRIVATE ${SRC_FILES_TEST})
 
-    target_link_libraries(tests PRIVATE sfml-graphics sfml-system sfml-window tgui)
-    install(TARGETS tests)
-    add_test(
-        NAME MyTest
-        COMMAND tests)
+    foreach(TEST_FILE ${TEST_FILES})
+        get_filename_component(TEST_NAME ${TEST_FILE} NAME_WE)
+        add_executable(${TEST_NAME} ${TEST_FILE} ${SRC_FILES_TEST})
+        target_link_libraries(${TEST_NAME} PRIVATE sfml-graphics sfml-system sfml-window tgui)
+        add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME})
+    endforeach()
     #add_test(NAME tests COMMAND tests)
 
 endif()

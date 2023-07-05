@@ -38,7 +38,7 @@ TEST_CASE("Testing simulationState class") {
     auto firstConfiguration = conf[0];
     SimulationState simulation_state(firstConfiguration);
 
-    auto bodies = simulation_state.getBodies();
+    auto& bodies = simulation_state.getBodies();
 
     CHECK(bodies[0]->getMass() == SUN_MASS);
     CHECK(bodies[1]->getMass() == EARTH_MASS);
@@ -110,7 +110,7 @@ TEST_CASE("Testing simulationState class") {
     auto firstConfiguration = conf[0];
     SimulationState simulation_state(firstConfiguration);
 
-    auto bodies = simulation_state.getBodies();
+    auto& bodies = simulation_state.getBodies();
 
     // chiamo reset anche se non si è modificata la configurazione iniziale,
     // testiamo quindi se reset lascia invariata la configurazione
