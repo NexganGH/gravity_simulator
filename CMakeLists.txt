@@ -46,7 +46,7 @@ install(TARGETS gravity)
 
 # se il testing e' abilitato...
 # per disabilitare il testing, passare -DBUILD_TESTING=OFF a cmake durante la fase di configurazione
-if (BUILD_TESTING=ON)
+if (BUILD_TESTING)
 
     # aggiungi l'eseguibile tests
     add_executable(tests test/vector.test.cpp vector.cpp)
