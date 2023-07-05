@@ -18,19 +18,71 @@ class Body {
  public:
   Body(Vector position, Vector velocity, double mass);
 
+  /**
+   * @return The mass of the body.
+   */ 
   double getMass() const;
 
+  /**
+   * @return The position of the body in universe's coordinates.
+  */
   Vector getPosition() const;
+  
+  /**
+   * Sets the position of the body
+   * 
+   * @param v The new position.
+  */
   void setPosition(Vector v);
+
+  /**
+   * @return The current velocity of the body.
+  */
   Vector getVelocity() const;
+
+  /**
+   * Sets the velocity of the body.
+   * 
+   * @param velocity The new velocity.
+  */
   void setVelocity(Vector velocity);
 
+  /**
+   * Add a force to the body (without resetting the current force).
+   * 
+   * @param force The force to add.
+   * @see [Force](https://en.wikipedia.org/wiki/Force)
+  */
   void addForce(Vector force);
 
+  /**
+   * Calculates the acceleration of the body according to Newton's Second Law Of Motion.
+   * 
+   * @return The current acceleration.
+   * @see [Newton's laws of motion](https://en.wikipedia.org/wiki/Newton%27s_laws_of_motion)
+  */
   Vector getAcceleration() const;
+
+  /**
+   * Sets the force applied to this body to 0.
+  */
   void resetForce();
+
+  /**
+   * Creates a shape for the body. The shape will automatically be scaled according to the universe's scale.
+   * 
+   * The position of the shape is in universe's coordinates.
+   * 
+   * @param scale The scale of the universe compared to the screen.
+   * @return A pointer to the created shape.
+  */
   virtual std::unique_ptr<sf::Shape> getShape(double scale) const = 0;
 
+  /**
+   * Clones the body.
+   * 
+   * @return A pointer to a clone of the body.
+  */
   virtual std::unique_ptr<Body> clone() const = 0;
 };
 

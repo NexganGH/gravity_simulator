@@ -3,8 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "../include/body.hpp"
-#include "../include/renderer.hpp"
+#include "body.hpp"
+#include "renderer.hpp"
 
 /**
  * Class used to properly calculate the distance between two objects, in order
