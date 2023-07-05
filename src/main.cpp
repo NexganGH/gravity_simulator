@@ -8,8 +8,9 @@
 #include "simulation_state.hpp"
 
 int main() {
-  gs::OrbitDrawer orbitDrawer;
+  sf::Clock deltaClock;
 
+  // Adapting the height to user's height.
   auto height = sf::VideoMode::getDesktopMode().height - 100;
 
   sf::RenderWindow window(sf::VideoMode(height, height), "Gravity Simulator",
@@ -26,7 +27,6 @@ int main() {
 
   window.setFramerateLimit(60);
 
-  sf::Clock deltaClock;
   while (window.isOpen()) {
     sf::Time dt = deltaClock.restart();
 
@@ -35,24 +35,29 @@ int main() {
       if (event.type == sf::Event::Closed) {
         window.close();
       }
+
+      guiManager.handleEvent(event);
     }
 
     window.clear();
 
     auto& ph = state.getPhysicsEngine();
     auto& bodies = state.getBodies();
+
+    // Step of the simulation - dt is the real time passed since the previous
+    // step.
     ph->evolve(state.getBodies(), dt.asSeconds());
 
+    // Drawing all the bodies
     double timeElapsed = ph->getRealSecondsElapsed();
     for (auto it = bodies.begin(); it != bodies.end(); ++it) {
-      orbitDrawer.addPoint((*it)->getPosition(), timeElapsed);
+      // Adds the point of the orbit on the drawer.
+      guiManager.addPoint((*it)->getPosition(), timeElapsed);
       state.getRenderer()->draw(*it);
     }
 
-    // correct
     guiManager.updateValues(ph->getSimulationSecondsElapsed() / 3.154E7,
                             ph->getTimeScale());
-    orbitDrawer.draw(state.getRenderer(), timeElapsed);
     guiManager.draw();
 
     window.display();
