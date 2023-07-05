@@ -2,10 +2,10 @@
 
 #include <vector>
 
-#include "../include/configuration.hpp"
-#include "../include/gui_manager.hpp"
-#include "../include/physics_engine.hpp"
-#include "../include/renderer.hpp"
+#include "configuration.hpp"
+#include "gui_manager.hpp"
+#include "physics_engine.hpp"
+#include "renderer.hpp"
 
 
   SimulationState::SimulationState(std::shared_ptr<Configuration> conf)

@@ -1,6 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1688421766 "c:/Users/lucat/Desktop/Cartella per latex/gravity_simulator/docs/main.tex" "main.pdf" "main" 1688421768 0
-  "c:/Users/lucat/Desktop/Cartella per latex/gravity_simulator/docs/main.tex" 1688421765 1764 85a0c14feb72229e26ae6f9989c435a4 ""
+["pdflatex"] 1688586583 "c:/Users/lucat/Desktop/Cartella per latex/gravity_simulator/docs/main.tex" "main.pdf" "main" 1688586585 0
+  "Playpause.png" 1688586338 7123 634b98fef202a8ef799cfdffcd2d2a56 ""
+  "c:/Users/lucat/Desktop/Cartella per latex/gravity_simulator/docs/main.tex" 1688586580 2951 48eec8c0720be344be99b7e3b7e7d786 ""
   "d:/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1680549048 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "d:/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1680546305 1004 54797486969f23fa377b128694d548df ""
   "d:/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1680546305 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -87,9 +88,9 @@
   "d:/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1680616089 4662201 401302a2381f0948916f0007364a0dac ""
   "d:/texlive/2023/texmf-var/web2c/pdftex/pdflatex.fmt" 1680616240 7885521 990d7a69c92cb2da781ca9e4b9dc8d00 ""
   "d:/texlive/2023/texmf.cnf" 1680616048 713 e69b156964470283e0530f5060668171 ""
-  "main.aux" 1688421768 1739 3c0db6ae10d484b7e10c92f4186f03fa "pdflatex"
-  "main.out" 1688421768 1257 01e5c0e8fe5658d50485ab7194e1c205 "pdflatex"
-  "main.tex" 1688421765 1764 85a0c14feb72229e26ae6f9989c435a4 ""
+  "main.aux" 1688586585 3012 34c76eb4dae57be5bb411c6d972480cf "pdflatex"
+  "main.out" 1688586585 2266 6f31df0e9fdaa5105298784e5f9fb334 "pdflatex"
+  "main.tex" 1688586580 2951 48eec8c0720be344be99b7e3b7e7d786 ""
   (generated)
   "main.aux"
   "main.log"

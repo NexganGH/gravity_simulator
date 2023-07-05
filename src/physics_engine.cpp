@@ -5,7 +5,10 @@
 #include <cmath>
 #include <memory>
 
-#include "../include/body.hpp"
+#include "body.hpp"
+#include "physics_engine.hpp"
+
+
 
 void PhysicsEngine::firstStep(std::unique_ptr<Body> &b1, double dt) {
   assert(b1 != nullptr);
