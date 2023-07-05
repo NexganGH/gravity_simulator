@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 
+namespace gs {
 struct Vector {
   double x{0};
   double y{0};
@@ -30,29 +31,24 @@ struct Vector {
    * @return the versor of the vector.
    * @see [Unit vector](https://en.wikipedia.org/wiki/Unit_vector)
    */
-  Vector versor() const ;
+  Vector versor() const;
 
-  sf::Vector2f toSfml() const ;
+  sf::Vector2f toSfml() const;
 
-  Vector& operator+=(const Vector& v) ;
-  bool operator==(const Vector& b) const ;
-};
-//creo una struct di vettori
-struct Cuple_Vector{
-  Vector pos;
-  Vector vel;
+  Vector& operator+=(const Vector& v);
+  bool operator==(const Vector& b) const;
 };
 
 // D//overload operatore somma per vector
-Vector operator+(Vector a, Vector b) ;
+Vector operator+(Vector a, Vector b);
 
-Vector operator-(Vector a, Vector b) ;
-Vector operator-(Vector v) ;
+Vector operator-(Vector a, Vector b);
+Vector operator-(Vector v);
 
-Vector operator*(double k, Vector v) ;
+Vector operator*(double k, Vector v);
 
-Vector operator*(Vector v, double k) ;
+Vector operator*(Vector v, double k);
 
-Vector operator/(Vector v, double k) ;
-
+Vector operator/(Vector v, double k);
+};  // namespace gs
 #endif

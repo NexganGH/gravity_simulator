@@ -8,6 +8,8 @@
 #include "renderer.hpp"
 #include "vector.hpp"
 
+namespace gs {
+
 class OrbitDrawer {
  private:
   struct OrbitPoint {
@@ -20,17 +22,21 @@ class OrbitDrawer {
 
  public:
   /**
-   * Adds a point to draw. The point will be deleted after a certain amount of time.
-  */
+   * Adds a point to draw. The point will be deleted after a certain amount of
+   * time.
+   */
   void addPoint(Vector p, double time);
 
   /**
    * Draws the points according to the time in the program.
-   * 
+   *
    * @param renderer The renderer where to draw the points.
-   * @param realTimeSeconds The realTimeSeconds since the beginning of the program.
-  */
+   * @param realTimeSeconds The realTimeSeconds since the beginning of the
+   * program.
+   */
   void draw(std::unique_ptr<Renderer>& renderer, double realTimeSeconds);
 };
+
+};  // namespace gs
 
 #endif

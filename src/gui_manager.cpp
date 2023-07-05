@@ -11,6 +11,8 @@
 #include "simulation_state.hpp"
 #include "vector.hpp"
 
+namespace gs {
+
 GuiManager::GuiManager(sf::RenderWindow& window, SimulationState& state)
     : _gui(tgui::Gui(window)), _state(state) {}
 
@@ -98,8 +100,7 @@ void GuiManager::leftButtonClicked(sf::Event event) {
   if (_creatingBody) {
     Vector mousePos{(double)event.mouseButton.x, (double)event.mouseButton.y};
     mousePos = _state.getRenderer()->screenToReal(mousePos);
-    auto velocityVersor = (mousePos - _creatingBody->getPosition()) /
-                          (mousePos - _creatingBody->getPosition()).norm();
+    auto velocityVersor = (mousePos - _creatingBody->getPosition()).versor();
     _creatingBody->setVelocity(velocityVersor * 30E3);
     _state.getBodies().push_back(std::move(_creatingBody));
   }
@@ -122,4 +123,10 @@ void GuiManager::draw() {
 
     renderer->drawGui(line);
   }
+
+  _orbitDrawer.draw(_state.getRenderer(), _state.getPhysicsEngine()->getRealSecondsElapsed());
 }
+
+void GuiManager::addPoint(Vector p, double time) { _orbitDrawer.addPoint(p, time); }
+
+};  // namespace gs

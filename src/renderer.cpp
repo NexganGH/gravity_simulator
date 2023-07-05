@@ -6,10 +6,7 @@
 #include "body.hpp"
 #include "renderer.hpp"
 
-/**
- * Class used to properly calculate the distance between two objects, in order
- * to render them properly on the screen.
- */
+namespace gs {
 
 
   double Renderer::realToScreen(double real) { return real / _scale; }
@@ -57,9 +54,5 @@
 
   Renderer::Renderer(const Renderer& renderer)
       : _window(renderer._window), _scale(renderer._scale) {}
-  // non c'è bisogno di definire l'operatore = per fare il copy constructor
-  // perchè lo genera automaticamnte una volta noto il copy constructor qui
-  // definito
 
-
-
+};

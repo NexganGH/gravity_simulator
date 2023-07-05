@@ -1,4 +1,4 @@
-
+#include "orbit_drawer.hpp"
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -6,25 +6,26 @@
 
 #include "renderer.hpp"
 #include "vector.hpp"
-#include "orbit_drawer.hpp"
 
-  void OrbitDrawer::addPoint(Vector p, double time) {
-    assert(time >= 0);
-    _orbitPoints.push_back(OrbitPoint{time, p});
+namespace gs {
+
+void OrbitDrawer::addPoint(Vector p, double time) {
+  assert(time >= 0);
+  _orbitPoints.push_back(OrbitPoint{time, p});
+}
+
+void OrbitDrawer::draw(std::unique_ptr<Renderer>& renderer, double time) {
+  auto toRemove = std::remove_if(
+      _orbitPoints.begin(), _orbitPoints.end(),
+      [&](OrbitPoint data) { return time - data.time > DELETE_AFTER_SECONDS; });
+  _orbitPoints.erase(toRemove, _orbitPoints.end());
+
+  for (auto data : _orbitPoints) {
+    sf::CircleShape circle(2);
+    circle.setFillColor(sf::Color::Green);
+    circle.setPosition(data.point.toSfml());
+    renderer->draw(circle);
   }
+}
 
-  void OrbitDrawer::draw(std::unique_ptr<Renderer>& renderer, double time) {
-    auto toRemove = std::remove_if(
-        _orbitPoints.begin(), _orbitPoints.end(), [&](OrbitPoint data) {
-          return time - data.time > DELETE_AFTER_SECONDS;
-        });
-    _orbitPoints.erase(toRemove, _orbitPoints.end());
-
-    for (auto data : _orbitPoints) {
-      sf::CircleShape circle(2);
-      circle.setFillColor(sf::Color::Green);
-      circle.setPosition(data.point.toSfml());
-      renderer->draw(circle);
-    }
-  }
-
+};  // namespace gs

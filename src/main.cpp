@@ -1,37 +1,33 @@
 #include <SFML/Graphics.hpp>
-#include <TGUI/Backend/SFML-Graphics.hpp>
-#include <TGUI/TGUI.hpp>
 #include <iostream>
 #include <vector>
 
-#include "body.hpp"
 #include "configurations.hpp"
 #include "gui_manager.hpp"
 #include "orbit_drawer.hpp"
-#include "physics_engine.hpp"
-#include "renderer.hpp"
 #include "simulation_state.hpp"
 
 int main() {
-  OrbitDrawer orbitDrawer;
+  sf::Clock deltaClock;
 
+  // Adapting the height to user's window height.
   auto height = sf::VideoMode::getDesktopMode().height - 100;
 
   sf::RenderWindow window(sf::VideoMode(height, height), "Gravity Simulator",
                           sf::Style::Titlebar);
   window.setPosition(sf::Vector2i(window.getPosition().x, 50));
 
-  auto configurations = getConfigurations(window);
+  std::srand(std::time(NULL));
+  auto configurations = gs::getConfigurations(window);
   auto conf = configurations[0];
 
-  SimulationState state(conf);
+  gs::SimulationState state(conf);
 
-  GuiManager guiManager(window, state);  // added
+  gs::GuiManager guiManager(window, state);  // added
   guiManager.setup();
 
   window.setFramerateLimit(60);
 
-  sf::Clock deltaClock;
   while (window.isOpen()) {
     sf::Time dt = deltaClock.restart();
 
@@ -39,25 +35,30 @@ int main() {
     while (window.pollEvent(event)) {
       if (event.type == sf::Event::Closed) {
         window.close();
-      }      
+      }
+
+      guiManager.handleEvent(event);
     }
 
     window.clear();
 
     auto& ph = state.getPhysicsEngine();
     auto& bodies = state.getBodies();
+
+    // Step of the simulation - dt is the real time passed since the previous
+    // step.
     ph->evolve(state.getBodies(), dt.asSeconds());
 
+    // Drawing all the bodies
     double timeElapsed = ph->getRealSecondsElapsed();
     for (auto it = bodies.begin(); it != bodies.end(); ++it) {
-      orbitDrawer.addPoint((*it)->getPosition(), timeElapsed);
+      // Adds the point of the orbit on the drawer.
+      guiManager.addPoint((*it)->getPosition(), timeElapsed);
       state.getRenderer()->draw(*it);
     }
 
-    // correct
     guiManager.updateValues(ph->getSimulationSecondsElapsed() / 3.154E7,
-                               ph->getTimeScale());
-    orbitDrawer.draw(state.getRenderer(), timeElapsed);
+                            ph->getTimeScale());
     guiManager.draw();
 
     window.display();

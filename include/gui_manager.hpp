@@ -1,6 +1,10 @@
 #ifndef GUI_MANAGER_H
 #define GUI_MANAGER_H
 
+
+#include "simulation_state.hpp"
+#include "orbit_drawer.hpp"
+
 #include <SFML/Graphics.hpp>
 #include <TGUI/Backend/SFML-Graphics.hpp>
 #include <TGUI/TGUI.hpp>
@@ -8,15 +12,13 @@
 #include <iostream>
 #include <vector>
 
-#include "physics_engine.hpp"
-#include "renderer.hpp"
-#include "simulation_state.hpp"
-#include "vector.hpp"
+namespace gs {
 
 class GuiManager {
  private:
   tgui::Gui _gui;
   SimulationState& _state;
+  OrbitDrawer _orbitDrawer;
 
   tgui::Label::Ptr _timeLabel;
   tgui::Label::Ptr _speed;
@@ -55,6 +57,10 @@ class GuiManager {
    * Draw the gui.
   */
   void draw();
+
+  void addPoint(Vector p, double time);
+};
+
 };
 
 #endif

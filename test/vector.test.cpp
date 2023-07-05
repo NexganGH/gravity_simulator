@@ -7,11 +7,11 @@
 
 TEST_CASE("testing Vector class") {
   SUBCASE("Testing norm function") {
-    Vector a{1, 0};
-    Vector b{0, 1};
-    Vector c{0, 0};
-    Vector d{3, 4};
-    Vector e{-3, -4};
+    gs::Vector a{1, 0};
+    gs::Vector b{0, 1};
+    gs::Vector c{0, 0};
+    gs::Vector d{3, 4};
+    gs::Vector e{-3, -4};
     CHECK(a.norm() == 1);
     CHECK(b.norm() == 1);
     CHECK(c.norm() == 0);
@@ -20,13 +20,13 @@ TEST_CASE("testing Vector class") {
   }
 
   SUBCASE("Testing distance function") {
-    Vector a{0, 0};
-    Vector b{0, 1};
-    Vector c{1, 0};
-    Vector d{1, 1};
-    Vector e{0, -1};
-    Vector f{-1, 0};
-    Vector g{-1, -1};
+    gs::Vector a{0, 0};
+    gs::Vector b{0, 1};
+    gs::Vector c{1, 0};
+    gs::Vector d{1, 1};
+    gs::Vector e{0, -1};
+    gs::Vector f{-1, 0};
+    gs::Vector g{-1, -1};
     CHECK(a.distance(b) == 1);
     CHECK(b.distance(a) == 1);
     CHECK(c.distance(a) == 1);
@@ -42,26 +42,26 @@ TEST_CASE("testing Vector class") {
 
   SUBCASE("Testing versor function") {
     // TEst con Vector{0,0}??
-    Vector a{1, 1};
-    Vector b{5, 0};
-    Vector c{0, 3};
-    Vector d{-2, 0};
-    Vector e{0, -3};
-    Vector f{3, 3};
+    gs::Vector a{1, 1};
+    gs::Vector b{5, 0};
+    gs::Vector c{0, 3};
+    gs::Vector d{-2, 0};
+    gs::Vector e{0, -3};
+    gs::Vector f{3, 3};
     CHECK((a.versor()).x == doctest::Approx(0.7071));
     CHECK((a.versor()).y == doctest::Approx(0.7071));
-    CHECK(b.versor() == Vector{1, 0});
-    CHECK(c.versor() == Vector{0, 1});
-    CHECK(d.versor() == Vector{-1, 0});
-    CHECK(e.versor() == Vector{0, -1});
+    CHECK(b.versor() == gs::Vector{1, 0});
+    CHECK(c.versor() == gs::Vector{0, 1});
+    CHECK(d.versor() == gs::Vector{-1, 0});
+    CHECK(e.versor() == gs::Vector{0, -1});
     CHECK((f.versor()).x == doctest::Approx(0.7071));
     CHECK((f.versor()).y == doctest::Approx(0.7071));
     }
 
   SUBCASE("Testing the toSfrml function") {
-    Vector a{1, 1};
-    Vector b{1, -1};
-    Vector c{0, -3};
+    gs::Vector a{1, 1};
+    gs::Vector b{1, -1};
+    gs::Vector c{0, -3};
 
     CHECK(a.toSfml()==sf::Vector2f{1,1});
     CHECK(b.toSfml()==sf::Vector2f{1,-1});
@@ -69,106 +69,109 @@ TEST_CASE("testing Vector class") {
   }
 
   SUBCASE("Testing operator +="){
-    Vector a{1, 1};
-    Vector b{2, 2};
-    Vector c{0, 0};
-    Vector d{-2, 0};
-    Vector e{-1,-1};
-    CHECK((a+=b)==Vector{3,3});
-    CHECK((a+=a)==Vector{2,2});//
-    CHECK((c+=c)==Vector{0,0});
-    CHECK((d+=d)==Vector{-4,0});//
-    CHECK((d+=b)==Vector{0,2});//
-    CHECK((e+=a)==Vector{0,0});//
-    CHECK((a+=e)==Vector{0,0});//
+    gs::Vector a{1, 1};
+    gs::Vector b{2, 2};
+    gs::Vector c{0, 0};
+    gs::Vector d{-2, 0};
+    gs::Vector e{-1,-1};
+    CHECK((a+=b)==gs::Vector{3,3});
+    CHECK((a+=a)==gs::Vector{2,2});//
+    CHECK((c+=c)==gs::Vector{0,0});
+    CHECK((d+=d)==gs::Vector{-4,0});//
+    CHECK((d+=b)==gs::Vector{0,2});//
+    CHECK((e+=a)==gs::Vector{0,0});//
+    CHECK((a+=e)==gs::Vector{0,0});//
   }
 
   SUBCASE("Testing operator =="){
-    Vector a{1, 1};
-    Vector b{2, 2};
-    Vector c{0, 0};
+    gs::Vector a{1, 1};
+    gs::Vector b{2, 2};
+    gs::Vector c{0, 0};
     CHECK((a==a)==true);
     CHECK((a==b)==false);
     CHECK((c==c)==true);
   }
 
   SUBCASE("Testing operator +"){
-    Vector a{0, 0};
-    Vector b{0, 1};
-    Vector c{1, 0};
-    Vector e{0, -1};
-    CHECK((a+a)==Vector{0,0});
-    CHECK((b+b)==Vector{0,2});
-    CHECK((c+b)==Vector{1,1});
-    CHECK((e+b)==Vector{0,0});
-    CHECK((c+e)==Vector{1,-1});
+    gs::Vector a{0, 0};
+    gs::Vector b{0, 1};
+    gs::Vector c{1, 0};
+    gs::Vector e{0, -1};
+    CHECK((a+a)==gs::Vector{0,0});
+    CHECK((b+b)==gs::Vector{0,2});
+    CHECK((c+b)==gs::Vector{1,1});
+    CHECK((e+b)==gs::Vector{0,0});
+    CHECK((c+e)==gs::Vector{1,-1});
 
   }
 
   SUBCASE("Testing operator -"){
-    Vector a{0, 0};
-    Vector d{1, 1};
-    Vector e{0, -1};
-    CHECK((a-a)==Vector{0,0});
-    CHECK((d-d)==Vector{0,0});
-    CHECK((e-d)==Vector{-1,-2});
-    CHECK((a-d)==Vector{-1,-1});
+    gs::Vector a{0, 0};
+    gs::Vector d{1, 1};
+    gs::Vector e{0, -1};
+    CHECK((a-a)==gs::Vector{0,0});
+    CHECK((d-d)==gs::Vector{0,0});
+    CHECK((e-d)==gs::Vector{-1,-2});
+    CHECK((a-d)==gs::Vector{-1,-1});
 
   }
   SUBCASE("Testing operator -"){
-    Vector a{0, 0};
-    Vector b{0, 1};
-    Vector c{1, 0};
-    Vector d{1, 1};
-    Vector e{0, -1};
-    CHECK((-a)==Vector{0,0});
-    CHECK((-b)==Vector{0,-1});//fatto
-    CHECK((-c)==Vector{-1,0});
-    CHECK((-d)==Vector{-1,-1});
-     CHECK((-e)==Vector{0,1});//fatto
+    gs::Vector a{0, 0};
+    gs::Vector b{0, 1};
+    gs::Vector c{1, 0};
+    gs::Vector d{1, 1};
+    gs::Vector e{0, -1};
+    CHECK((-a)==gs::Vector{0,0});
+    CHECK((-b)==gs::Vector{0,-1});//fatto
+    CHECK((-c)==gs::Vector{-1,0});
+    CHECK((-d)==gs::Vector{-1,-1});
+     CHECK((-e)==gs::Vector{0,1});//fatto
 
   }
   SUBCASE("Testing operator *"){
-    Vector a{0, 0};
-    Vector b{0, 1};
-    Vector c{1, -1};
+    gs::Vector a{0, 0};
+    gs::Vector b{0, 1};
+    gs::Vector c{1, -1};
     double e{0};
     double f{1};
     double g{-1};
    
-    CHECK((e*a)==Vector{0,0});
-    CHECK((e*b)==Vector{0,0});
-    CHECK((a*f)==Vector{0,0});
-    CHECK((b*f)==Vector{0,1});
-    CHECK((c*g)==Vector{-1,1});
-    CHECK((b*g)==Vector{0,-1});
+    CHECK((e*a)==gs::Vector{0,0});
+    CHECK((e*b)==gs::Vector{0,0});
+    CHECK((a*f)==gs::Vector{0,0});
+    CHECK((b*f)==gs::Vector{0,1});
+    CHECK((c*g)==gs::Vector{-1,1});
+    CHECK((b*g)==gs::Vector{0,-1});
 
   }
   SUBCASE("Testing operator *"){
-    Vector a{0, 0};
-    Vector b{0, 1};
-    Vector c{1, -1};
+    gs::Vector a{0, 0};
+    gs::Vector b{0, 1};
+    gs::Vector c{1, -1};
     double e{0};
     double f{1};
     double g{-1};
     
-    CHECK((a*e)==Vector{0,0});
-    CHECK((b*e)==Vector{0,0});
-    CHECK((f*a)==Vector{0,0});
-    CHECK((f*b)==Vector{0,1});
-    CHECK((g*c)==Vector{-1,1});
-    CHECK((g*c)==Vector{-1,1});
+    CHECK((a*e)==gs::Vector{0,0});
+    CHECK((b*e)==gs::Vector{0,0});
+    CHECK((f*a)==gs::Vector{0,0});
+    CHECK((f*b)==gs::Vector{0,1});
+    CHECK((g*c)==gs::Vector{-1,1});
+    CHECK((g*c)==gs::Vector{-1,1});
   }
-  SUBCASE("Testing operator /"){ //testa l'assert
-    Vector a{0, 0};
-    Vector b{0, 1};
-    Vector c{1, -1};
+  SUBCASE("Testing operator /"){ 
+
+    gs::Vector a{0, 0};
+    gs::Vector b{0, 1};
+    gs::Vector c{1, -1};
     double f{1};
     double g{-1};
-    CHECK((a/f)==Vector{0,0});
-    CHECK((b/f)==Vector{0,1});//fatto
-    CHECK((c/g)==Vector{-1,1});
-    CHECK((c/f)==Vector{1,-1});
+    double h{0};
+    CHECK_THROWS(a/h);
+    CHECK((a/f)==gs::Vector{0,0});
+    CHECK((b/f)==gs::Vector{0,1});//fatto
+    CHECK((c/g)==gs::Vector{-1,1});
+    CHECK((c/f)==gs::Vector{1,-1});
 
   }
   
