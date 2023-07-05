@@ -159,12 +159,15 @@ TEST_CASE("testing Vector class") {
     CHECK((g*c)==Vector{-1,1});
     CHECK((g*c)==Vector{-1,1});
   }
-  SUBCASE("Testing operator /"){ //testa l'assert
+  SUBCASE("Testing operator /"){ 
+
     Vector a{0, 0};
     Vector b{0, 1};
     Vector c{1, -1};
     double f{1};
     double g{-1};
+    double h{0};
+    CHECK_THROWS(a/h);
     CHECK((a/f)==Vector{0,0});
     CHECK((b/f)==Vector{0,1});//fatto
     CHECK((c/g)==Vector{-1,1});
