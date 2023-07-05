@@ -89,11 +89,26 @@ class Body {
    * @return A pointer to a clone of the body.
    */
   virtual std::unique_ptr<Body> clone() const = 0;
+
+  virtual ~Body() = default;
 };
 
 class Planet : public Body {
+ private:
+  sf::Color _color;
+
  public:
   Planet(Vector position, Vector velocity, double mass);
+
+  std::unique_ptr<sf::Shape> getShape(double scale) const override;
+
+  std::unique_ptr<Body> clone() const override;
+  
+};
+
+class Star : public Body {
+ public:
+  Star(Vector position, Vector velocity, double mass);
 
   std::unique_ptr<sf::Shape> getShape(double scale) const override;
 
