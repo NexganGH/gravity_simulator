@@ -19,9 +19,18 @@ class OrbitDrawer {
   const double DELETE_AFTER_SECONDS = 50;
 
  public:
+  /**
+   * Adds a point to draw. The point will be deleted after a certain amount of time.
+  */
   void addPoint(Vector p, double time);
 
-  void draw(std::unique_ptr<Renderer>& renderer, double time);
+  /**
+   * Draws the points according to the time in the program.
+   * 
+   * @param renderer The renderer where to draw the points.
+   * @param realTimeSeconds The realTimeSeconds since the beginning of the program.
+  */
+  void draw(std::unique_ptr<Renderer>& renderer, double realTimeSeconds);
 };
 
 #endif

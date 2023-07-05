@@ -23,18 +23,42 @@ class PhysicsEngine {
  public:
   PhysicsEngine(double timeScale);
 
+  /**
+   * @return The timescale, in seconds. It corresponds to how many seconds will be simulated in a second in real life.
+  */
   double getTimeScale();
 
+  /**
+   * Sets the timescale. It corresponds to how many seconds will be simulated in a second in real life.
+  */
   void setTimeScale(double timeScale);
 
+  /**
+   * @returns True if the simulation is running.
+  */
   bool isRunning();
 
+  /**
+   * Stops the simulation if it is running or pause it if it is stopped.
+  */
   void toggleRunning();
 
+  /**
+   * Gets how many simulation seconds have passed since the beginning of the program.
+  */
   double getSimulationSecondsElapsed();
+
+  /**
+   * Gets how many real seconds have passed since the beginning of the program.
+  */
   double getRealSecondsElapsed();
 
-  void resetTimeElapsed();
+  /**
+   * Evolves the simulation of one step.
+   * 
+   * @param dt is the amount of time, in seconds, to advance the simulation. It should correspond to the amount of time in real life that occured from the 
+   * previous cycle. Use the `timeScale` parameter to speed up/slow down the simulation.
+  */
   void evolve(std::vector<std::unique_ptr<Body>> &bodies, double dt);
 
 };

@@ -26,9 +26,8 @@ int main() {
 
   SimulationState state(conf);
 
-  tgui::Gui gui{window};
-  GuiManager guiManager(gui, state);  // added
-  guiManager.createControlButtons();
+  GuiManager guiManager(window, state);  // added
+  guiManager.setup();
 
   window.setFramerateLimit(60);
 
@@ -40,17 +39,7 @@ int main() {
     while (window.pollEvent(event)) {
       if (event.type == sf::Event::Closed) {
         window.close();
-      }
-
-      if (event.type == sf::Event::MouseButtonPressed) {
-        if (event.mouseButton.button == sf::Mouse::Right) {
-          guiManager.rightButtonClicked(event);
-        } else if (event.mouseButton.button == sf::Mouse::Left) {
-          guiManager.leftButtonClicked(event);
-        }
-      }
-
-      gui.handleEvent(event);
+      }      
     }
 
     window.clear();
@@ -58,19 +47,18 @@ int main() {
     auto& ph = state.getPhysicsEngine();
     auto& bodies = state.getBodies();
     ph->evolve(state.getBodies(), dt.asSeconds());
-    double timeElapsed = ph->getRealSecondsElapsed();
 
+    double timeElapsed = ph->getRealSecondsElapsed();
     for (auto it = bodies.begin(); it != bodies.end(); ++it) {
       orbitDrawer.addPoint((*it)->getPosition(), timeElapsed);
       state.getRenderer()->draw(*it);
     }
 
     // correct
-    guiManager.setYearsElapsed(ph->getSimulationSecondsElapsed() / 3.154E7,
+    guiManager.updateValues(ph->getSimulationSecondsElapsed() / 3.154E7,
                                ph->getTimeScale());
     orbitDrawer.draw(state.getRenderer(), timeElapsed);
-    gui.draw();
-    guiManager.drawArrow();
+    guiManager.draw();
 
     window.display();
   }

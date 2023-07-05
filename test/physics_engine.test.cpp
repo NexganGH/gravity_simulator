@@ -57,9 +57,6 @@ TEST_CASE("Testing PhysicsEngine class") {
     PhysicsEngine ph(1);
     CHECK(ph.getSimulationSecondsElapsed() == 0);
     CHECK(ph.getRealSecondsElapsed() == 0);
-    ph.resetTimeElapsed();
-    CHECK(ph.getSimulationSecondsElapsed() == 0);
-    CHECK(ph.getRealSecondsElapsed() == 0);
   }
 
   SUBCASE("Testing evolve function with _running field set to flase") {
@@ -94,10 +91,6 @@ TEST_CASE("Testing PhysicsEngine class") {
 
     CHECK(ph.getRealSecondsElapsed() ==
           (ph.getSimulationSecondsElapsed()) / ph.getTimeScale());
-    // tesstiamo di nuovo la funzione resetTimeElapsed
-    ph.resetTimeElapsed();
-    CHECK(ph.getSimulationSecondsElapsed() == 0);
-    CHECK(ph.getRealSecondsElapsed() == 0);
   }
 
   SUBCASE("Testing evolve function with running set to true") {
@@ -137,13 +130,5 @@ TEST_CASE("Testing PhysicsEngine class") {
         ph.getRealSecondsElapsed() ==
         doctest::Approx((ph.getSimulationSecondsElapsed()) / ph.getTimeScale())
             .epsilon(0.001));
-    // tesstiamo di nuovo la funzione resetTimeElapsed
-    ph.resetTimeElapsed();
-    CHECK(ph.getSimulationSecondsElapsed() == 0);
-    CHECK(ph.getRealSecondsElapsed() == 0);
   }
-
-  // testa se il vettore è vuoto
-  // testa se il vettore è pieno di puntatori nulli
-  // testa se il dt che passo aevolve è minore di zero
 }

@@ -58,9 +58,9 @@ if (BUILD_TESTING)
 
     foreach(TEST_FILE ${TEST_FILES})
         get_filename_component(TEST_NAME ${TEST_FILE} NAME_WE)
-        add_executable(${TEST_NAME} ${TEST_FILE} ${SRC_FILES_TEST})
-        target_link_libraries(${TEST_NAME} PRIVATE sfml-graphics sfml-system sfml-window tgui)
-        add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME})
+        add_executable(${TEST_NAME}.t ${TEST_FILE} ${SRC_FILES_TEST})
+        target_link_libraries(${TEST_NAME}.t PRIVATE sfml-graphics sfml-system sfml-window tgui)
+        add_test(NAME ${TEST_NAME}.t COMMAND ${TEST_NAME}.t)
     endforeach()
     #add_test(NAME tests COMMAND tests)
 

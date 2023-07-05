@@ -85,8 +85,6 @@ double PhysicsEngine::getRealSecondsElapsed() {
   return _timeElapsed / _timeScale;
 }
 
-void PhysicsEngine::resetTimeElapsed() { _timeElapsed = 0; }
-
 void PhysicsEngine::evolve(std::vector<std::unique_ptr<Body>> &bodies,
                            double dt) {
   if(dt < 0)
