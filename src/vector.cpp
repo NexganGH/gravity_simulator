@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <cmath>
-#include "../include/vector.hpp"
+#include "vector.hpp"
 
 
 
