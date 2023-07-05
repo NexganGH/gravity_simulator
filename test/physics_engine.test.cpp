@@ -1,11 +1,9 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
-#include "../include/physics_engine.hpp"
+#include "physics_engine.hpp"
 
 #include <SFML/Graphics.hpp>
 
-#include "../include/body.hpp"
-#include "../include/vector.hpp"
 #include "doctest.h"
 
 TEST_CASE("Testing PhysicsEngine class") {
