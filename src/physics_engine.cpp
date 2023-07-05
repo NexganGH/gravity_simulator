@@ -8,7 +8,7 @@
 #include "body.hpp"
 #include "physics_engine.hpp"
 
-
+namespace gs {
 
 void PhysicsEngine::firstStep(std::unique_ptr<Body> &b1, double dt) {
   assert(b1 != nullptr);
@@ -87,8 +87,7 @@ double PhysicsEngine::getRealSecondsElapsed() {
 
 void PhysicsEngine::evolve(std::vector<std::unique_ptr<Body>> &bodies,
                            double dt) {
-  if(dt < 0)
-    throw new std::invalid_argument("dt must be >= 0.");
+  if (dt < 0) throw new std::invalid_argument("dt must be >= 0.");
 
   dt *= _timeScale * (_running ? 1 : 0);
 
@@ -114,3 +113,5 @@ void PhysicsEngine::evolve(std::vector<std::unique_ptr<Body>> &bodies,
 
   _timeElapsed += dt;
 }
+
+};  // namespace gs

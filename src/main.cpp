@@ -1,19 +1,14 @@
 #include <SFML/Graphics.hpp>
-#include <TGUI/Backend/SFML-Graphics.hpp>
-#include <TGUI/TGUI.hpp>
 #include <iostream>
 #include <vector>
 
-#include "body.hpp"
 #include "configurations.hpp"
 #include "gui_manager.hpp"
 #include "orbit_drawer.hpp"
-#include "physics_engine.hpp"
-#include "renderer.hpp"
 #include "simulation_state.hpp"
 
 int main() {
-  OrbitDrawer orbitDrawer;
+  gs::OrbitDrawer orbitDrawer;
 
   auto height = sf::VideoMode::getDesktopMode().height - 100;
 
@@ -21,12 +16,12 @@ int main() {
                           sf::Style::Titlebar);
   window.setPosition(sf::Vector2i(window.getPosition().x, 50));
 
-  auto configurations = getConfigurations(window);
+  auto configurations = gs::getConfigurations(window);
   auto conf = configurations[0];
 
-  SimulationState state(conf);
+  gs::SimulationState state(conf);
 
-  GuiManager guiManager(window, state);  // added
+  gs::GuiManager guiManager(window, state);  // added
   guiManager.setup();
 
   window.setFramerateLimit(60);
@@ -39,7 +34,7 @@ int main() {
     while (window.pollEvent(event)) {
       if (event.type == sf::Event::Closed) {
         window.close();
-      }      
+      }
     }
 
     window.clear();
@@ -56,7 +51,7 @@ int main() {
 
     // correct
     guiManager.updateValues(ph->getSimulationSecondsElapsed() / 3.154E7,
-                               ph->getTimeScale());
+                            ph->getTimeScale());
     orbitDrawer.draw(state.getRenderer(), timeElapsed);
     guiManager.draw();
 
