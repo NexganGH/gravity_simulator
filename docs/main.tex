@@ -55,6 +55,21 @@ In tutta la finestra grafica è possibile cliccare con il tasto destro in un pun
   \label{inclinometro}
 \end{figure}
 
+\subsection{La fisica dietro al programma}
+La legge di gravitazione universale afferma che due punti materiali si attraggono con una forza di intensità direttamente proporzionale al prodotto delle masse dei singoli corpi e inversamente proporzionale al quadrato della loro distanza. Questa legge, espressa vettorialmente, diventa:
+\begin{equation}
+\textbf{F}_{2,1}(\textbf{r})=-\frac{Gm_{1}m_{2}}{r^{2}}\textbf{u}_{r}
+\end{equation}
+dove $\textbf{F}_{2,1}$ è la forza con cui l'oggetto 1 è attratto dall'oggetto 2, G è la costante di gravitazione universale, che vale circa $6,67\cdot 10^{-11}\frac{Nm^2}{kg^2}$, $m_1$ e $m_2$ sono le masse dei due corpi, $\textbf{r}=\textbf{r}_1-\textbf{r}_2$ è il vettore congiungente i due corpi (supposti puntiformi), 
+$r$ è il suo modulo e $\textbf{u}_r=\frac{\textbf{r}}{r}$ rappresenta il versore che individua la retta congiungente i due punti materiali.\\
+Il programma utilizza questa relazione per calcolare istante per istante le forze che agiscono su ogni corpo, e di conseguenza le accelerazioni:
+\begin{equation}
+\textbf{F}_{j,tot}=\sum_{i=1, i≠j}^{N_{bodies}}\textbf{F}_{i}(\textbf{r})=m\ddot{\textbf{r}}
+\end{equation}
+dove \textbf{F}_{j,tot} è la forza risultante che agisce sul corpo $j$.\\
+Integrando poi la precedente equazione si ottiene la legge oraria $\textbf{r}(t)$ del corpo $j$. Non essendo risolvibile analiticamente si deve ricorrere a metodi di integrazione numerica.
+
+
 \section{Strumenti di sviluppo}
 \subsection{C++}
 \subsection{Librerie esterne}
