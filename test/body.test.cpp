@@ -1,6 +1,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
 #include "body.hpp"
+
 #include <SFML/Graphics.hpp>
 
 #include "doctest.h"
@@ -74,37 +75,36 @@ TEST_CASE("testing Body class") {
   }
 
   SUBCASE("testing getShape function") {
-    double firstScale=0;
-    double secondScale=1;
-    double thirdScale=-1;
-    
+    double firstScale = 0;
+    double secondScale = 1;
+    double thirdScale = -1;
+
     auto a = p1.getShape(secondScale);
-    auto b= p2.getShape(secondScale);
-    auto c= p3.getShape(secondScale);
-    //testing first the assert 
+    auto b = p2.getShape(secondScale);
+    auto c = p3.getShape(secondScale);
+    // testing first the assert
     CHECK_THROWS(p1.getShape(firstScale));
     CHECK_THROWS(p1.getShape(thirdScale));
-    //testing if the shapes are set in the same position of the correspondant planet
-    CHECK((*a).getPosition()==sf::Vector2f{0,0});
-    CHECK((*b).getPosition()==sf::Vector2f{1,1});
-    CHECK((*c).getPosition()==sf::Vector2f{1,-1});
-    //testing if they have the right color
-    CHECK((*a).getFillColor()==sf::Color::Blue);
-    CHECK((*b).getFillColor()==sf::Color::Blue);
-    CHECK((*c).getFillColor()==sf::Color::Blue);
-    //testing the radius//
-    
+    // testing if the shapes are set in the same position of the correspondant
+    // planet
+    CHECK((*a).getPosition() == sf::Vector2f{0, 0});
+    CHECK((*b).getPosition() == sf::Vector2f{1, 1});
+    CHECK((*c).getPosition() == sf::Vector2f{1, -1});
+    // testing if they have the right color
+    CHECK((*a).getFillColor() == sf::Color::Blue);
+    CHECK((*b).getFillColor() == sf::Color::Blue);
+    CHECK((*c).getFillColor() == sf::Color::Blue);
+    // testing the radius//
   }
 
-  SUBCASE("testing the clone function"){
-    std::unique_ptr<Body> a= p1.clone();
-    std::unique_ptr<Body> b= p2.clone();
-    CHECK((*a).getPosition()==p1.getPosition());
-    CHECK((*a).getVelocity()==p1.getVelocity());
-    CHECK((*a).getMass()==p1.getMass());
-    CHECK((*b).getPosition()==p2.getPosition());
-    CHECK((*b).getVelocity()==p2.getVelocity());
-    CHECK((*b).getMass()==p2.getMass());
+  SUBCASE("testing the clone function") {
+    std::unique_ptr<Body> a = p1.clone();
+    std::unique_ptr<Body> b = p2.clone();
+    CHECK((*a).getPosition() == p1.getPosition());
+    CHECK((*a).getVelocity() == p1.getVelocity());
+    CHECK((*a).getMass() == p1.getMass());
+    CHECK((*b).getPosition() == p2.getPosition());
+    CHECK((*b).getVelocity() == p2.getVelocity());
+    CHECK((*b).getMass() == p2.getMass());
   }
 }
-

@@ -4,8 +4,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "body.hpp"
-#include "vector.hpp"
 #include "doctest.h"
 
 TEST_CASE("Testing PhysicsEngine class") {
