@@ -5,8 +5,8 @@
 #include <cmath>
 
 struct Vector {
-  double x;
-  double y;
+  double x{0};
+  double y{0};
 
   /**
    * Calculates the euclidean norm of the vector.

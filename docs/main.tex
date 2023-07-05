@@ -36,23 +36,28 @@ Poi possiamo compilare tramite CMake usando questi comandi:
     $ cmake -S. -B build
     $ cmake --build build
     $ build/gravity
-     \end{verbatim} 
+     \end{verbatim}
 
 \subsection{Obiettivo del simulatore}
 Si vuole creare un programma in grado di calcolare in tempo reale e rappresentare tramite
 un'interfaccia il movimento di alcuni corpi celesti e le interazioni tra loro. è inoltre possibile aggiungere nuovi pianeti direttamente all'interno della simulazione che interagiranno con quelli già presenti.
 
-\subsection{User interaction}
+\subsection{Interface}
+\subsubsection{Elements on screen}
+Nell'angolo in alto a sinistra (Figura \href{playpause} ) troviamo 2 pulsanti cliccabili (che vedremo nel dettaglio nella prossima sezione), 
+il tempo trascorso dall'inizio della simulazione (in anni, espresso con 7 cifre significative) e la velocità espressa in rapporto di tempo (anni al secondo)
+
+\subsubsection{User interaction}
 Nell'angolo alto a sinistra dell'interfaccia grafica sono presenti due tasti: \\
--il tasto Play/Pause (Figura \href{playpause}, 1 ) che permette di far partire o fermare la simulazione;\\
--il tasto Reset (Figura \href{playpause}, 2) che riporta tutto allo stato iniziale (i corpi già presenti ritornano nel punto in cui erano a inizio simulazione mentre quelli generati dall'utente vengono eliminati); \\
+-il tasto Play/Pause (Figura \href{playpause}, sinistra ) che permette di far partire o fermare la simulazione;\\
+-il tasto Reset (Figura \href{playpause}, destra) che riporta tutto allo stato iniziale (i corpi già presenti ritornano nel punto in cui erano a inizio simulazione mentre quelli generati dall'utente vengono eliminati); \\
 In tutta la finestra grafica è possibile cliccare con il tasto destro in un punto, facendo ciò comparirà una finestra in cui è possibile inserire la massa del corpo che stiamo inserendo (in unità di massa terrestre) e sarà poi possibile selezionare il verso di movimento iniziale del corpo
 
 \begin{figure} [H]
     \centering
-    \includegraphics[height=.42\linewidth]{Playpause.png}
-    \captionof{figure}{Il tasto (1) Play/Pause permette di far partire e fermare la simulazione in ogni momento}
-  \label{inclinometro}
+    \includegraphics[height=.20\linewidth]{Playpause.png}
+    \captionof{figure}{Il tasto (sinistra) Play/Pause permette di far partire e fermare la simulazione in ogni momento, mentre il tasto (destra) reset riporta la simulazione allo stato iniziale  (i corpi già presenti ritornano nel punto in cui erano a inizio simulazione mentre quelli generati dall’utente vengono eliminati) }
+    \label{playpause}
 \end{figure}
 
 \subsection{La fisica dietro al programma}
@@ -81,7 +86,7 @@ Integrando poi la precedente equazione si ottiene la legge oraria $\textbf{r}(t)
 \subsection{Struttura del progetto}
 \section{Testing e debugging}
 \section{Risultati e problemi riscontrati}
-\appendix 
+\appendix
 \section{Calcoli e approssimazioni}
 
 \end{document}

@@ -6,12 +6,13 @@
 #include <cmath>
 #include <iostream>
 
-#include "../include/vector.hpp"
-
-Body::Body(Vector position, Vector velocity, double mass)
-    : _position{position}, _velocity{velocity}, _mass{mass} {
-  assert(_mass > 0);
-}
+#include "vector.hpp"
+#include "body.hpp"
+ 
+  Body::Body(Vector position, Vector velocity, double mass)
+      : _position{position}, _velocity{velocity}, _mass{mass} {
+    assert(_mass>0);
+  }
 
 double Body::getMass() const { return _mass; }
 

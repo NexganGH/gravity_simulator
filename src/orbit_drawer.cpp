@@ -4,9 +4,9 @@
 #include <iostream>
 #include <vector>
 
-#include "../include/renderer.hpp"
-#include "../include/vector.hpp"
-#include "../include/orbit_drawer.hpp"
+#include "renderer.hpp"
+#include "vector.hpp"
+#include "orbit_drawer.hpp"
 
   void OrbitDrawer::addPoint(Vector p, double time) {
     assert(time >= 0);
