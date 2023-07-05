@@ -7,6 +7,7 @@
 #include <iostream>
 
 
+
 namespace gs {
 
 Body::Body(Vector position, Vector velocity, double mass)
@@ -69,6 +70,5 @@ std::unique_ptr<sf::Shape> Star::getShape(double scale) const {
 std::unique_ptr<Body> Star::clone() const {
   return std::make_unique<Star>(*this);
 }
-
 
 };  // namespace gs

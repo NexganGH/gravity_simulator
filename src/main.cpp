@@ -10,13 +10,14 @@
 int main() {
   sf::Clock deltaClock;
 
-  // Adapting the height to user's height.
+  // Adapting the height to user's window height.
   auto height = sf::VideoMode::getDesktopMode().height - 100;
 
   sf::RenderWindow window(sf::VideoMode(height, height), "Gravity Simulator",
                           sf::Style::Titlebar);
   window.setPosition(sf::Vector2i(window.getPosition().x, 50));
 
+  std::srand(std::time(NULL));
   auto configurations = gs::getConfigurations(window);
   auto conf = configurations[0];
 
