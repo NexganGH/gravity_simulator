@@ -3,8 +3,8 @@
 #include <cmath>
 #include <memory>
 
-#include "../include/body.hpp"
-#include "../include/physics_engine.hpp"
+#include "include/body.hpp"
+#include "physics_engine.hpp"
 
 
 

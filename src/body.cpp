@@ -4,8 +4,8 @@
 #include <iostream>
 #include <cassert>
 
-#include "../include/vector.hpp"
-#include "../include/body.hpp"
+#include "vector.hpp"
+#include "body.hpp"
  
   Body::Body(Vector position, Vector velocity, double mass)
       : _position{position}, _velocity{velocity}, _mass{mass} {
