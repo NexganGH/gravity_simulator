@@ -59,6 +59,7 @@ Star::Star(Vector position, Vector velocity, double mass)
 std::unique_ptr<sf::Shape> Star::getShape(double scale,
                                           double universeWidth) const {
   if (scale <= 0) throw std::invalid_argument("Scale must be > 0");
+  if (universeWidth <= 0) throw std::invalid_argument("Universe width must be > 0");
 
   auto circle = std::make_unique<sf::CircleShape>(5);
   if (_mass <= SUN_MASS) {
