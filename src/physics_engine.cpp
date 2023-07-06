@@ -10,7 +10,7 @@
 
 namespace gs {
 
-void PhysicsEngine::firstStep(std::unique_ptr<Body> &b1, double dt) {
+void PhysicsEngine::firstStep(std::unique_ptr<Body> &b1, double dt) const {
   assert(b1 != nullptr);
   assert(dt >= 0);
 
@@ -29,7 +29,7 @@ void PhysicsEngine::firstStep(std::unique_ptr<Body> &b1, double dt) {
   b1->setPosition(newPosition);
 }
 
-void PhysicsEngine::secondStep(std::unique_ptr<Body> &b1, double dt) {
+void PhysicsEngine::secondStep(std::unique_ptr<Body> &b1, double dt) const {
   assert(b1 != nullptr);
   assert(dt >= 0);
 
@@ -43,7 +43,7 @@ void PhysicsEngine::secondStep(std::unique_ptr<Body> &b1, double dt) {
 }
 
 void PhysicsEngine::applyGravity(std::unique_ptr<Body> &b1,
-                                 std::unique_ptr<Body> &b2) {
+                                 std::unique_ptr<Body> &b2) const {
   if (b1 == nullptr) throw new std::invalid_argument("b1 must be non-null.");
   if (b2 == nullptr) throw new std::invalid_argument("b2 must be non-null.");
 
@@ -68,7 +68,7 @@ PhysicsEngine::PhysicsEngine(double timeScale) : _timeScale(timeScale) {
   if (timeScale < 0) throw std::invalid_argument("timeScale must be >= 0");
 }
 
-double PhysicsEngine::getTimeScale() { return _timeScale; }
+double PhysicsEngine::getTimeScale() const { return _timeScale; }
 
 void PhysicsEngine::setTimeScale(double timeScale) {
   // assert(timeScale >= 0);
@@ -76,12 +76,12 @@ void PhysicsEngine::setTimeScale(double timeScale) {
   _timeScale = timeScale;
 }
 
-bool PhysicsEngine::isRunning() { return _running; }
+bool PhysicsEngine::isRunning() const { return _running; }
 
 void PhysicsEngine::toggleRunning() { _running = !_running; }
 
-double PhysicsEngine::getSimulationSecondsElapsed() { return _timeElapsed; }
-double PhysicsEngine::getRealSecondsElapsed() {
+double PhysicsEngine::getSimulationSecondsElapsed() const { return _timeElapsed; }
+double PhysicsEngine::getRealSecondsElapsed() const {
   return _timeElapsed / _timeScale;
 }
 

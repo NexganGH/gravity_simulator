@@ -1,3 +1,7 @@
+
+namespace gs {
+
+// Constants used to initailise the configurations.
 const float EARTH_SUN_DISTANCE = 149597870700;
 const float EARTH_SPEED = 30.24E3;
 const float EARTH_MASS = 5.9722E24;
@@ -27,10 +31,12 @@ const float NEPTUNE_AFELIO = 30.34 * EARTH_SUN_DISTANCE;
 const float NEPTUNE_AFELIO_SPEED = 5.37E3;
 const float NEPTUNE_MASS = 17 * EARTH_MASS;
 
-const float SATURN_AFELIO =  10.05 * EARTH_SUN_DISTANCE;
+const float SATURN_AFELIO = 10.05 * EARTH_SUN_DISTANCE;
 const float SATURN_AFELIO_SPEED = 9.68E3;
 const float SATURN_MASS = 5.68E26;
 
 const float URANUS_AFELIO = 20.10 * EARTH_SUN_DISTANCE;
 const float URANUS_AFELIO_SPEED = 6.8E3;
 const float URANUS_MASS = 8.68E25;
+
+}  // namespace gs

@@ -53,7 +53,7 @@ int main() {
     double timeElapsed = ph->getRealSecondsElapsed();
     for (auto it = bodies.begin(); it != bodies.end(); ++it) {
       // Adds the point of the orbit on the drawer.
-      guiManager.addPoint((*it)->getPosition(), timeElapsed);
+      guiManager.addOrbitPoint((*it)->getPosition(), timeElapsed);
       state.getRenderer()->draw(*it);
     }
 

@@ -11,12 +11,17 @@
 
 namespace gs {
 
+/**
+ * This is an initial setup of the simulation. Contains a name, the starting
+ * bodies, the * universe width, the timescale.
+ */
 class Configuration {
  private:
   std::string _name;
+  std::vector<std::unique_ptr<Body>> _bodies;
   double _universeWidth;
   double _timeScale;
-  std::vector<std::unique_ptr<Body>> _bodies;
+
   sf::RenderWindow& _window;
 
  public:
@@ -54,7 +59,7 @@ class Configuration {
    */
   std::vector<std::unique_ptr<Body>> createBodies() const;
 
-  // Configuration's fields make it non-copyable.
+  // Configuration's fields make Configuration non-copyable.
   Configuration(const Configuration&) = delete;
   Configuration& operator=(Configuration&) = delete;
 };

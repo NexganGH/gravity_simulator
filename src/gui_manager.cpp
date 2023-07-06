@@ -13,67 +13,18 @@
 
 namespace gs {
 
-GuiManager::GuiManager(sf::RenderWindow& window, SimulationState& state, std::vector<std::shared_ptr<Configuration>> configurations)
-    : _gui(tgui::Gui(window)), _state(state), _availableConfigurations(configurations) {}
+GuiManager::GuiManager(
+    sf::RenderWindow& window, SimulationState& state,
+    std::vector<std::shared_ptr<Configuration>> configurations)
+    : _gui(tgui::Gui(window)),
+      _state(state),
+      _availableConfigurations(configurations) {}
 
 void GuiManager::setup() {
-  tgui::Button::Ptr play = tgui::Button::create(">");
-  play->setPosition(50, 25);
-  play->setSize(50, 50);
-  play->setEnabled(true);
-  play->onPress.connect([=]() {
-    auto& ph = _state.getPhysicsEngine();
-    ph->toggleRunning();
-
-    play->setText(ph->isRunning() ? "||" : ">");
-  });
-  _gui.add(play);
-
-  tgui::Button::Ptr reset = tgui::Button::create("reset");
-  reset->setPosition(100, 25);
-  reset->setSize(50, 50);
-  reset->setEnabled(true);
-  reset->onPress.connect([=]() {
-    _orbitDrawer.reset();
-    this->_state.reset();
-    play->setText(">");
-  });
-  _gui.add(reset);
-
-  _timeLabel = tgui::Label::create();
-  _timeLabel->setText("Time elapsed: 0.0 years");
-  _timeLabel->setPosition(50, 75);
-  _timeLabel->setTextSize(18);
-  auto renderer = _timeLabel->getSharedRenderer();
-  renderer->setTextColor(tgui::Color::White);
-  _gui.add(_timeLabel);
-
-  _speed = tgui::Label::create();
-  _speed->setText("Simulation speed: - days/s");
-  _speed->setPosition(50, 100);
-  _speed->setTextSize(18);
-  _gui.add(_speed);
-
-  auto confLIst = tgui::ListBox::create();
-  confLIst->setPosition(50, 125);
-  auto lRenderer = confLIst->getRenderer();
-  lRenderer->setTextColor(sf::Color::Black);
-
-  int id{0};
-  for (auto& conf : _availableConfigurations) {
-    
-    confLIst->addItem(conf->getName(), std::to_string(id));
-    ++id;
-  }
-
-  confLIst->onItemSelect([=]() {
-    auto item = confLIst->getSelectedItemId();
-    this->_state.reset(this->_availableConfigurations[item.toInt()]);
-    _state.reset();
-    _orbitDrawer.reset();
-  });
-
-  _gui.add(confLIst);
+  createPlayButton();
+  createResetButton();
+  createLabels();
+  createConfigurationList();
 }
 
 void GuiManager::updateValues(double timeElapsed, double simulationSpeed) {
@@ -104,7 +55,6 @@ void GuiManager::rightButtonClicked(sf::Event event) {
                              (double)event.mouseButton.y);
 
   _massInserter->onReturnKeyPress([=]() {
-    // std::cout << _massInserter->getAbsolutePosition().y << "\n";
     Vector pos = {_massInserter->getPosition().x,
                   _massInserter->getPosition().y};
     // Must be converted to real (universe)'s coordinate
@@ -114,7 +64,6 @@ void GuiManager::rightButtonClicked(sf::Event event) {
         realPos, Vector{0, 0}, _massInserter->getText().toFloat() * 5.9722E24);
     _massInserter->onUnfocus.disconnectAll();
     _gui.remove(_massInserter);
-    //_gui.remove(_massInserter);
   });
 
   _massInserter->onUnfocus([=]() { _gui.remove(_massInserter); });
@@ -153,8 +102,72 @@ void GuiManager::draw() {
                     _state.getPhysicsEngine()->getRealSecondsElapsed());
 }
 
-void GuiManager::addPoint(Vector p, double time) {
+void GuiManager::addOrbitPoint(Vector p, double time) {
   _orbitDrawer.addPoint(p, time);
 }
 
+void GuiManager::createPlayButton() {
+  _playBtn = tgui::Button::create(">");
+  _playBtn->setPosition(50, 25);
+  _playBtn->setSize(50, 50);
+  _playBtn->onPress.connect([=]() {
+    auto& ph = _state.getPhysicsEngine();
+    ph->toggleRunning();
+
+    // Toggle between the pause and the play symbol.
+    _playBtn->setText(ph->isRunning() ? "||" : ">");
+  });
+  _gui.add(_playBtn);
+}
+
+void GuiManager::createResetButton() {
+  auto reset = tgui::Button::create("reset");
+  reset->setPosition(100, 25);
+  reset->setSize(50, 50);
+  reset->setEnabled(true);
+  reset->onPress.connect([=]() {
+    _orbitDrawer.reset();
+    this->_state.reset();
+    _playBtn->setText(">");
+  });
+  _gui.add(reset);
+}
+
+void GuiManager::createLabels() {
+  _timeLabel = tgui::Label::create();
+  _timeLabel->setText("Time elapsed: 0.0 years");
+  _timeLabel->setPosition(50, 75);
+  _timeLabel->setTextSize(18);
+  auto renderer = _timeLabel->getSharedRenderer();
+  renderer->setTextColor(tgui::Color::White);
+  _gui.add(_timeLabel);
+
+  _speed = tgui::Label::create();
+  _speed->setText("Simulation speed: - days/s");
+  _speed->setPosition(50, 100);
+  _speed->setTextSize(18);
+  _gui.add(_speed);
+}
+
+void GuiManager::createConfigurationList() {
+  auto confBoxList = tgui::ListBox::create();
+  confBoxList->setPosition(50, 125);
+  auto lRenderer = confBoxList->getRenderer();
+  lRenderer->setTextColor(sf::Color::Black);
+
+  int id{0};
+  for (auto& conf : _availableConfigurations) {
+    confBoxList->addItem(conf->getName(), std::to_string(id));
+    ++id;
+  }
+
+  confBoxList->onItemSelect([=]() {
+    auto item = confBoxList->getSelectedItemId();
+    this->_state.reset(this->_availableConfigurations[item.toInt()]);
+    _state.reset();
+    _orbitDrawer.reset();
+  });
+
+  _gui.add(confBoxList);
+}
 };  // namespace gs
