@@ -15,8 +15,7 @@ namespace gs {
  */
 class Renderer {
  private:
-  sf::RenderWindow& _window;  // perchè per reference? perchè per il costruttore
-                              // si prene per reference?
+  sf::RenderWindow& _window; 
 
   // Example: if scale = 2 => Real distance between two objects is
   // (screenDistance)*2 (in meters) If scale = 1, the 1 pixel = 1 meter.

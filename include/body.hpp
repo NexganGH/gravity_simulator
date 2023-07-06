@@ -62,8 +62,7 @@ class Body {
    * Motion.
    *
    * @return The current acceleration.
-   * @see [Newton's laws of
-   * motion](https://en.wikipedia.org/wiki/Newton%27s_laws_of_motion)
+   * @see [Newton's laws of motion](https://en.wikipedia.org/wiki/Newton%27s_laws_of_motion)
    */
   Vector getAcceleration() const;
 
