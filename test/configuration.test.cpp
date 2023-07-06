@@ -33,7 +33,7 @@ TEST_CASE("Testing configuration function") {
     CHECK(bodies[2]->getMass() == 1);
   }
 
-  // createRenderer function isn't testes
+  // createRenderer function isn't tested
 
   SUBCASE("Testing createPhysicsEngine function") {
     sf::RenderWindow window;
