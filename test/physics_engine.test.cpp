@@ -87,7 +87,7 @@ TEST_CASE("Testing PhysicsEngine class") {
     CHECK(bodies[0]->getPosition() == gs::Vector{0, 0});
     CHECK(bodies[1]->getPosition() == gs::Vector{0, 1});
     CHECK(bodies[0]->getVelocity() == gs::Vector{0, 0});
-    CHECK(bodies[0]->getVelocity() == gs::Vector{0, 0});
+    CHECK(bodies[1]->getVelocity() == gs::Vector{0, 0});
 
     CHECK(ph.getRealSecondsElapsed() ==
           (ph.getSimulationSecondsElapsed()) / ph.getTimeScale());
@@ -120,11 +120,16 @@ TEST_CASE("Testing PhysicsEngine class") {
 
     ph.evolve(bodies, dt);
 
-    // calcola i nuovi valori // todo
-    // CHECK(bodies[0]->getPosition() == Vector{0, 0});
-    // CHECK(bodies[1]->getPosition() == Vector{0, 1});
-    // CHECK(bodies[0]->getVelocity() == Vector{0, 0});
-    // CHECK(bodies[0]->getVelocity() == Vector{0, 0});
+    //calcola i nuovi valori
+    const double G = 6.6743E-11;
+    CHECK(bodies[0]->getPosition().x == 0);
+    CHECK(bodies[0]->getPosition().y == doctest::Approx(G/2).epsilon(0.000000000001));
+    CHECK(bodies[1]->getPosition().x == 0);
+    CHECK(bodies[1]->getPosition().y == doctest::Approx(1-G).epsilon(0.000000000001));
+    CHECK(bodies[0]->getVelocity().x == 0);
+    CHECK(bodies[0]->getVelocity().y == doctest::Approx(3.337E-11).epsilon(0.0000000001));
+    CHECK(bodies[1]->getVelocity().x == 0);
+    CHECK(bodies[1]->getVelocity().y == doctest::Approx(-3.337E-11).epsilon(0.0000000001));
 
     CHECK(
         ph.getRealSecondsElapsed() ==
