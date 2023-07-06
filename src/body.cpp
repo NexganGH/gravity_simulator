@@ -1,12 +1,12 @@
 #include "body.hpp"
-#include "vector.hpp"
 
 #include <SFML/Graphics.hpp>
 #include <cassert>
 #include <cmath>
 #include <iostream>
 
-
+#include "constants.hpp"
+#include "vector.hpp"
 
 namespace gs {
 
@@ -32,7 +32,9 @@ Vector Body::getAcceleration() const { return _force / _mass; }
 void Body::resetForce() { _force = {0, 0}; }
 
 Planet::Planet(Vector position, Vector velocity, double mass)
-    : Body(position, velocity, mass), _color(sf::Color(std::rand() % 255, std::rand() % 255, std::rand() % 255)) {}
+    : Body(position, velocity, mass),
+      _color(
+          sf::Color(std::rand() % 255, std::rand() % 255, std::rand() % 255)) {}
 
 std::unique_ptr<sf::Shape> Planet::getShape(double scale, double _) const {
   if (scale <= 0) throw std::invalid_argument("Scale must be > 0");
@@ -54,11 +56,18 @@ std::unique_ptr<Body> Planet::clone() const {
 Star::Star(Vector position, Vector velocity, double mass)
     : Body(position, velocity, mass) {}
 
-std::unique_ptr<sf::Shape> Star::getShape(double scale, double universeWidth) const {
+std::unique_ptr<sf::Shape> Star::getShape(double scale,
+                                          double universeWidth) const {
   if (scale <= 0) throw std::invalid_argument("Scale must be > 0");
 
   auto circle = std::make_unique<sf::CircleShape>(5);
-  circle->setFillColor(sf::Color::Yellow);
+  if (_mass <= SUN_MASS) {
+    circle->setFillColor(sf::Color::Yellow);
+  }
+  if (_mass > SUN_MASS && _mass <= 10 * SUN_MASS) {
+    circle->setFillColor(sf::Color(0,0,0));
+  } else
+    {circle->setFillColor(sf::Color::Red);}
 
   // Making body's size proportional to mass.
   auto radius = std::pow(getMass(), 0.08) * 1E8 / scale;

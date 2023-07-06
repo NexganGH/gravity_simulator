@@ -71,7 +71,7 @@ auto createSolarSystemTillMars(sf::RenderWindow& window) {
 
   auto height = 3 * MARS_AFELIO;
 
-  std::unique_ptr<Body> sun = std::make_unique<Planet>(
+  std::unique_ptr<Body> sun = std::make_unique<Star>(
       Vector{height / 2, height / 2}, Vector{0, 0}, SUN_MASS);
   std::unique_ptr<Body> earth = std::make_unique<Planet>(
       Vector{height / 2 + EARTH_SUN_DISTANCE, height / 2},
@@ -228,9 +228,9 @@ auto createCollapsingBinaryStars(sf::RenderWindow& window) {
 std::vector<std::shared_ptr<Configuration>> getConfigurations(
     sf::RenderWindow& window) {
   std::vector<std::shared_ptr<Configuration>> list;
-
-  list.push_back(createSolarSystem(window));
+  
   list.push_back(createSolarSystemTillMars(window));
+  list.push_back(createSolarSystem(window));
   list.push_back(createEarthAndSun(window));
   list.push_back(createStarCollapsing(window));
   list.push_back(createTwoBodies(window));
