@@ -38,8 +38,8 @@ double Vector::norm() const {
 sf::Vector2f Vector::toSfml() const { return sf::Vector2f(x, y); }
 
 Vector& Vector::operator+=(const Vector& v) {
-  this->x = x + v.x;
-  this->y = y + v.y;
+  this->x = this->x + v.x;
+  this->y = this->y + v.y;
   return *this;
 }
 

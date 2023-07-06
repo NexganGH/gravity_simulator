@@ -74,13 +74,14 @@ TEST_CASE("testing Vector class") {
     gs::Vector c{0, 0};
     gs::Vector d{-2, 0};
     gs::Vector e{-1,-1};
-    CHECK((a+=b)==gs::Vector{3,3});
-    CHECK((a+=a)==gs::Vector{2,2});//
+
+    CHECK((a+=b)==gs::Vector{3,3});// qui a diventa {3,3}
+    CHECK((a+=a)==gs::Vector{6,6});//qui  a è ancora {3,3} quindi quando faccio la somma con se stesso fa {6,6}
     CHECK((c+=c)==gs::Vector{0,0});
-    CHECK((d+=d)==gs::Vector{-4,0});//
-    CHECK((d+=b)==gs::Vector{0,2});//
-    CHECK((e+=a)==gs::Vector{0,0});//
-    CHECK((a+=e)==gs::Vector{0,0});//
+    CHECK((d+=d)==gs::Vector{-4,0});
+    CHECK((d+=b)==gs::Vector{-2,2});//qui d è {-4,0} e b {2,2}
+    CHECK((e+=a)==gs::Vector{5,5});// qui a è {6,6}
+    CHECK((a+=e)==gs::Vector{11,11});// qui a è {6,6} ma e{5,5}
   }
 
   SUBCASE("Testing operator =="){
@@ -122,10 +123,10 @@ TEST_CASE("testing Vector class") {
     gs::Vector d{1, 1};
     gs::Vector e{0, -1};
     CHECK((-a)==gs::Vector{0,0});
-    CHECK((-b)==gs::Vector{0,-1});//fatto
+    CHECK((-b)==gs::Vector{0,-1});
     CHECK((-c)==gs::Vector{-1,0});
     CHECK((-d)==gs::Vector{-1,-1});
-     CHECK((-e)==gs::Vector{0,1});//fatto
+     CHECK((-e)==gs::Vector{0,1});
 
   }
   SUBCASE("Testing operator *"){
@@ -169,7 +170,7 @@ TEST_CASE("testing Vector class") {
     double h{0};
     CHECK_THROWS(a/h);
     CHECK((a/f)==gs::Vector{0,0});
-    CHECK((b/f)==gs::Vector{0,1});//fatto
+    CHECK((b/f)==gs::Vector{0,1});
     CHECK((c/g)==gs::Vector{-1,1});
     CHECK((c/f)==gs::Vector{1,-1});
 
