@@ -35,6 +35,8 @@ class OrbitDrawer {
    * program.
    */
   void draw(std::unique_ptr<Renderer>& renderer, double realTimeSeconds);
+
+  void reset();
 };
 
 };  // namespace gs

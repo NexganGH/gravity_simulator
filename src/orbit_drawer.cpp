@@ -28,4 +28,8 @@ void OrbitDrawer::draw(std::unique_ptr<Renderer>& renderer, double time) {
   }
 }
 
+void OrbitDrawer::reset() {
+  _orbitPoints.clear();
+}
+
 };  // namespace gs

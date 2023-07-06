@@ -33,7 +33,11 @@ void GuiManager::setup() {
   reset->setPosition(100, 25);
   reset->setSize(50, 50);
   reset->setEnabled(true);
-  reset->onPress.connect([=]() { this->_state.reset(); });
+  reset->onPress.connect([=]() { 
+    _orbitDrawer.reset(); 
+    this->_state.reset();
+    play->setText(">");
+  });
   _gui.add(reset);
 
   _timeLabel = tgui::Label::create();
@@ -124,9 +128,12 @@ void GuiManager::draw() {
     renderer->drawGui(line);
   }
 
-  _orbitDrawer.draw(_state.getRenderer(), _state.getPhysicsEngine()->getRealSecondsElapsed());
+  _orbitDrawer.draw(_state.getRenderer(),
+                    _state.getPhysicsEngine()->getRealSecondsElapsed());
 }
 
-void GuiManager::addPoint(Vector p, double time) { _orbitDrawer.addPoint(p, time); }
+void GuiManager::addPoint(Vector p, double time) {
+  _orbitDrawer.addPoint(p, time);
+}
 
 };  // namespace gs
