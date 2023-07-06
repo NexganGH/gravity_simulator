@@ -13,9 +13,9 @@ namespace gs {
 
 auto createSolarSystem(sf::RenderWindow& window) {
   auto solarSystem = std::make_shared<Configuration>(
-      "Solar System", 2*NEPTUNE_AFELIO + EARTH_SUN_DISTANCE, 1000000, window);
+      "Solar System", 2 * NEPTUNE_AFELIO + EARTH_SUN_DISTANCE, 1000000, window);
 
-  auto height = 2*NEPTUNE_AFELIO + EARTH_SUN_DISTANCE;
+  auto height = 2 * NEPTUNE_AFELIO + EARTH_SUN_DISTANCE;
 
   std::unique_ptr<Body> sun = std::make_unique<Star>(
       Vector{height / 2, height / 2}, Vector{0, 0}, SUN_MASS);
@@ -34,22 +34,18 @@ auto createSolarSystem(sf::RenderWindow& window) {
   std::unique_ptr<Body> moon = std::make_unique<Planet>(
       Vector{height / 2 + EARTH_SUN_DISTANCE + MOON_AFELIO, height / 2},
       Vector{0, -MOON_AFELIO_SPEED - EARTH_SPEED}, MOON_MASS);
-  std::unique_ptr<Body> jupiter = std::make_unique<Planet>(
-      Vector{height / 2 + JUPITER_AFELIO,
-             height / 2},
-      Vector{0, -JUPITER_AFELIO_SPEED}, JUPITER_MASS);
-  std::unique_ptr<Body> neptune = std::make_unique<Planet>(
-      Vector{height/2 + NEPTUNE_AFELIO,
-             height / 2},
-      Vector{0, -NEPTUNE_AFELIO_SPEED}, NEPTUNE_MASS);
-        std::unique_ptr<Body> uranus = std::make_unique<Planet>(
-      Vector{height/2 + URANUS_AFELIO,
-             height / 2},
-      Vector{0, -URANUS_AFELIO_SPEED}, URANUS_MASS);
-  std::unique_ptr<Body> saturn = std::make_unique<Planet>(
-      Vector{height/ 2- SATURN_AFELIO,
-             height / 2},
-      Vector{0, SATURN_AFELIO_SPEED}, SATURN_MASS);
+  std::unique_ptr<Body> jupiter =
+      std::make_unique<Planet>(Vector{height / 2 + JUPITER_AFELIO, height / 2},
+                               Vector{0, -JUPITER_AFELIO_SPEED}, JUPITER_MASS);
+  std::unique_ptr<Body> neptune =
+      std::make_unique<Planet>(Vector{height / 2 + NEPTUNE_AFELIO, height / 2},
+                               Vector{0, -NEPTUNE_AFELIO_SPEED}, NEPTUNE_MASS);
+  std::unique_ptr<Body> uranus =
+      std::make_unique<Planet>(Vector{height / 2 + URANUS_AFELIO, height / 2},
+                               Vector{0, -URANUS_AFELIO_SPEED}, URANUS_MASS);
+  std::unique_ptr<Body> saturn =
+      std::make_unique<Planet>(Vector{height / 2 - SATURN_AFELIO, height / 2},
+                               Vector{0, SATURN_AFELIO_SPEED}, SATURN_MASS);
 
   solarSystem->addBody(sun);
   solarSystem->addBody(mercury);
@@ -148,45 +144,21 @@ auto createStarCollapsing(sf::RenderWindow& window) {
   return starCollapsing;
 }
 
-auto createTwoBodies(sf::RenderWindow& window) {
-  auto twoBodies =
-      std::make_shared<Configuration>("Two Planets", 1600, 1000000, window);
-  std::unique_ptr<Body> p1 =
-      std::make_unique<Planet>(Vector{800, 400} * 100, Vector{0, 0}, 10E15);
-  std::unique_ptr<Body> p2 =
-      std::make_unique<Planet>(Vector{500, 400} * 100, Vector{0, 45}, 10E13);
-
-  twoBodies->addBody(p1);
-  twoBodies->addBody(p2);
-
-  return twoBodies;
-}
-
-auto createTwoBodies2(sf::RenderWindow& window) {
-  auto twoBodies2 =
-      std::make_shared<Configuration>("Two Planets 2", 1600, 1000000, window);
-  std::unique_ptr<Body> p1 =
-      std::make_unique<Planet>(Vector{800, 400} * 100, Vector{0, 0}, 10E16);
-  std::unique_ptr<Body> p2 =
-      std::make_unique<Planet>(Vector{800, 100} * 100, Vector{-180, 0}, 10E11);
-
-  twoBodies2->addBody(p1);
-  twoBodies2->addBody(p2);
-
-  return twoBodies2;
-}
-
 auto createThreeBodies(sf::RenderWindow& window) {
-  auto threeBodies =
-      std::make_shared<Configuration>("Three Planets", 2000, 1000000, window);
+  auto threeBodies = std::make_shared<Configuration>(
+      "Three Planets", 3 * MARS_AFELIO, 1000000, window);
 
-  std::unique_ptr<Body> p1 =
-      std::make_unique<Planet>(Vector{700, 400}, Vector{0, 30}, 10E14);
-  std::unique_ptr<Body> p2 =
-      std::make_unique<Planet>(Vector{1000, 400}, Vector{0, 0}, 50E14);
+  auto height = 3 * MARS_AFELIO;
 
+  std::unique_ptr<Body> p1 = std::make_unique<Planet>(
+      Vector{height / 2 - VENUS_AFELIO, height / 2 + MERCURY_AFELIO},
+      Vector{0, 0}, JUPITER_MASS);
+  std::unique_ptr<Body> p2 = std::make_unique<Planet>(
+      Vector{height / 2 + VENUS_AFELIO, height / 2 + MERCURY_AFELIO},
+      Vector{0, 0}, SATURN_MASS);
   std::unique_ptr<Body> p3 =
-      std::make_unique<Planet>(Vector{1200, 500}, Vector{10, 30}, 10E14);
+      std::make_unique<Planet>(Vector{height / 2, height / 2 - VENUS_AFELIO},
+                               Vector{10, 30}, 0.8*JUPITER_MASS);
 
   threeBodies->addBody(p1);
   threeBodies->addBody(p2);
@@ -196,13 +168,15 @@ auto createThreeBodies(sf::RenderWindow& window) {
 }
 
 auto createBinaryStars(sf::RenderWindow& window) {
-  auto binaryStars =
-      std::make_shared<Configuration>("Binary Stars", 2000, 1000000, window);
-
-  std::unique_ptr<Body> s1 =
-      std::make_unique<Star>(Vector{975, 400}, Vector{0, 25}, 20E14);
-  std::unique_ptr<Body> s2 =
-      std::make_unique<Star>(Vector{1100, 400}, Vector{0, -25}, 20E14);
+  auto binaryStars = std::make_shared<Configuration>(
+      "Binary Stars", 3 * MARS_AFELIO, 1000000, window);
+  auto height = 3 * MARS_AFELIO;
+  std::unique_ptr<Body> s1 = std::make_unique<Star>(
+      Vector{height / 2 - EARTH_SUN_DISTANCE, height / 2},
+      Vector{0, 0.5 * EARTH_SPEED}, 0.75 * SUN_MASS);
+  std::unique_ptr<Body> s2 = std::make_unique<Star>(
+      Vector{height / 2 + EARTH_SUN_DISTANCE, height / 2},
+      Vector{0, -SATURN_AFELIO_SPEED}, 1.5 * SUN_MASS);
 
   binaryStars->addBody(s1);
   binaryStars->addBody(s2);
@@ -215,9 +189,9 @@ auto createCollapsingBinaryStars(sf::RenderWindow& window) {
       "Collapsing Binary Stars", 2000, 1000000, window);
 
   std::unique_ptr<Body> s1 =
-      std::make_unique<Planet>(Vector{850, 400}, Vector{0, 20}, 50E14);
+      std::make_unique<Star>(Vector{850, 400}, Vector{0, 20}, 50E14);
   std::unique_ptr<Body> s2 =
-      std::make_unique<Planet>(Vector{1150, 400}, Vector{0, -20}, 50E14);
+      std::make_unique<Star>(Vector{1150, 400}, Vector{0, -20}, 50E14);
 
   collapsingBinaryStars->addBody(s1);
   collapsingBinaryStars->addBody(s2);
@@ -228,13 +202,11 @@ auto createCollapsingBinaryStars(sf::RenderWindow& window) {
 std::vector<std::shared_ptr<Configuration>> getConfigurations(
     sf::RenderWindow& window) {
   std::vector<std::shared_ptr<Configuration>> list;
-  
+
   list.push_back(createSolarSystemTillMars(window));
   list.push_back(createSolarSystem(window));
   list.push_back(createEarthAndSun(window));
   list.push_back(createStarCollapsing(window));
-  list.push_back(createTwoBodies(window));
-  list.push_back(createTwoBodies2(window));
   list.push_back(createThreeBodies(window));
   list.push_back(createBinaryStars(window));
   list.push_back(createCollapsingBinaryStars(window));
