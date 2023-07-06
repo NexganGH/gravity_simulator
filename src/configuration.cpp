@@ -22,10 +22,16 @@ Configuration::Configuration(std::string name, double universeWidth,
   assert(_timeScale > 0);
 }
 
+
+
 void Configuration::addBody(std::unique_ptr<Body>& body) {
   if (body == nullptr) throw std::invalid_argument("Body is nullptr.");
 
   _bodies.push_back(std::move(body));
+}
+
+std::string Configuration::getName() const {
+  return _name;
 }
 
 std::unique_ptr<Renderer> Configuration::createRenderer() const {

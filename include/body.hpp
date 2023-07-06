@@ -81,7 +81,7 @@ class Body {
    * @param scale The scale of the universe compared to the screen.
    * @return A pointer to the created shape.
    */
-  virtual std::unique_ptr<sf::Shape> getShape(double scale) const = 0;
+  virtual std::unique_ptr<sf::Shape> getShape(double scale, double universeWidth) const = 0;
 
   /**
    * Clones the body.
@@ -100,7 +100,7 @@ class Planet : public Body {
  public:
   Planet(Vector position, Vector velocity, double mass);
 
-  std::unique_ptr<sf::Shape> getShape(double scale) const override;
+  std::unique_ptr<sf::Shape> getShape(double scale, double universeWidth) const override;
 
   std::unique_ptr<Body> clone() const override;
   
@@ -110,7 +110,7 @@ class Star : public Body {
  public:
   Star(Vector position, Vector velocity, double mass);
 
-  std::unique_ptr<sf::Shape> getShape(double scale) const override;
+  std::unique_ptr<sf::Shape> getShape(double scale, double universeWidth) const override;
 
   std::unique_ptr<Body> clone() const override;
 };

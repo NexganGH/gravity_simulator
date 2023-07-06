@@ -34,7 +34,7 @@ void Body::resetForce() { _force = {0, 0}; }
 Planet::Planet(Vector position, Vector velocity, double mass)
     : Body(position, velocity, mass), _color(sf::Color(std::rand() % 255, std::rand() % 255, std::rand() % 255)) {}
 
-std::unique_ptr<sf::Shape> Planet::getShape(double scale) const {
+std::unique_ptr<sf::Shape> Planet::getShape(double scale, double _) const {
   if (scale <= 0) throw std::invalid_argument("Scale must be > 0");
 
   auto circle = std::make_unique<sf::CircleShape>(5);
@@ -54,14 +54,16 @@ std::unique_ptr<Body> Planet::clone() const {
 Star::Star(Vector position, Vector velocity, double mass)
     : Body(position, velocity, mass) {}
 
-std::unique_ptr<sf::Shape> Star::getShape(double scale) const {
+std::unique_ptr<sf::Shape> Star::getShape(double scale, double universeWidth) const {
   if (scale <= 0) throw std::invalid_argument("Scale must be > 0");
 
   auto circle = std::make_unique<sf::CircleShape>(5);
   circle->setFillColor(sf::Color::Yellow);
 
   // Making body's size proportional to mass.
-  auto radius = std::pow(getMass(), 0.08) * 1E8;
+  auto radius = std::pow(getMass(), 0.08) * 1E8 / scale;
+
+  radius = radius / 249.261E9 * universeWidth;
   circle->setRadius(radius / scale);
   circle->setPosition(_position.x, _position.y);
   return circle;

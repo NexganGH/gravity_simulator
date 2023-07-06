@@ -13,7 +13,11 @@ SimulationState::SimulationState(std::shared_ptr<Configuration> conf)
       _physicsEngine(conf->createPhysicsEngine()),
       _renderer(conf->createRenderer()) {}
 
-void SimulationState::reset() {
+void SimulationState::reset(std::shared_ptr<Configuration> conf) {
+  if (conf) {
+    _configuration = conf;
+  }
+
   _bodies = _configuration->createBodies();
   _physicsEngine = _configuration->createPhysicsEngine();
   _renderer = _configuration->createRenderer();

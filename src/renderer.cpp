@@ -23,9 +23,11 @@ namespace gs {
     return std::make_unique<Renderer>(window, universeWidth / window.getView().getSize().x);
   }
 
+  double Renderer::getUniverseWidth() { return _window.getView().getSize().x * _scale; }
+
   double Renderer::getUniverseHeight() { return _window.getView().getSize().y * _scale; }
 
-  void Renderer::draw(std::unique_ptr<Body>& body) { draw(*(body->getShape(_scale))); }
+  void Renderer::draw(std::unique_ptr<Body>& body) { draw(*(body->getShape(_scale, getUniverseWidth()))); }
 
   void Renderer::draw(sf::Shape& shape) {
     auto pos = realToScreen(shape.getPosition());

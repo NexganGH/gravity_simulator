@@ -13,8 +13,8 @@
 
 namespace gs {
 
-GuiManager::GuiManager(sf::RenderWindow& window, SimulationState& state)
-    : _gui(tgui::Gui(window)), _state(state) {}
+GuiManager::GuiManager(sf::RenderWindow& window, SimulationState& state, std::vector<std::shared_ptr<Configuration>> configurations)
+    : _gui(tgui::Gui(window)), _state(state), _availableConfigurations(configurations) {}
 
 void GuiManager::setup() {
   tgui::Button::Ptr play = tgui::Button::create(">");
@@ -33,8 +33,8 @@ void GuiManager::setup() {
   reset->setPosition(100, 25);
   reset->setSize(50, 50);
   reset->setEnabled(true);
-  reset->onPress.connect([=]() { 
-    _orbitDrawer.reset(); 
+  reset->onPress.connect([=]() {
+    _orbitDrawer.reset();
     this->_state.reset();
     play->setText(">");
   });
@@ -50,9 +50,30 @@ void GuiManager::setup() {
 
   _speed = tgui::Label::create();
   _speed->setText("Simulation speed: - days/s");
-  _speed->setPosition(50, 125);
+  _speed->setPosition(50, 100);
   _speed->setTextSize(18);
   _gui.add(_speed);
+
+  auto confLIst = tgui::ListBox::create();
+  confLIst->setPosition(50, 125);
+  auto lRenderer = confLIst->getRenderer();
+  lRenderer->setTextColor(sf::Color::Black);
+
+  int id{0};
+  for (auto& conf : _availableConfigurations) {
+    
+    confLIst->addItem(conf->getName(), std::to_string(id));
+    ++id;
+  }
+
+  confLIst->onItemSelect([=]() {
+    auto item = confLIst->getSelectedItemId();
+    this->_state.reset(this->_availableConfigurations[item.toInt()]);
+    _state.reset();
+    _orbitDrawer.reset();
+  });
+
+  _gui.add(confLIst);
 }
 
 void GuiManager::updateValues(double timeElapsed, double simulationSpeed) {

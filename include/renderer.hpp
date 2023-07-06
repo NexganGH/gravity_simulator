@@ -32,6 +32,7 @@ class Renderer {
   static std::unique_ptr<Renderer> fromUniverseWidth(sf::RenderWindow& window,
                                                      double universeWidth);
 
+  double getUniverseWidth();
   double getUniverseHeight();
 
   void draw(std::unique_ptr<Body>& body);
