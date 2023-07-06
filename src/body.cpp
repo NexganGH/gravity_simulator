@@ -36,7 +36,7 @@ Planet::Planet(Vector position, Vector velocity, double mass)
       _color(
           sf::Color(std::rand() % 255, std::rand() % 255, std::rand() % 255)) {}
 
-std::unique_ptr<sf::Shape> Planet::getShape(double scale, double _) const {
+std::unique_ptr<sf::Shape> Planet::getShape(double scale, double universeWidth) const {
   if (scale <= 0) throw std::invalid_argument("Scale must be > 0");
 
   auto circle = std::make_unique<sf::CircleShape>(5);
@@ -44,6 +44,12 @@ std::unique_ptr<sf::Shape> Planet::getShape(double scale, double _) const {
 
   // Making body's size proportional to mass.
   auto radius = std::pow(getMass(), 0.08) * 1E8;
+
+  // Since radius was calculated to fit on the model "Solar System till Mars", we must rescale it by dividing it for 3*MARS_AFELIO (size of that configuration)
+  // and multiply it by the current universe width.
+  radius = radius / (3 * 249.261E9) * universeWidth;
+
+  // Then we must rescale the REAL radius to the SCREEN radius (REAL = meters; SCREEN = pixels) 
   circle->setRadius(radius / scale);
   circle->setPosition(_position.x, _position.y);
   return circle;
@@ -70,9 +76,13 @@ std::unique_ptr<sf::Shape> Star::getShape(double scale,
     {circle->setFillColor(sf::Color::Red);}
 
   // Making body's size proportional to mass.
-  auto radius = std::pow(getMass(), 0.08) * 1E8 / scale;
+  auto radius = std::pow(getMass(), 0.08) * 1E8;
+  
+  // Since radius was calculated to fit on the model "Solar System till Mars", we must rescale it by dividing it for 3*MARS_AFELIO (size of that configuration)
+  // and multiply it by the current universe width.
+  radius = radius / (3* 249.261E9) * universeWidth;
 
-  radius = radius / 249.261E9 * universeWidth;
+  // Then we must rescale the REAL radius to the SCREEN radius (REAL = meters; SCREEN = pixels) 
   circle->setRadius(radius / scale);
   circle->setPosition(_position.x, _position.y);
   return circle;
