@@ -81,8 +81,6 @@ TEST_CASE("testing Body class") {
     double thirdScale = -1;
 
     auto a = p1.getShape(secondScale);
-    auto b = p2.getShape(secondScale);
-    auto c = p3.getShape(secondScale);
     // testing first the assert
     CHECK_THROWS(p1.getShape(firstScale));
     CHECK_THROWS(p1.getShape(thirdScale));
