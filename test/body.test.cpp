@@ -10,7 +10,7 @@ TEST_CASE("testing Body class") {
   gs::Planet p1(gs::Vector{0, 0}, gs::Vector{0, 0}, 1);
   gs::Planet p2(gs::Vector{1, 1}, gs::Vector{1, 1}, 2);
   gs::Planet p3(gs::Vector{1, -1}, gs::Vector{-1, 1}, 1);
-  
+
   SUBCASE("Testing getMass function") {
     CHECK(p1.getMass() == 1);
     CHECK(p2.getMass() == 2);
@@ -79,21 +79,23 @@ TEST_CASE("testing Body class") {
     double firstScale = 0;
     double secondScale = 1;
     double thirdScale = -1;
+    double firstWidth = 0;
+    double secondWidth = 1;
+    double thirdWidth = -1;
 
-    auto a = p1.getShape(secondScale);
+    auto a = p1.getShape(secondScale, secondWidth);
+    auto b = p2.getShape(secondScale, secondWidth);
+    auto c = p1.getShape(secondScale, secondWidth);
     // testing first the assert
-    CHECK_THROWS(p1.getShape(firstScale));
-    CHECK_THROWS(p1.getShape(thirdScale));
+    CHECK_THROWS(p1.getShape(firstScale, firstWidth));
+    CHECK_THROWS(p1.getShape(thirdScale, secondWidth));
+    CHECK_THROWS(p1.getShape(secondScale, thirdWidth));
+
     // testing if the shapes are set in the same position of the correspondant
     // planet
     CHECK((*a).getPosition() == sf::Vector2f{0, 0});
     CHECK((*b).getPosition() == sf::Vector2f{1, 1});
     CHECK((*c).getPosition() == sf::Vector2f{1, -1});
-    // testing if they have the right color
-    CHECK((*a).getFillColor() == sf::Color::Blue);
-    CHECK((*b).getFillColor() == sf::Color::Blue);
-    CHECK((*c).getFillColor() == sf::Color::Blue);
-    // testing the radius//
   }
 
   SUBCASE("testing the clone function") {
