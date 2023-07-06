@@ -7,6 +7,9 @@
 #include <vector>
 namespace gs {
 
+/**
+ * @return Default configurations.
+*/
 std::vector<std::shared_ptr<Configuration>> getConfigurations(
     sf::RenderWindow& window);
 

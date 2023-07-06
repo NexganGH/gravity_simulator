@@ -8,12 +8,14 @@
 #include <SFML/Graphics.hpp>
 #include <TGUI/Backend/SFML-Graphics.hpp>
 #include <TGUI/TGUI.hpp>
-#include <cmath>
 #include <iostream>
 #include <vector>
 
 namespace gs {
 
+/**
+ * A class used to setup and manage the GUI.
+*/
 class GuiManager {
  private:
   tgui::Gui _gui;
@@ -24,13 +26,31 @@ class GuiManager {
   tgui::Label::Ptr _timeLabel;
   tgui::Label::Ptr _speed;
 
+  tgui::Button::Ptr _playBtn;
   // Body that is currently being created.
   std::unique_ptr<Body> _creatingBody;
   tgui::EditBox::Ptr _massInserter;
 
+  /**
+   * Must be called to handle a right click event.
+   * 
+   * @param event The SFML event.
+  */
   void rightButtonClicked(sf::Event event);
 
+  /**
+   * Must be called to handle a left click event.
+   * 
+   * @param event The SFML event.
+  */
   void leftButtonClicked(sf::Event event);
+
+
+  // These are all internal functions used to create the GUI. Names are self-explanatory.
+  void createPlayButton();
+  void createResetButton();
+  void createLabels();
+  void createConfigurationList();
 
  public:
   GuiManager(sf::RenderWindow& window, SimulationState& state, std::vector<std::shared_ptr<Configuration>> configurations);
@@ -59,7 +79,13 @@ class GuiManager {
   */
   void draw();
 
-  void addPoint(Vector p, double time);
+  /**
+   * Add an orbit point to the GUI
+   * 
+   * @param p The point being added.
+   * @param time The time at which this orbit point was registered.
+  */
+  void addOrbitPoint(Vector p, double time);
 };
 
 };

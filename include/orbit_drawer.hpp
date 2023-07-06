@@ -10,6 +10,9 @@
 
 namespace gs {
 
+/**
+ * A class used to draw the orbit points of the planets in the screen.
+*/
 class OrbitDrawer {
  private:
   struct OrbitPoint {
@@ -36,6 +39,9 @@ class OrbitDrawer {
    */
   void draw(std::unique_ptr<Renderer>& renderer, double realTimeSeconds);
 
+  /**
+   * Deletes all the orbit points.
+  */
   void reset();
 };
 

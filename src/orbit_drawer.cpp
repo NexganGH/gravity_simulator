@@ -10,7 +10,8 @@
 namespace gs {
 
 void OrbitDrawer::addPoint(Vector p, double time) {
-  assert(time >= 0);
+  if(time < 0)
+    throw std::invalid_argument("time must be >= 0.");
   _orbitPoints.push_back(OrbitPoint{time, p});
 }
 
