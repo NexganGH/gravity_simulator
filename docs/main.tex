@@ -165,7 +165,19 @@ Si noti inoltre che, siccome $dt$ dipende dalla velocità con cui viene eseguito
 
 Questo implica il fatto, però, che un utente con un hardware lento, a parità di timescale, avrà degli intervalli di calcolo maggiori, diminuendo l'accuratezza dei calcoli. A tal proposito può essere ridotto il timescale.
 
-\subsection{}
+\subsection{Renderer}
+La classe \verb|Renderer| ha lo scopo di disegnare i corpi e l'interfaccia a schermo. Poiché le posizioni dei corpi sono espressi in coordinate reali (metri), è necessario che prima di disegnarli a schermo le loro coordinate sono convertite. A tal proposito, il metodo statico \verb|fromUniverseWidth| permette di calcolare una scala a partire dalla grandezza dell'universo e della finestra:
+\begin{equation*}
+    scale = \frac{universe\;width}{window\;width}
+\end{equation*}
+
+Per convertire una coordinata \verb|x| da coordinate reali a coordinate sullo schermo, si usa la relazione:
+\begin{equation*}
+    x_{schermo} = \frac{x_{reale}}{scale}
+\end{equation*}
+
+\subsection{Configuration}
+La classe \verb|Configuration| contiene lo stato iniziale del progetto 
 
 \section{Testing e debugging}
 
