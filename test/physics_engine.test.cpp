@@ -8,11 +8,11 @@
 
 TEST_CASE("Testing PhysicsEngine class") {
   SUBCASE("Testing getTimeScale() function an the constructor") {
-    PhysicsEngine ph(1);
+    gs::PhysicsEngine ph(1);
     // PhysicsEngine a(-11);
     // PhysicsEngine b(0);
-    PhysicsEngine c(2);
-    PhysicsEngine d(0.1);
+    gs::PhysicsEngine c(2);
+    gs::PhysicsEngine d(0.1);
 
     CHECK(ph.getTimeScale() == 1);
     // CHECK_THROWS(PhysicsEngine(-11));
@@ -22,11 +22,11 @@ TEST_CASE("Testing PhysicsEngine class") {
   }
 
   SUBCASE("Testing setTimeScale function") {
-    PhysicsEngine ph(1);
-    PhysicsEngine a(1);
-    PhysicsEngine b(1);
-    PhysicsEngine c(1);
-    PhysicsEngine d(1);
+    gs::PhysicsEngine ph(1);
+    gs::PhysicsEngine a(1);
+    gs::PhysicsEngine b(1);
+    gs::PhysicsEngine c(1);
+    gs::PhysicsEngine d(1);
 
     ph.setTimeScale(1);
     b.setTimeScale(2);
@@ -39,7 +39,7 @@ TEST_CASE("Testing PhysicsEngine class") {
   }
 
   SUBCASE("Testing isRunning and toggleRunning functions") {
-    PhysicsEngine ph(1);
+    gs::PhysicsEngine ph(1);
     CHECK(!ph.isRunning());
     ph.toggleRunning();
     CHECK(ph.isRunning());
@@ -54,27 +54,27 @@ TEST_CASE("Testing PhysicsEngine class") {
   SUBCASE(
       "Testing getSimulationSecondsElapsed and getRealSecondsElapsed and "
       "resetTimeElapsed in one only case") {
-    PhysicsEngine ph(1);
+    gs::PhysicsEngine ph(1);
     CHECK(ph.getSimulationSecondsElapsed() == 0);
     CHECK(ph.getRealSecondsElapsed() == 0);
   }
 
   SUBCASE("Testing evolve function with _running field set to flase") {
-    std::unique_ptr<Body> p1 =
-        std::make_unique<Planet>(Vector{0, 0}, Vector{0, 0}, 1);
-    std::unique_ptr<Body> p2 =
-        std::make_unique<Planet>(Vector{0, 1}, Vector{0, 0}, 1);
+    std::unique_ptr<gs::Body> p1 =
+        std::make_unique<gs::Planet>(gs::Vector{0, 0}, gs::Vector{0, 0}, 1);
+    std::unique_ptr<gs::Body> p2 =
+        std::make_unique<gs::Planet>(gs::Vector{0, 1}, gs::Vector{0, 0}, 1);
 
     // prima di applicare la gravità ai corpi mi aspetto che le accelerazioni
     // dei corpi siano nulle
-    CHECK(p1->getAcceleration() == Vector{0, 0});
-    CHECK(p2->getAcceleration() == Vector{0, 0});
+    CHECK(p1->getAcceleration() == gs::Vector{0, 0});
+    CHECK(p2->getAcceleration() == gs::Vector{0, 0});
 
-    std::vector<std::unique_ptr<Body>> bodies;
+    std::vector<std::unique_ptr<gs::Body>> bodies;
     bodies.push_back(std::move(p1));
     bodies.push_back(std::move(p2));
 
-    PhysicsEngine ph(1);
+    gs::PhysicsEngine ph(1);
 
     double dt = 1;
 
@@ -84,31 +84,31 @@ TEST_CASE("Testing PhysicsEngine class") {
     // nuove posizioni e velocità sarà nullo per cui l'effetto che si ottiene è
     // quello di non aver applicato alcuna forza.
 
-    CHECK(bodies[0]->getPosition() == Vector{0, 0});
-    CHECK(bodies[1]->getPosition() == Vector{0, 1});
-    CHECK(bodies[0]->getVelocity() == Vector{0, 0});
-    CHECK(bodies[0]->getVelocity() == Vector{0, 0});
+    CHECK(bodies[0]->getPosition() == gs::Vector{0, 0});
+    CHECK(bodies[1]->getPosition() == gs::Vector{0, 1});
+    CHECK(bodies[0]->getVelocity() == gs::Vector{0, 0});
+    CHECK(bodies[0]->getVelocity() == gs::Vector{0, 0});
 
     CHECK(ph.getRealSecondsElapsed() ==
           (ph.getSimulationSecondsElapsed()) / ph.getTimeScale());
   }
 
   SUBCASE("Testing evolve function with running set to true") {
-    std::unique_ptr<Body> p1 =
-        std::make_unique<Planet>(Vector{0, 0}, Vector{0, 0}, 1);
-    std::unique_ptr<Body> p2 =
-        std::make_unique<Planet>(Vector{0, 1}, Vector{0, 0}, 1);
+    std::unique_ptr<gs::Body> p1 =
+        std::make_unique<gs::Planet>(gs::Vector{0, 0}, gs::Vector{0, 0}, 1);
+    std::unique_ptr<gs::Body> p2 =
+        std::make_unique<gs::Planet>(gs::Vector{0, 1}, gs::Vector{0, 0}, 1);
 
     // prima di applicare la gravità ai corpi mi aspetto che le accelerazioni
     // dei corpi siano nulle
-    CHECK(p1->getAcceleration() == Vector{0, 0});
-    CHECK(p2->getAcceleration() == Vector{0, 0});
+    CHECK(p1->getAcceleration() == gs::Vector{0, 0});
+    CHECK(p2->getAcceleration() == gs::Vector{0, 0});
 
-    std::vector<std::unique_ptr<Body>> bodies;
+    std::vector<std::unique_ptr<gs::Body>> bodies;
     bodies.push_back(std::move(p1));
     bodies.push_back(std::move(p2));
 
-    PhysicsEngine ph(1);
+    gs::PhysicsEngine ph(1);
 
     double dt = 1;
 

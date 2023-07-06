@@ -46,8 +46,8 @@ TEST_CASE("testing Body class") {
 
   SUBCASE("Testing setVelocity function") {
     p1.setVelocity({-1, 1});
-    p1.setVelocity({0, 0});
-    p1.setVelocity({2, 0});
+    p2.setVelocity({0, 0});
+    p3.setVelocity({2, 0});
     CHECK(p1.getVelocity() == gs::Vector{-1, 1});
     CHECK(p2.getVelocity() == gs::Vector{0, 0});
     CHECK(p3.getVelocity() == gs::Vector{2, 0});
@@ -85,7 +85,7 @@ TEST_CASE("testing Body class") {
 
     auto a = p1.getShape(secondScale, secondWidth);
     auto b = p2.getShape(secondScale, secondWidth);
-    auto c = p1.getShape(secondScale, secondWidth);
+    auto c = p3.getShape(secondScale, secondWidth);
     // testing first the assert
     CHECK_THROWS(p1.getShape(firstScale, firstWidth));
     CHECK_THROWS(p1.getShape(thirdScale, secondWidth));
@@ -93,19 +93,22 @@ TEST_CASE("testing Body class") {
 
     // testing if the shapes are set in the same position of the correspondant
     // planet
-    CHECK((*a).getPosition() == sf::Vector2f{0, 0});
-    CHECK((*b).getPosition() == sf::Vector2f{1, 1});
-    CHECK((*c).getPosition() == sf::Vector2f{1, -1});
+    CHECK(a->getPosition() == sf::Vector2f{0, 0});
+    CHECK(b->getPosition() == sf::Vector2f{1, 1});
+    CHECK(c->getPosition() == sf::Vector2f{1, -1});
   }
 
   SUBCASE("testing the clone function") {
     std::unique_ptr<gs::Body> a = p1.clone();
     std::unique_ptr<gs::Body> b = p2.clone();
-    CHECK((*a).getPosition() == p1.getPosition());
-    CHECK((*a).getVelocity() == p1.getVelocity());
-    CHECK((*a).getMass() == p1.getMass());
-    CHECK((*b).getPosition() == p2.getPosition());
-    CHECK((*b).getVelocity() == p2.getVelocity());
-    CHECK((*b).getMass() == p2.getMass());
+    CHECK(a->getPosition() == p1.getPosition());
+    CHECK(a->getVelocity() == p1.getVelocity());
+    CHECK(a->getMass() == p1.getMass());
+    CHECK(b->getPosition() == p2.getPosition());
+    CHECK(b->getVelocity() == p2.getVelocity());
+    CHECK(b->getMass() == p2.getMass());
   }
 }
+
+// Methods of class gs::Star are defined as the gs::Planet' ones, so it is like
+// they had already been tested
