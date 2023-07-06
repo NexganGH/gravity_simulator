@@ -46,8 +46,8 @@ TEST_CASE("testing Body class") {
 
   SUBCASE("Testing setVelocity function") {
     p1.setVelocity({-1, 1});
-    p1.setVelocity({0, 0});
-    p1.setVelocity({2, 0});
+    p2.setVelocity({0, 0});
+    p3.setVelocity({2, 0});
     CHECK(p1.getVelocity() == gs::Vector{-1, 1});
     CHECK(p2.getVelocity() == gs::Vector{0, 0});
     CHECK(p3.getVelocity() == gs::Vector{2, 0});
@@ -85,7 +85,7 @@ TEST_CASE("testing Body class") {
 
     auto a = p1.getShape(secondScale, secondWidth);
     auto b = p2.getShape(secondScale, secondWidth);
-    auto c = p1.getShape(secondScale, secondWidth);
+    auto c = p3.getShape(secondScale, secondWidth);
     // testing first the assert
     CHECK_THROWS(p1.getShape(firstScale, firstWidth));
     CHECK_THROWS(p1.getShape(thirdScale, secondWidth));
@@ -109,3 +109,6 @@ TEST_CASE("testing Body class") {
     CHECK((*b).getMass() == p2.getMass());
   }
 }
+
+// Methods of class gs::Star are defined as the gs::Planet' ones, so it is like
+// they had already been tested
