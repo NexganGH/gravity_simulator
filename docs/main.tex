@@ -25,26 +25,49 @@
 \maketitle
 \section{Il Progetto}
 \subsection{Istruzioni per la compilazione}
-All'interno del compilatore è necessario scaricare la repository online utile per la creazione della GUI:
+Eseguire il pull della repository con il comando:
+\begin{verbatim}
+    $ git clone https://github.com/NexganGH/gravity_simulator
+\end{verbatim}
+
+Installare \href{https://www.sfml-dev.org/tutorials/2.5/start-linux.php}{SFML v2.5.1} con il comando:
+\begin{verbatim}
+    $ sudo apt-get install libsfml-dev=2.5.1
+\end{verbatim}
+
+Installare \href{https://www.sfml-dev.org/tutorials/2.5/start-linux.php}{TGUI}, libreria estensione di SFML per create le interfacce utenti:
 \begin{verbatim}
    $ sudo add-apt-repository ppa:texus/tgui
    $ sudo apt-get update
    $ sudo apt-get install libtgui-1.0-dev
     \end{verbatim}
-Poi possiamo compilare tramite CMake usando questi comandi:
+
+Il programma può essere compilato, \textit{per la release}, con:
 \begin{verbatim}
-    $ cmake -S. -B build
+    $ cmake -S. -B build -DBUILD_TESTING=Off
     $ cmake --build build
     $ build/gravity
-     \end{verbatim}
+\end{verbatim}
+
+Questo creerà un eseguibile \verb|gravity| nella cartella \verb|build|, da eseguire con il comando:
+\begin{verbatim}
+    $ build/gravity
+\end{verbatim}
 
 \subsection{Obiettivo del simulatore}
-Si vuole creare un programma in grado di calcolare in tempo reale e rappresentare tramite
-un'interfaccia il movimento di alcuni corpi celesti e le interazioni tra loro. è inoltre possibile aggiungere nuovi pianeti direttamente all'interno della simulazione che interagiranno con quelli già presenti.
+Lo scopo del programma quello di simulare un sistema di N corpi planetari o stellari secondo la fisica newtoniana. L'obiettivo principale era quello di creare un sistema solare stabile, in grado cioè di preservare le orbite nel tempo, senza che queste degenerino.
+
+Oltre all'obiettivo principale, si sono volute implementare altre funzionalità utili all'utente, tra cui:
+\begin{itemize}
+    \item finestra grafica per visualizzare i corpi, con relativa interfaccia grafica;
+    \item possibilità di inserire nuovi corpi con una massa e direzione a scelta;
+    \item possibilità di avviare, interrompere o ripristinare la simulazione;
+    \item possibilità di scegliere tra diverse configurationi iniziali.
+\end{itemize}
 
 \subsection{Interface}
 \subsubsection{Elements on screen}
-Nell'angolo in alto a sinistra (Figura \href{playpause} ) troviamo 2 pulsanti cliccabili (che vedremo nel dettaglio nella prossima sezione), 
+Nell'angolo in alto a sinistra (Figura \href{playpause} ) troviamo 2 pulsanti cliccabili (che vedremo nel dettaglio nella prossima sezione),
 il tempo trascorso dall'inizio della simulazione (in anni, espresso con 7 cifre significative) e la velocità espressa in rapporto di tempo (anni al secondo)
 
 \subsubsection{User interaction}
@@ -63,34 +86,91 @@ In tutta la finestra grafica è possibile cliccare con il tasto destro in un pun
 \subsection{La fisica dietro al programma}
 La legge di gravitazione universale afferma che due punti materiali si attraggono con una forza di intensità direttamente proporzionale al prodotto delle masse dei singoli corpi e inversamente proporzionale al quadrato della loro distanza. Questa legge, espressa vettorialmente, diventa:
 \begin{equation}
-\textbf{F}_{2,1}(\textbf{r})=-\frac{Gm_{1}m_{2}}{r^{2}}\hat{\textbf{u}}_{r}
+    \textbf{F}_{2,1}(\textbf{r})=-\frac{Gm_{1}m_{2}}{r^{2}}\hat{\textbf{u}}_{r}
 \end{equation}
-dove $\textbf{F}_{2,1}$ è la forza con cui l'oggetto 1 è attratto dall'oggetto 2, G è la costante di gravitazione universale, che vale circa $6,67\cdot 10^{-11}\frac{Nm^2}{kg^2}$, $m_1$ e $m_2$ sono le masse dei due corpi, $\textbf{r}=\textbf{r}_1-\textbf{r}_2$ è il vettore congiungente i due corpi (supposti puntiformi), 
+dove $\textbf{F}_{2,1}$ è la forza con cui l'oggetto 1 è attratto dall'oggetto 2, G è la costante di gravitazione universale, che vale circa $6,67\cdot 10^{-11}\frac{Nm^2}{kg^2}$, $m_1$ e $m_2$ sono le masse dei due corpi, $\textbf{r}=\textbf{r}_1-\textbf{r}_2$ è il vettore congiungente i due corpi (supposti puntiformi),
 $r$ è il suo modulo e $\hat{\textbf{u}}_{r}=\frac{\textbf{r}}{r}$ rappresenta il versore che individua la retta congiungente i due punti materiali.\\
 Il programma utilizza questa relazione per calcolare istante per istante le forze che agiscono su ogni corpo, e di conseguenza le accelerazioni:
 \begin{equation}
-\textbf{F}_{j,tot}=\sum_{i=1, i\neq j}^{N_{bodies}}\textbf{F}_{i}(\textbf{r})=m\ddot{\textbf{r}}
+    \textbf{F}_{j,tot}=\sum_{i=1, i\neq j}^{N_{bodies}}\textbf{F}_{i}(\textbf{r})=m\ddot{\textbf{r}}
 \end{equation}
 dove $\textbf{F}_{j,tot}$ è la forza risultante che agisce sul corpo $j$.\\
 Integrando poi la precedente equazione si ottiene la legge oraria $\textbf{r}(t)$ del corpo $j$. Non essendo risolvibile analiticamente si deve ricorrere a metodi di integrazione numerica.
 
-
-\section{Strumenti di sviluppo}
-\subsection{C++}
-\subsection{Librerie esterne}
-
-\subsection{CMake}
-\subsection{VSCode}
-\subsection{Git e Github}
-\section{Implementazione}
+\section{Soluzioni matematiche}
 \subsection{Metodo LeapFrog}
 
-\subsection{Struttura del progetto}
+\section{Implementazione}
+\subsection{Strumenti utilizzati}
+È stato utilizzato C++ 17, compilator tramite GCC.
+
+Si sono utilizzate le librerie:
+\begin{itemize}
+    \item SFML 2.5.1 per l'implementazione grafica.
+    \item \href{https://tgui.eu/tutorials/1.0/linux/}{TGUI 1.0}.
+\end{itemize}
+
+Per il linking dei file e la creazione degli executable, come i test, è stato usato CMake 3.16.
+
+Per lo sviluppo è stato utilizzato l'IDE Visual Studio Code, usato in ambiente WSL con Ubuntu 20.04. È stato adottato, per la formattazione, un file \href{https://github.com/NexganGH/gravity_simulator/blob/master/.clang-format}{.clang-format} basato sullo stile di Google.
+
+Per effettuare il controllo delle versioni, è stato utilizzato Git 2.5.1; come repository remota è stato adottato GitHub. La repository è presente al link: \url{https://github.com/NexganGH/gravity_simulator/tree/master}
+
+
+\subsection{Struttura dei file}
+La directory principale contiene è divisa nelle seguenti sotto-directory:
+\begin{itemize}
+    \item \verb|docs/| contiene questo file, il suo sorgente in Latex e altri file necessari alla compilazione.
+    \item \verb|include/| contiene gli header (\verb|.hpp|).
+    \item \verb|src/| contiene i file \verb|.cpp| con le definizioni.
+    \item \verb|test/| contiene i file di testing.
+\end{itemize}
+
+\subsection{Struttura generale delle classi}
+
+L'obiettivo di design del progetto è stato quello di sfruttare al massimo la OOP per garantire la massima riusabilità delle classi, in egual modo aumentando la mantenibilità e scalabilità del codice.
+
+La classe cardine del programma è \verb|SimulationState|, la quale rappresenta lo stato corrente della simulazione. Essa contiene:
+\begin{itemize}
+    \item la lista dei corpi presenti nello spazio (vettore di \verb|Body|);
+    \item un'istanza di \verb|Configuration|, che rappresenta la configurazione iniziale attualmente in uso;
+    \item un'istanza di \verb|PhysicsEngine|, classe che si occupa di effettuare i calcoli circa le posizioni dei pianeti;
+    \item un'istanza di \verb|Renderer|, il cui scopo è disegnare a schermo i pianeti.
+\end{itemize}
+
+\verb|Body| è una classe che rappresenta un corpo nello spazio, dotato di una posizione, velocità, forza e massa. Tale classe è astratta poiché alcuni metodi dipendono dal tipo del corpo, distinzione eseguita tramite ereditarietà (attualmente le classi figlie sono \verb|Planet| e \verb|Star|).
+
+\verb|Configuration| rappresenta uno specifico stato iniziale della simulazione: è quindi caratterizzato da una lista di corpi con le loro posizioni iniziali. A tal propositio, la funzione \verb|getConfigurations| fornisce una lista di configurazioni, le quali sono mostrate all'utente in alto a sinistra nell'interfaccia.
+
+\verb|PhysicsEngine| è la classe che esegue i calcoli: il suo metodo pubblico più importante è \verb|evolve|, il quale permette di evolvere una lista di corpi nell'arco di tempo \verb|dt|. Esso implementa il metodo di integrazione LeapFrog.
+
+\verb|Renderer| è la classe che permette di disegnare a schermo i corpi e i componenti dell'interfaccia. Nel caso dei corpi, è effettuata un automatico una conversione dalle coordinate dei corpi, espressi in coordinate reali (metri), alle coordinate sullo schermo (pixel). Tale conversiene avviene, ovviamente, in base alla larghezza dell'universo in visione (variabile a seconda della configurazione).
+
+\verb|GuiManager| è una classe che crea e gestisce l'interfaccia utente.
+
+\subsection{PhysicsEngine}
+Il metodo principale, \verb|evolve|, oltre ha come parametro la lista dei corpi da evolvere e l'intervallo di tempo \verb|dt|. Tale intervallo deve corrispondere all'intervallo di tempo che è trascorso \textit{nella realtà} dalla scorsa chiamata di \verb|evolve|.
+
+Al fine di simulare eventi che avvengono in periodi estesi, come anni, è necessario però utilizzare una \verb|timescale|, ovvero un valore che velocizzi la simulazione. Tale valore è moltiplicato per il \verb|dt| del metodo evolve. Si incorre nella seguente relazione:
+
+\begin{equation*}
+    T_{simulazione} = n \cdot dt \cdot timescale
+\end{equation*}
+
+dove $T_{simulazione}$ è il tempo trascorso, in secondi, nella simulazione durante $n$ chiamate di \verb|evolve| di un intervallo di tempo $dt$ ciascuno.
+
+ Se $n \cdot dt = 1 s$, cioè è passato 1 secondo nella realtà, si ha che $T_{simulazione} = timescale$; da ciò si conclude che timescale, espresso in secondi, rappresenta il numero di secondi passato nella simulazione durante un secondo nella realtà.
+
+Si noti inoltre che, siccome $dt$ dipende dalla velocità con cui viene eseguito il ciclo, quindi dall'hardware dell'utente, il tempo della simulazione è normalizzato: \textit{la velocità della simulazione è costante in tutti gli ambienti/dispositivi}.
+
+Questo implica il fatto, però, che un utente con un hardware lento, a parità di timescale, avrà degli intervalli di calcolo maggiori, diminuendo l'accuratezza dei calcoli. A tal proposito può essere ridotto il timescale.
+
+\subsection{}
 
 \section{Testing e debugging}
 
 \section{Risultati e problemi riscontrati}
-Si è riuscito a ottenere una simulazione dei primi quattro pianeti del sistema solare,. Le orbite, grazie all'implementazione del metodo Leapfrog 
+Si è riuscito a ottenere una simulazione dei primi quattro pianeti del sistema solare,. Le orbite, grazie all'implementazione del metodo Leapfrog
 \appendix
 \section{Calcoli e approssimazioni}
 
