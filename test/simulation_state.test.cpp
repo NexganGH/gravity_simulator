@@ -6,73 +6,48 @@
 
 #include "body.hpp"
 #include "configurations.hpp"
+#include "constants.hpp"
 #include "doctest.h"
 
 TEST_CASE("Testing simulationState class") {
-  // non si può testare getRenderer
+  // getRenderer can't be tested
   SUBCASE("testing getBodies and getPhysicsEngine function") {
-    const float EARTH_SUN_DISTANCE = 149597870700;
-    const float EARTH_SPEED = 30.24E3;
-    const float EARTH_MASS = 5.9722E24;
-    const float SUN_MASS = 1.98855E30;
-
-    const float MERCURY_AFELIO = 69.8E9;
-    const float MERCURY_AFELIO_SPEED = 39.0E3;
-    const float MERCURY_MASS = 0.055 * EARTH_MASS;
-
-    const float MOON_AFELIO = 405500E3;
-    const float MOON_AFELIO_SPEED = 0.970E3;
-    const float MOON_MASS = 7.3476E22;
-
-    const float VENUS_AFELIO = 109.8E9;
-    const float VENUS_AFELIO_SPEED = 34.78E3;
-    const float VENUS_MASS = 0.815 * EARTH_MASS;
-
-    const float MARS_AFELIO = 249.261E9;
-    const float MARS_AFELIO_SPEED = 21.97E3;
-    const float MARS_MASS = 0.1 * EARTH_MASS;
-    auto height = 2 * MARS_AFELIO + EARTH_SUN_DISTANCE;
+    auto height = 3 * gs::MARS_AFELIO;
 
     sf::RenderWindow window;
-    auto conf = getConfigurations(window);
+    auto conf = gs::getConfigurations(window);
     auto firstConfiguration = conf[0];
     gs::SimulationState simulation_state(firstConfiguration);
 
     auto& bodies = simulation_state.getBodies();
 
-    CHECK(bodies[0]->getMass() == SUN_MASS);
-    CHECK(bodies[1]->getMass() == EARTH_MASS);
-    CHECK(bodies[2]->getMass() == MERCURY_MASS);
-    CHECK(bodies[3]->getMass() == VENUS_MASS);
-    CHECK(bodies[4]->getMass() == MARS_MASS);
-    CHECK(bodies[5]->getMass() == MOON_MASS);
+    CHECK(bodies[0]->getMass() == gs::SUN_MASS);
+    CHECK(bodies[1]->getMass() == gs::EARTH_MASS);
+    CHECK(bodies[2]->getMass() == gs::MERCURY_MASS);
+    CHECK(bodies[3]->getMass() == gs::VENUS_MASS);
+    CHECK(bodies[4]->getMass() == gs::MARS_MASS);
+    CHECK(bodies[5]->getMass() == gs::MOON_MASS);
 
-    CHECK(bodies[0]->getPosition() ==
-          gs::Vector{0.5 * 1E5 + MARS_AFELIO + MARS_AFELIO / 2, height / 2});
+    CHECK(bodies[0]->getPosition() == gs::Vector{height / 2, height / 2});
     CHECK(bodies[1]->getPosition() ==
-          gs::Vector{0.5 * 1E5 + MARS_AFELIO + MARS_AFELIO / 2 + EARTH_SUN_DISTANCE,
-                 height / 2});
+          gs::Vector{height / 2 + gs::EARTH_SUN_DISTANCE, height / 2});
     CHECK(bodies[2]->getPosition() ==
-          gs::Vector{0.5 * 1E5 + MARS_AFELIO + MARS_AFELIO / 2 - MERCURY_AFELIO,
-                 height / 2});
+          gs::Vector{height / 2 - gs::MERCURY_AFELIO, height / 2});
     CHECK(bodies[3]->getPosition() ==
-          gs::Vector{0.5 * 1E5 + MARS_AFELIO + MARS_AFELIO / 2 - VENUS_AFELIO,
-                 height / 2});
+          gs::Vector{height / 2 - gs::VENUS_AFELIO, height / 2});
     CHECK(bodies[4]->getPosition() ==
-          gs::Vector{0.5 * 1E5 + MARS_AFELIO + MARS_AFELIO / 2 - MARS_AFELIO,
-                 height / 2});
+          gs::Vector{height / 2 - gs::MARS_AFELIO, height / 2});
     CHECK(bodies[5]->getPosition() ==
-          gs::Vector{0.5 * 1E5 + MARS_AFELIO + MARS_AFELIO / 2 +
-                     EARTH_SUN_DISTANCE + MOON_AFELIO,
-                 height / 2});
+          gs::Vector{height / 2 + gs::EARTH_SUN_DISTANCE + gs::MOON_AFELIO,
+                     height / 2});
 
     CHECK(bodies[0]->getVelocity() == gs::Vector{0, 0});
-    CHECK(bodies[1]->getVelocity() == gs::Vector{0, -EARTH_SPEED});
-    CHECK(bodies[2]->getVelocity() == gs::Vector{0, MERCURY_AFELIO_SPEED});
-    CHECK(bodies[3]->getVelocity() == gs::Vector{0, VENUS_AFELIO_SPEED});
-    CHECK(bodies[4]->getVelocity() == gs::Vector{0, MARS_AFELIO_SPEED});
+    CHECK(bodies[1]->getVelocity() == gs::Vector{0, -gs::EARTH_SPEED});
+    CHECK(bodies[2]->getVelocity() == gs::Vector{0, gs::MERCURY_AFELIO_SPEED});
+    CHECK(bodies[3]->getVelocity() == gs::Vector{0, gs::VENUS_AFELIO_SPEED});
+    CHECK(bodies[4]->getVelocity() == gs::Vector{0, gs::MARS_AFELIO_SPEED});
     CHECK(bodies[5]->getVelocity() ==
-          Vector{0, -MOON_AFELIO_SPEED - EARTH_SPEED});
+          gs::Vector{0, -gs::MOON_AFELIO_SPEED - gs::EARTH_SPEED});
     // getPhysicsEngine
 
     auto& ph = simulation_state.getPhysicsEngine();
@@ -83,78 +58,54 @@ TEST_CASE("Testing simulationState class") {
   }
 
   SUBCASE("testing reset function in the only case we can") {
-    const float EARTH_SUN_DISTANCE = 149597870700;
-    const float EARTH_SPEED = 30.24E3;
-    const float EARTH_MASS = 5.9722E24;
-    const float SUN_MASS = 1.98855E30;
-
-    const float MERCURY_AFELIO = 69.8E9;
-    const float MERCURY_AFELIO_SPEED = 39.0E3;
-    const float MERCURY_MASS = 0.055 * EARTH_MASS;
-
-    const float MOON_AFELIO = 405500E3;
-    const float MOON_AFELIO_SPEED = 0.970E3;
-    const float MOON_MASS = 7.3476E22;
-
-    const float VENUS_AFELIO = 109.8E9;
-    const float VENUS_AFELIO_SPEED = 34.78E3;
-    const float VENUS_MASS = 0.815 * EARTH_MASS;
-
-    const float MARS_AFELIO = 249.261E9;
-    const float MARS_AFELIO_SPEED = 21.97E3;
-    const float MARS_MASS = 0.1 * EARTH_MASS;
-    auto height = 2 * MARS_AFELIO + EARTH_SUN_DISTANCE;
-
     sf::RenderWindow window;
-    auto conf = getConfigurations(window);
+    auto conf = gs::getConfigurations(window);
     auto firstConfiguration = conf[0];
     gs::SimulationState simulation_state(firstConfiguration);
 
-    auto& bodies = simulation_state.getBodies();
+    gs::PhysicsEngine ph(1000);
+    ph.toggleRunning();
+    ph.evolve(simulation_state.getBodies(), 1000);
 
-    // chiamo reset anche se non si è modificata la configurazione iniziale,
-    // testiamo quindi se reset lascia invariata la configurazione
     simulation_state.reset();
 
-    CHECK(bodies[0]->getMass() == SUN_MASS);
-    CHECK(bodies[1]->getMass() == EARTH_MASS);
-    CHECK(bodies[2]->getMass() == MERCURY_MASS);
-    CHECK(bodies[3]->getMass() == VENUS_MASS);
-    CHECK(bodies[4]->getMass() == MARS_MASS);
-    CHECK(bodies[5]->getMass() == MOON_MASS);
+    auto& bodies = simulation_state.getBodies();
 
-    CHECK(bodies[0]->getPosition() ==
-          gs::Vector{0.5 * 1E5 + MARS_AFELIO + MARS_AFELIO / 2, height / 2});
+    CHECK(bodies[0]->getMass() == gs::SUN_MASS);
+    CHECK(bodies[1]->getMass() == gs::EARTH_MASS);
+    CHECK(bodies[2]->getMass() == gs::MERCURY_MASS);
+    CHECK(bodies[3]->getMass() == gs::VENUS_MASS);
+    CHECK(bodies[4]->getMass() == gs::MARS_MASS);
+    CHECK(bodies[5]->getMass() == gs::MOON_MASS);
+
+    auto height = 3 * gs::MARS_AFELIO;
+
+    CHECK(bodies[0]->getPosition() == gs::Vector{height / 2, height / 2});
     CHECK(bodies[1]->getPosition() ==
-          gs::Vector{0.5 * 1E5 + MARS_AFELIO + MARS_AFELIO / 2 + EARTH_SUN_DISTANCE,
-                 height / 2});
+          gs::Vector{height / 2 + gs::EARTH_SUN_DISTANCE, height / 2});
     CHECK(bodies[2]->getPosition() ==
-          gs::Vector{0.5 * 1E5 + MARS_AFELIO + MARS_AFELIO / 2 - MERCURY_AFELIO,
-                 height / 2});
+          gs::Vector{height / 2 - gs::MERCURY_AFELIO, height / 2});
     CHECK(bodies[3]->getPosition() ==
-          gs::Vector{0.5 * 1E5 + MARS_AFELIO + MARS_AFELIO / 2 - VENUS_AFELIO,
-                 height / 2});
+          gs::Vector{height / 2 - gs::VENUS_AFELIO, height / 2});
     CHECK(bodies[4]->getPosition() ==
-          gs::Vector{0.5 * 1E5 + MARS_AFELIO + MARS_AFELIO / 2 - MARS_AFELIO,
-                 height / 2});
+          gs::Vector{height / 2 - gs::MARS_AFELIO, height / 2});
     CHECK(bodies[5]->getPosition() ==
-          gs::Vector{0.5 * 1E5 + MARS_AFELIO + MARS_AFELIO / 2 +
-                     EARTH_SUN_DISTANCE + MOON_AFELIO,
-                 height / 2});
+          gs::Vector{height / 2 + gs::EARTH_SUN_DISTANCE + gs::MOON_AFELIO,
+                     height / 2});
 
     CHECK(bodies[0]->getVelocity() == gs::Vector{0, 0});
-    CHECK(bodies[1]->getVelocity() == gs::Vector{0, -EARTH_SPEED});
-    CHECK(bodies[2]->getVelocity() == gs::Vector{0, MERCURY_AFELIO_SPEED});
-    CHECK(bodies[3]->getVelocity() == gs::Vector{0, VENUS_AFELIO_SPEED});
-    CHECK(bodies[4]->getVelocity() == gs::Vector{0, MARS_AFELIO_SPEED});
+    CHECK(bodies[1]->getVelocity() == gs::Vector{0, -gs::EARTH_SPEED});
+    CHECK(bodies[2]->getVelocity() == gs::Vector{0, gs::MERCURY_AFELIO_SPEED});
+    CHECK(bodies[3]->getVelocity() == gs::Vector{0, gs::VENUS_AFELIO_SPEED});
+    CHECK(bodies[4]->getVelocity() == gs::Vector{0, gs::MARS_AFELIO_SPEED});
     CHECK(bodies[5]->getVelocity() ==
-          gs::Vector{0, -MOON_AFELIO_SPEED - EARTH_SPEED});
+          gs::Vector{0, -gs::MOON_AFELIO_SPEED - gs::EARTH_SPEED});
     // getPhysicsEngine
 
-    auto& ph = simulation_state.getPhysicsEngine();
-    CHECK(ph->getTimeScale() ==
+    auto& phh = simulation_state.getPhysicsEngine();
+    CHECK(phh->getTimeScale() ==
           1000000);  // cambiare se si cambia il timescale in configurations
-    CHECK(ph->getRealSecondsElapsed() == 0);
-    CHECK(ph->getSimulationSecondsElapsed() == 0);
+    CHECK(phh->getRealSecondsElapsed() == 0);
+    CHECK(phh->getSimulationSecondsElapsed() == 0);
   }
 }
