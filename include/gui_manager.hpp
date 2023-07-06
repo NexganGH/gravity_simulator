@@ -19,6 +19,7 @@ class GuiManager {
   tgui::Gui _gui;
   SimulationState& _state;
   OrbitDrawer _orbitDrawer;
+  std::vector<std::shared_ptr<Configuration>> _availableConfigurations;
 
   tgui::Label::Ptr _timeLabel;
   tgui::Label::Ptr _speed;
@@ -32,7 +33,7 @@ class GuiManager {
   void leftButtonClicked(sf::Event event);
 
  public:
-  GuiManager(sf::RenderWindow& window, SimulationState& state);
+  GuiManager(sf::RenderWindow& window, SimulationState& state, std::vector<std::shared_ptr<Configuration>> configurations);
 
   /**
    * Setup the gui to create the control buttons - play, pause, and similar.
