@@ -23,7 +23,7 @@ int main() {
 
   gs::SimulationState state(conf);
 
-  gs::GuiManager guiManager(window, state);  // added
+  gs::GuiManager guiManager(window, state, configurations);  // added
   guiManager.setup();
 
   window.setFramerateLimit(60);

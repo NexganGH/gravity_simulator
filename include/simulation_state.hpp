@@ -19,7 +19,7 @@ class SimulationState {
  public:
   SimulationState(std::shared_ptr<Configuration> conf);
 
-  void reset();
+  void reset(std::shared_ptr<Configuration> conf = nullptr);
 
   std::vector<std::unique_ptr<Body>>& getBodies();
   std::unique_ptr<PhysicsEngine>& getPhysicsEngine();

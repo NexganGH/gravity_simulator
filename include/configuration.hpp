@@ -30,6 +30,8 @@ class Configuration {
    */
   void addBody(std::unique_ptr<Body>& body);
 
+  std::string getName() const;
+
   /**
    * Creates the Renderer, used to draw the objects on the screen.
    *
