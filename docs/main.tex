@@ -23,36 +23,7 @@
 
 \begin{document}
 \maketitle
-\section{Il Progetto}
-\subsection{Istruzioni per la compilazione}
-Eseguire il pull della repository con il comando:
-\begin{verbatim}
-    $ git clone https://github.com/NexganGH/gravity_simulator
-\end{verbatim}
-
-Installare \href{https://www.sfml-dev.org/tutorials/2.5/start-linux.php}{SFML v2.5.1} con il comando:
-\begin{verbatim}
-    $ sudo apt-get install libsfml-dev=2.5.1
-\end{verbatim}
-
-Installare \href{https://www.sfml-dev.org/tutorials/2.5/start-linux.php}{TGUI}, libreria estensione di SFML per create le interfacce utenti:
-\begin{verbatim}
-   $ sudo add-apt-repository ppa:texus/tgui
-   $ sudo apt-get update
-   $ sudo apt-get install libtgui-1.0-dev
-    \end{verbatim}
-
-Il programma può essere compilato, \textit{per la release}, con:
-\begin{verbatim}
-    $ cmake -S. -B build -DBUILD_TESTING=Off
-    $ cmake --build build
-    $ build/gravity
-\end{verbatim}
-
-Questo creerà un eseguibile \verb|gravity| nella cartella \verb|build|, da eseguire con il comando:
-\begin{verbatim}
-    $ build/gravity
-\end{verbatim}
+\section{Introduzione}
 
 \subsection{Obiettivo del simulatore}
 Lo scopo del programma quello di simulare un sistema di N corpi planetari o stellari secondo la fisica newtoniana. L'obiettivo principale era quello di creare un sistema solare stabile, in grado cioè di preservare le orbite nel tempo, senza che queste degenerino.
@@ -65,9 +36,70 @@ Oltre all'obiettivo principale, si sono volute implementare altre funzionalità 
     \item possibilità di scegliere tra diverse configurationi iniziali.
 \end{itemize}
 
+\subsection{Istruzioni per la compilazione}
+
+Piattaforma di riferimento: Ubuntu 20.04.
+
+Eseguire il pull della repository con il comando:
+\begin{verbatim}
+    $ git clone https://github.com/NexganGH/gravity_simulator
+\end{verbatim}
+
+Installare \href{https://www.sfml-dev.org/tutorials/2.5/start-linux.php}{SFML v2.5.1} con il comando:
+\begin{verbatim}
+    $ sudo apt-get install libsfml-dev=2.5.1+dfsg-1build1
+\end{verbatim}
+
+Installare \href{https://www.sfml-dev.org/tutorials/2.5/start-linux.php}{TGUI}, libreria estensione di SFML per create le interfacce utenti:
+\begin{verbatim}
+   $ sudo add-apt-repository ppa:texus/tgui
+   $ sudo apt-get update
+   $ sudo apt-get install libtgui-1.0-dev
+    \end{verbatim}
+
+Assicurarsi di avere CMake installato, da installare altrimenti con:
+\begin{verbatim}
+    $ sudo apt-get install cmake
+\end{verbatim}
+
+Il programma può essere compilato, \textit{per la release}, con:
+\begin{verbatim}
+    $ cmake -S. -B build -DBUILD_TESTING=Off -DCMAKE_BUILD_TYPE=Release
+    $ cmake --build build
+    $ build/gravity
+     \end{verbatim}
+
+Questo creerà un eseguibile \verb|gravity| nella cartella \verb|build|, da eseguire con il comando:
+\begin{verbatim}
+    $ build/gravity
+\end{verbatim}
+
+\subsection{Funzionalità}
+Il programma consiste in uno spazio in cui sono presenti diversi corpi stellari, i quali sono soggetti a gravità reciproca.
+
+La schermata iniziale prevede una simulazione del sistema solare fino a Marte. L'utente può da qui avviare la simulazione con il tasto in alto a sinistra. 
+
+Tra le varie funzionalità:
+\begin{itemize}
+    \item l'utente può inserire un nuovo corpo con click destro del mouse. Questo tasto apre una finestra che richiede di inserire la massa \textbf{in unità terrestri} (1 = massa della Terra). Successivamente è richiesto scegliere la direzione verso cui il corpo verrà lanciato con un modulo di 30 km/s.
+    \item l'utente può mettere in pausa la simulazione
+    \item l'utente può ripristinare la simulazione con il tasto "reset", in alto a sinistra.
+    \item l'utente può scegliere tra varie configurazioni predefinite in alto a sinistra.
+\end{itemize}
+
+Altre caratteristiche:
+\begin{itemize}
+    \item la grandezza dei pianeti è proporzionale in maniera esponenziale alla massa (con esponente < 1);
+    \item il colore dei pianeti è casuale; il colore delle stelle varia da giallo a rosso a seconda della massa.
+    \item la finestra è sempre quadrata e dipende dalla grandezza dello schermo dell'utente.
+\end{itemize}
+
+Da notare che l'interfaccia grafica non scala con la grandezza dello schermo dell'utente.
+
+
 \subsection{Interface}
 \subsubsection{Elements on screen}
-Nell'angolo in alto a sinistra (Figura \href{playpause} ) troviamo 2 pulsanti cliccabili (che vedremo nel dettaglio nella prossima sezione),
+Nell'angolo in alto a sinistra (Figura \href{playpause} ) troviamo 2 pulsanti cliccabili (che vedremo nel dettaglio nella prossima sezione), 
 il tempo trascorso dall'inizio della simulazione (in anni, espresso con 7 cifre significative) e la velocità espressa in rapporto di tempo (anni al secondo)
 
 \subsubsection{User interaction}
@@ -83,13 +115,21 @@ In tutta la finestra grafica è possibile cliccare con il tasto destro in un pun
     \label{playpause}
 \end{figure}
 
+\begin{figure} [H]
+    \centering
+    \includegraphics[height=.20\linewidth]{Menù.png}
+    \captionof{figure}{Il menù presente nella parte alta a sinistra dell'interfaccia serve a selezionare delle simulazioni prefabbricate. Cliccandone una essa comparirà nello schermo. Le possibilità sono: Solar system till mars, Solar system, Earth & Sun, Star collapsing, Two planets, Two planets 2, Three planets, Binary stars, Collapsing binary stars.}
+    \label{menu}
+\end{figure}
+
+
 \subsection{La fisica dietro al programma}
 \label{la_fisica_dietro_al_programma}
 La legge di gravitazione universale afferma che due punti materiali si attraggono con una forza di intensità direttamente proporzionale al prodotto delle masse dei singoli corpi e inversamente proporzionale al quadrato della loro distanza. Questa legge, espressa vettorialmente, diventa:
 \begin{equation}
     \textbf{F}_{2,1}(\textbf{r})=-\frac{Gm_{1}m_{2}}{r^{2}}\textbf{\hat{u}}_{r}
 \end{equation}
-dove $\textbf{F}_{2,1}$ è la forza con cui l'oggetto 1 è attratto dall'oggetto 2, G è la costante di gravitazione universale, che vale circa $6,67\cdot 10^{-11}\frac{Nm^2}{kg^2}$, $m_1$ e $m_2$ sono le masse dei due corpi, $\textbf{r}=\textbf{r}_1-\textbf{r}_2$ è il vettore congiungente i due corpi (supposti puntiformi),
+dove $\textbf{F}_{2,1}$ è la forza con cui l'oggetto 1 è attratto dall'oggetto 2, G è la costante di gravitazione universale, che vale circa $6,67\cdot 10^{-11}\frac{Nm^2}{kg^2}$, $m_1$ e $m_2$ sono le masse dei due corpi, $\textbf{r}=\textbf{r}_1-\textbf{r}_2$ è il vettore congiungente i due corpi (supposti puntiformi), 
 $r$ è il suo modulo e $\hat{\textbf{u}}_{r}=\frac{\textbf{r}}{r}$ rappresenta il versore che individua la retta congiungente i due punti materiali.\\
 Il programma utilizza questa relazione per calcolare istante per istante le forze che agiscono su ogni corpo, e di conseguenza le accelerazioni:
 \begin{equation}
@@ -152,7 +192,7 @@ Il suddetto metodo integrativo ha la proprietà di conservare l'energia meccanic
 Si sono utilizzate le librerie:
 \begin{itemize}
     \item SFML 2.5.1 per l'implementazione grafica.
-    \item \href{https://tgui.eu/tutorials/1.0/linux/}{TGUI 1.0}.
+    \item \href{https://tgui.eu/tutorials/1.0/linux/}{TGUI 1.0} per l'interfaccia utente.
 \end{itemize}
 
 Per il linking dei file e la creazione degli executable, come i test, è stato usato CMake 3.16.
@@ -194,6 +234,7 @@ La classe cardine del programma è \verb|SimulationState|, la quale rappresenta 
 \verb|GuiManager| è una classe che crea e gestisce l'interfaccia utente.
 
 \subsection{PhysicsEngine}
+\label{physics_engine}
 Il metodo principale, \verb|evolve|, oltre ha come parametro la lista dei corpi da evolvere e l'intervallo di tempo \verb|dt|. Tale intervallo deve corrispondere all'intervallo di tempo che è trascorso \textit{nella realtà} dalla scorsa chiamata di \verb|evolve|.
 
 Al fine di simulare eventi che avvengono in periodi estesi, come anni, è necessario però utilizzare una \verb|timescale|, ovvero un valore che velocizzi la simulazione. Tale valore è moltiplicato per il \verb|dt| del metodo evolve. Si incorre nella seguente relazione:
@@ -222,12 +263,73 @@ Per convertire una coordinata \verb|x| da coordinate reali a coordinate sullo sc
 \end{equation*}
 
 \subsection{Configuration}
-La classe \verb|Configuration| contiene lo stato iniziale del progetto 
+La classe \verb|Configuration| contiene lo stato iniziale del progetto - tra cui la lista dei corpi. Lo scopo della classe è quello di fornire gli elementi per inizializzare \verb|SimulationState|. La lista dei corpi è fornita tramite copia, in modo che la lista all'interno della classe rimanga non modificata possa essere riutilizzata per il tasto "reset".
+
+Sono state create diverse istanze di \verb|Configuration| per proporre diverse configurazioni iniziali all'utente. Queste sono istanziate nel metodo \verb|getConfigurations|.
+
+\subsection{Altre classi}
+Tra le altre classi del programma ci sono:
+\begin{itemize}
+    \item \verb|GuiManager|, utilizzata per la creazione e gestione dell'interfaccia.
+    \item \verb|Vector|, utilizzata per rappresentare un vettore nello spazio 2D. Sono disponibili diverse operazioni.
+    \item \verb|OrbitDrawer|, utilizzata per disegnare le orbite e cancellare i punti dopo un intervallo di tempo.
+\end{itemize}
+
+\subsection{Ciclo principale}
+Il ciclo principale si svolge nel \verb|main|. Un ciclo permette di utilizzare il metodo \verb|evolve| di PhysicsEngine per evolvere la simulazione per un tempo indefinito. Il valore \verb|dt|, da fornire a \verb|PhysicsEngine| (si veda Sezione (\ref{physics_engine})), è misurato tramite un cronometro.
+
+\subsection{Utilizzo dei puntatori}
+Al fine di evitare memory leaks, sono stati utilizzati gli smart pointer. Ove possibile, è stato adottato lo \verb|unique_ptr|.
+
+A titolo esemplificativo si consideri la lista di puntatori a \verb|Body|:
+\begin{verbatim}
+    std::vector<std::unique_ptr<Body>> _bodies;
+\end{verbatim}
+
+Il vettore contiene dei puntatori a \verb|Body| poiché questa è una classe astratta, si tratta quindi di polimorfismo dinamico.
+
+\verb|Configuration| ne crea una copia che viene passata a \verb|SimulationState|. Per la copia si utilizza il metodo astratto di \verb|clone| che ritorna uno \verb|unique_ptr| all'oggetto \verb|Body| clonato: a questo punto viene creato un nuovo vettore con questi puntatori. L'ownership è poi passata a \verb|SimulationState|; tale principio è applicato anche agli altri puntatori all'interno di \verb|SimulationState|, la quale ne detiene l'ownership.
+
+Per accedere ad un oggetto detenuto da \verb|SimulationState|, questa fornisce come interfaccia una serie di metodi che ritornano referenze agli \verb|unique_ptr|.
+
+Per istanziare i puntatori si utilizzano i metodi \verb|std::make_unique| e \verb|std::make_shared|.
 
 \section{Testing e debugging}
+\subsection{Tecnica di testing}
+È stato utilizzata la libreria \verb|doctest| per effettuare i testing. CMake permette di effettuare i linking e creare un eseguibile per ogni file di test.
+
+\subsection{Eseguire un test}
+I test sono contenuti in executable separati con il nome della classe.t. Ad esempio, per effettuare il test della classe \verb|PhysicsEngine|:
+\begin{verbatim}
+    $ cmake -S. -B build -DBUILD_TESTING=On
+    $ cmake --build build --target physics_engine.t
+    $ build/gravity
+\end{verbatim}
+
+Per eseguire i test, eseguire \verb|physics_engine.t| nella cartella \verb|build|:
+\begin{verbatim}
+    $ build/physics_engine.t
+\end{verbatim}
+\subsection{Memory Leak}
+Durante i test non sono stati riscontrati memory leak provenienti dal codice originale. In determinati test si sono evidenziati, però, dei leak provenienti da SFML oppure TGUI la cui causa è sconosciuta.
 
 \section{Risultati e problemi riscontrati}
-Si è riuscito a ottenere una simulazione dei primi quattro pianeti del sistema solare,. Le orbite, grazie all'implementazione del metodo Leapfrog
+Tramite il metodo Leapfrog, si è ottenuta con successo una simulazione in scala del sistema solare (fino a Marte oppure fino Nettuno a seconda della configurazione). 
+Si riscontra, con successo:
+\begin{itemize}
+    \item che le orbite sono stabili e non degenerano nel tempo: ricoprono sempre lo stesso percorso;
+    \item che la Terra rivoluziona attorno al Sole in 1 anno, come atteso;
+    \item che le funzionalità implementate, come la creazione di un nuovo pianeta, il reset, la pausa funzionano correttamente;
+    \item che la simulazione risulta anche in altri casi coerente con ciò che approssimativamente ci si aspetta.
+\end{itemize}
+
+Tra i problemi riscontrati, tuttavia, si evidenzia:
+\begin{itemize}
+    \item un peggioramento delle performance nel tempo, dovuto alla creazione dei punti delle orbite (anche se questi vengono cancellati dopo un certo periodo);
+    \item dopo un periodo di simulazione elevato, il tempo di rivoluzione della Terra aumenta la proprio durata ($> 1$ anno). Si ipotizza che tale problema sia dovuto alle approssimazioni numeriche effettuate.
+\end{itemize}
+
+\subsection{}
 \appendix
 \section{Calcoli e approssimazioni}
 \subsection{Versore distanza tra due corpi}
