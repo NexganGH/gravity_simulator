@@ -8,9 +8,9 @@ namespace gs {
 
 /**
  * A vector in a 2D space.
- * 
+ *
  * @see [Vector](https://en.wikipedia.org/wiki/Vector)
-*/
+ */
 struct Vector {
   double x{0};
   double y{0};
@@ -40,7 +40,7 @@ struct Vector {
   Vector versor() const;
 
   sf::Vector2f toSfml() const;
-  
+
   Vector& operator+=(const Vector& v);
   bool operator==(const Vector& b) const;
 };

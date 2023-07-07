@@ -207,7 +207,7 @@ auto createSolarSystemWithBlackHole(sf::RenderWindow& window) {
 
   std::unique_ptr<Body> sun = std::make_unique<Star>(
       Vector{height / 2, height / 2}, Vector{0, 0}, 3.3f * SUN_MASS);
-      // THe smallest black hole is just 3.3 times the mass of the sun.
+  // THe smallest black hole is just 3.3 times the mass of the sun.
   std::unique_ptr<Body> earth = std::make_unique<Planet>(
       Vector{height / 2 + EARTH_SUN_DISTANCE, height / 2},
       Vector{0, -EARTH_SPEED}, EARTH_MASS);

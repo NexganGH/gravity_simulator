@@ -11,8 +11,9 @@
 namespace gs {
 
 /**
- * Represents a generic body in the simulation with a given position, velocity, force and mass.
-*/
+ * Represents a generic body in the simulation with a given position, velocity,
+ * force and mass.
+ */
 class Body {
  protected:
   Vector _position;
@@ -65,7 +66,8 @@ class Body {
    * Motion.
    *
    * @return The current acceleration.
-   * @see [Newton's laws of motion](https://en.wikipedia.org/wiki/Newton%27s_laws_of_motion)
+   * @see [Newton's laws of
+   * motion](https://en.wikipedia.org/wiki/Newton%27s_laws_of_motion)
    */
   Vector getAcceleration() const;
 
@@ -97,7 +99,7 @@ class Body {
 
 /**
  * Represents a generic Planet in the space. Planets have random colors.
-*/
+ */
 class Planet : public Body {
  private:
   sf::Color _color;
@@ -108,7 +110,6 @@ class Planet : public Body {
   std::unique_ptr<sf::Shape> getShape(double scale) const override;
 
   std::unique_ptr<Body> clone() const override;
-  
 };
 
 class Star : public Body {

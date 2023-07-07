@@ -1,21 +1,20 @@
 #ifndef GUI_MANAGER_H
 #define GUI_MANAGER_H
 
-
-#include "simulation_state.hpp"
-#include "orbit_drawer.hpp"
-
 #include <SFML/Graphics.hpp>
 #include <TGUI/Backend/SFML-Graphics.hpp>
 #include <TGUI/TGUI.hpp>
 #include <iostream>
 #include <vector>
 
+#include "orbit_drawer.hpp"
+#include "simulation_state.hpp"
+
 namespace gs {
 
 /**
  * A class used to setup and manage the GUI.
-*/
+ */
 class GuiManager {
  private:
   tgui::Gui _gui;
@@ -33,27 +32,28 @@ class GuiManager {
 
   /**
    * Must be called to handle a right click event.
-   * 
+   *
    * @param event The SFML event.
-  */
+   */
   void rightButtonClicked(sf::Event event);
 
   /**
    * Must be called to handle a left click event.
-   * 
+   *
    * @param event The SFML event.
-  */
+   */
   void leftButtonClicked(sf::Event event);
 
-
-  // These are all internal functions used to create the GUI. Names are self-explanatory.
+  // These are all internal functions used to create the GUI. Names are
+  // self-explanatory.
   void createPlayButton();
   void createResetButton();
   void createLabels();
   void createConfigurationList();
 
  public:
-  GuiManager(sf::RenderWindow& window, SimulationState& state, std::vector<std::shared_ptr<Configuration>> configurations);
+  GuiManager(sf::RenderWindow& window, SimulationState& state,
+             std::vector<std::shared_ptr<Configuration>> configurations);
 
   /**
    * Setup the gui to create the control buttons - play, pause, and similar.
@@ -76,18 +76,18 @@ class GuiManager {
 
   /**
    * Draw the gui.
-  */
+   */
   void draw();
 
   /**
    * Add an orbit point to the GUI
-   * 
+   *
    * @param p The point being added.
    * @param time The time at which this orbit point was registered.
-  */
+   */
   void addOrbitPoint(Vector p, double time);
 };
 
-};
+};  // namespace gs
 
 #endif

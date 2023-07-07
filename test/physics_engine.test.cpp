@@ -63,7 +63,6 @@ TEST_CASE("Testing PhysicsEngine class") {
     std::unique_ptr<gs::Body> p2 =
         std::make_unique<gs::Planet>(gs::Vector{0, 1}, gs::Vector{0, 0}, 1);
 
-
     CHECK(p1->getAcceleration() == gs::Vector{0, 0});
     CHECK(p2->getAcceleration() == gs::Vector{0, 0});
 
@@ -76,7 +75,6 @@ TEST_CASE("Testing PhysicsEngine class") {
     double dt = 1;
 
     ph.evolve(bodies, dt);
-
 
     CHECK(bodies[0]->getPosition() == gs::Vector{0, 0});
     CHECK(bodies[1]->getPosition() == gs::Vector{0, 1});
@@ -111,13 +109,17 @@ TEST_CASE("Testing PhysicsEngine class") {
 
     const double G = 6.67E-11;
     CHECK(bodies[0]->getPosition().x == 0);
-    CHECK(bodies[0]->getPosition().y == doctest::Approx(G/2).epsilon(0.000000000000001));
+    CHECK(bodies[0]->getPosition().y ==
+          doctest::Approx(G / 2).epsilon(0.000000000000001));
     CHECK(bodies[1]->getPosition().x == 0);
-    CHECK(bodies[1]->getPosition().y == doctest::Approx(1-G/2).epsilon(0.000000000000001));
+    CHECK(bodies[1]->getPosition().y ==
+          doctest::Approx(1 - G / 2).epsilon(0.000000000000001));
     CHECK(bodies[0]->getVelocity().x == 0);
-    CHECK(bodies[0]->getVelocity().y == doctest::Approx(G).epsilon(0.000000000000001));
+    CHECK(bodies[0]->getVelocity().y ==
+          doctest::Approx(G).epsilon(0.000000000000001));
     CHECK(bodies[1]->getVelocity().x == 0);
-    CHECK(bodies[1]->getVelocity().y == doctest::Approx(-G).epsilon(0.000000000000001));
+    CHECK(bodies[1]->getVelocity().y ==
+          doctest::Approx(-G).epsilon(0.000000000000001));
 
     CHECK(
         ph.getRealSecondsElapsed() ==

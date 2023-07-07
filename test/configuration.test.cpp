@@ -1,18 +1,22 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
+#include "configuration.hpp"
+
 #include <SFML/Graphics.hpp>
 #include <memory>
 
-#include "configuration.hpp"
 #include "doctest.h"
 
 TEST_CASE("Testing configuration function") {
   SUBCASE("Testing addBody() and createBodies()") {
     sf::RenderWindow window;
     gs::Configuration conf("test configuration", 10, 10, window);
-    std::unique_ptr<gs::Body> p1 = std::make_unique<gs::Planet>(gs::Vector {0, 0}, gs::Vector {0, 0}, 1);
-    std::unique_ptr<gs::Body> p2 = std::make_unique<gs::Planet>(gs::Vector {1, 1}, gs::Vector {1, 1}, 1);
-    std::unique_ptr<gs::Body> p3 = std::make_unique<gs::Planet>(gs::Vector {2, 2}, gs::Vector {-1, -1}, 1);
+    std::unique_ptr<gs::Body> p1 =
+        std::make_unique<gs::Planet>(gs::Vector{0, 0}, gs::Vector{0, 0}, 1);
+    std::unique_ptr<gs::Body> p2 =
+        std::make_unique<gs::Planet>(gs::Vector{1, 1}, gs::Vector{1, 1}, 1);
+    std::unique_ptr<gs::Body> p3 =
+        std::make_unique<gs::Planet>(gs::Vector{2, 2}, gs::Vector{-1, -1}, 1);
 
     conf.addBody(p1);
     conf.addBody(p2);

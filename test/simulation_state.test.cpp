@@ -52,7 +52,8 @@ TEST_CASE("Testing simulationState class") {
 
     auto& ph = simulation_state.getPhysicsEngine();
     CHECK(ph->getTimeScale() ==
-          1000000);  // remember to change if the value of timescale is changed in configurations
+          1000000);  // remember to change if the value of timescale is changed
+                     // in configurations
     CHECK(ph->getRealSecondsElapsed() == 0);
     CHECK(ph->getSimulationSecondsElapsed() == 0);
   }
@@ -104,7 +105,8 @@ TEST_CASE("Testing simulationState class") {
 
     auto& phh = simulation_state.getPhysicsEngine();
     CHECK(phh->getTimeScale() ==
-          1000000);  // remember to change if the value of timescale is changed in configurations
+          1000000);  // remember to change if the value of timescale is changed
+                     // in configurations
     CHECK(phh->getRealSecondsElapsed() == 0);
     CHECK(phh->getSimulationSecondsElapsed() == 0);
   }

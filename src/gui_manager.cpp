@@ -66,8 +66,7 @@ void GuiManager::rightButtonClicked(sf::Event event) {
       _creatingBody = std::make_unique<Planet>(
           realPos, Vector{0, 0},
           _massInserter->getText().toFloat() * 5.9722E24);
-      
-    }
+        }
     _massInserter->onUnfocus.disconnectAll();
     _gui.remove(_massInserter);
   });

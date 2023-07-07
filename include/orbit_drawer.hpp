@@ -12,7 +12,7 @@ namespace gs {
 
 /**
  * A class used to draw the orbit points of the planets in the screen.
-*/
+ */
 class OrbitDrawer {
  private:
   struct OrbitPoint {
@@ -41,7 +41,7 @@ class OrbitDrawer {
 
   /**
    * Deletes all the orbit points.
-  */
+   */
   void reset();
 };
 
