@@ -23,8 +23,23 @@
 
 \begin{document}
 \maketitle
-\section{Il Progetto}
+\section{Introduzione}
+
+\subsection{Obiettivo del simulatore}
+Lo scopo del programma quello di simulare un sistema di N corpi planetari o stellari secondo la fisica newtoniana. L'obiettivo principale era quello di creare un sistema solare stabile, in grado cioè di preservare le orbite nel tempo, senza che queste degenerino.
+
+Oltre all'obiettivo principale, si sono volute implementare altre funzionalità utili all'utente, tra cui:
+\begin{itemize}
+    \item finestra grafica per visualizzare i corpi, con relativa interfaccia grafica;
+    \item possibilità di inserire nuovi corpi con una massa e direzione a scelta;
+    \item possibilità di avviare, interrompere o ripristinare la simulazione;
+    \item possibilità di scegliere tra diverse configurationi iniziali.
+\end{itemize}
+
 \subsection{Istruzioni per la compilazione}
+
+Piattaforma di riferimento: Ubuntu 20.04.
+
 Eseguire il pull della repository con il comando:
 \begin{verbatim}
     $ git clone https://github.com/NexganGH/gravity_simulator
@@ -42,6 +57,11 @@ Installare \href{https://www.sfml-dev.org/tutorials/2.5/start-linux.php}{TGUI}, 
    $ sudo apt-get install libtgui-1.0-dev
     \end{verbatim}
 
+Assicurarsi di avere CMake installato, da installare altrimenti con:
+\begin{verbatim}
+    $ sudo apt-get install cmake
+\end{verbatim}
+
 Il programma può essere compilato, \textit{per la release}, con:
 \begin{verbatim}
     $ cmake -S. -B build -DBUILD_TESTING=Off
@@ -54,16 +74,7 @@ Questo creerà un eseguibile \verb|gravity| nella cartella \verb|build|, da eseg
     $ build/gravity
 \end{verbatim}
 
-\subsection{Obiettivo del simulatore}
-Lo scopo del programma quello di simulare un sistema di N corpi planetari o stellari secondo la fisica newtoniana. L'obiettivo principale era quello di creare un sistema solare stabile, in grado cioè di preservare le orbite nel tempo, senza che queste degenerino.
 
-Oltre all'obiettivo principale, si sono volute implementare altre funzionalità utili all'utente, tra cui:
-\begin{itemize}
-    \item finestra grafica per visualizzare i corpi, con relativa interfaccia grafica;
-    \item possibilità di inserire nuovi corpi con una massa e direzione a scelta;
-    \item possibilità di avviare, interrompere o ripristinare la simulazione;
-    \item possibilità di scegliere tra diverse configurationi iniziali.
-\end{itemize}
 
 \subsection{Interface}
 \subsubsection{Elements on screen}
@@ -107,7 +118,7 @@ Integrando poi la precedente equazione si ottiene la legge oraria $\textbf{r}(t)
 Si sono utilizzate le librerie:
 \begin{itemize}
     \item SFML 2.5.1 per l'implementazione grafica.
-    \item \href{https://tgui.eu/tutorials/1.0/linux/}{TGUI 1.0}.
+    \item \href{https://tgui.eu/tutorials/1.0/linux/}{TGUI 1.0} per l'interfaccia utente.
 \end{itemize}
 
 Per il linking dei file e la creazione degli executable, come i test, è stato usato CMake 3.16.
@@ -149,6 +160,7 @@ La classe cardine del programma è \verb|SimulationState|, la quale rappresenta 
 \verb|GuiManager| è una classe che crea e gestisce l'interfaccia utente.
 
 \subsection{PhysicsEngine}
+\label{physics_engine}
 Il metodo principale, \verb|evolve|, oltre ha come parametro la lista dei corpi da evolvere e l'intervallo di tempo \verb|dt|. Tale intervallo deve corrispondere all'intervallo di tempo che è trascorso \textit{nella realtà} dalla scorsa chiamata di \verb|evolve|.
 
 Al fine di simulare eventi che avvengono in periodi estesi, come anni, è necessario però utilizzare una \verb|timescale|, ovvero un valore che velocizzi la simulazione. Tale valore è moltiplicato per il \verb|dt| del metodo evolve. Si incorre nella seguente relazione:
@@ -177,12 +189,56 @@ Per convertire una coordinata \verb|x| da coordinate reali a coordinate sullo sc
 \end{equation*}
 
 \subsection{Configuration}
-La classe \verb|Configuration| contiene lo stato iniziale del progetto 
+La classe \verb|Configuration| contiene lo stato iniziale del progetto - tra cui la lista dei corpi. Lo scopo della classe è quello di fornire gli elementi per inizializzare \verb|SimulationState|. La lista dei corpi è fornita tramite copia, in modo che la lista all'interno della classe rimanga non modificata possa essere riutilizzata per il tasto "reset".
+
+Sono state create diverse istanze di \verb|Configuration| per proporre diverse configurazioni iniziali all'utente. Queste sono istanziate nel metodo \verb|getConfigurations|.
+
+\subsection{Altre classi}
+Tra le altre classi del programma ci sono:
+\begin{itemize}
+    \item \verb|GuiManager|, utilizzata per la creazione e gestione dell'interfaccia.
+    \item \verb|Vector|, utilizzata per rappresentare un vettore nello spazio 2D. Sono disponibili diverse operazioni.
+    \item \verb|OrbitDrawer|, utilizzata per disegnare le orbite e cancellare i punti dopo un intervallo di tempo.
+\end{itemize}
+
+\subsection{Ciclo principale}
+Il ciclo principale si svolge nel \verb|main|. Un ciclo permette di utilizzare il metodo \verb|evolve| di PhysicsEngine per evolvere la simulazione per un tempo indefinito. Il valore \verb|dt|, da fornire a \verb|PhysicsEngine| (si veda Sezione (\ref{physics_engine})), è misurato tramite un cronometro.
+
+\subsection{Utilizzo dei puntatori}
+Al fine di evitare memory leaks, sono stati utilizzati gli smart pointer. Ove possibile, è stato adottato lo \verb|unique_ptr|.
+
+A titolo esemplificativo si consideri la lista di puntatori a \verb|Body|:
+\begin{verbatim}
+    std::vector<std::unique_ptr<Body>> _bodies;
+\end{verbatim}
+
+Il vettore contiene dei puntatori a \verb|Body| poiché questa è una classe astratta, si tratta quindi di polimorfismo dinamico.
+
+\verb|Configuration| ne crea una copia che viene passata a \verb|SimulationState|. Per la copia si utilizza il metodo astratto di \verb|clone| che ritorna uno \verb|unique_ptr| all'oggetto \verb|Body| clonato: a questo punto viene creato un nuovo vettore con questi puntatori. L'ownership è poi passata a \verb|SimulationState|; tale principio è applicato anche agli altri puntatori all'interno di \verb|SimulationState|, la quale ne detiene l'ownership.
+
+Per accedere ad un oggetto detenuto da \verb|SimulationState|, questa fornisce come interfaccia una serie di metodi che ritornano referenze agli \verb|unique_ptr|.
+
+Per istanziare i puntatori si utilizzano i metodi \verb|std::make_unique| e \verb|std::make_shared|.
 
 \section{Testing e debugging}
+\subsection{Memory Leak}
+Durante i test non sono stati riscontrati memory leak provenienti dal codice originale. In determinati test si sono evidenziati, però, dei leak provenienti da SFML oppure TGUI la cui causa è sconosciuta.
 
 \section{Risultati e problemi riscontrati}
-Si è riuscito a ottenere una simulazione dei primi quattro pianeti del sistema solare,. Le orbite, grazie all'implementazione del metodo Leapfrog
+Tramite il metodo Leapfrog, si è ottenuta con successo una simulazione in scala del sistema solare (fino a Marte oppure fino Nettuno a seconda della configurazione). 
+Si riscontra, con successo:
+\begin{itemize}
+    \item che le orbite sono stabili e non degenerano nel tempo: ricoprono sempre lo stesso percorso;
+    \item che la Terra rivoluziona attorno al Sole in 1 anno, come atteso;
+    \item che le funzionalità implementate, come la creazione di un nuovo pianeta, il reset, la pausa funzionano correttamente;
+    \item che la simulazione risulta anche in altri casi coerente con ciò che approssimativamente ci si aspetta.
+\end{itemize}
+
+Tra i problemi riscontrati, tuttavia, si evidenzia:
+\begin{itemize}
+    \item un peggioramento delle performance nel tempo, dovuto alla creazione dei punti delle orbite (anche se questi vengono cancellati dopo un certo periodo);
+    \item dopo un periodo di simulazione elevato, il tempo di rivoluzione della Terra aumenta la proprio durata ($> 1$ anno). Si ipotizza che tale problema sia dovuto alle approssimazioni numeriche effettuate.
+\end{itemize}
 \appendix
 \section{Calcoli e approssimazioni}
 
