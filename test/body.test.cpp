@@ -79,17 +79,14 @@ TEST_CASE("testing Body class") {
     double firstScale = 0;
     double secondScale = 1;
     double thirdScale = -1;
-    double firstWidth = 0;
-    double secondWidth = 1;
-    double thirdWidth = -1;
 
-    auto a = p1.getShape(secondScale, secondWidth);
-    auto b = p2.getShape(secondScale, secondWidth);
-    auto c = p3.getShape(secondScale, secondWidth);
+    auto a = p1.getShape(secondScale);
+    auto b = p2.getShape(secondScale);
+    auto c = p3.getShape(secondScale);
     // testing first the assert
-    CHECK_THROWS(p1.getShape(firstScale, firstWidth));
-    CHECK_THROWS(p1.getShape(thirdScale, secondWidth));
-    CHECK_THROWS(p1.getShape(secondScale, thirdWidth));
+    CHECK_THROWS(p1.getShape(firstScale));
+    CHECK_THROWS(p1.getShape(thirdScale));
+    CHECK_THROWS(p1.getShape(secondScale));
 
     // testing if the shapes are set in the same position of the correspondant
     // planet

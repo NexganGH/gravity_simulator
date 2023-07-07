@@ -1,12 +1,8 @@
-
-#include "../include/physics_engine.hpp"
+#include "physics_engine.hpp"
 
 #include <cassert>
 #include <cmath>
 #include <memory>
-
-#include "body.hpp"
-#include "physics_engine.hpp"
 
 namespace gs {
 
@@ -24,7 +20,7 @@ void PhysicsEngine::firstStep(std::unique_ptr<Body> &b1, double dt) const {
   b1->setVelocity(newVelocity);
 
   // implementazione eulero
-  auto newPosition = pos + newVelocity * dt ;
+  auto newPosition = pos + newVelocity * dt;
 
   b1->setPosition(newPosition);
 }
@@ -79,7 +75,9 @@ bool PhysicsEngine::isRunning() const { return _running; }
 
 void PhysicsEngine::toggleRunning() { _running = !_running; }
 
-double PhysicsEngine::getSimulationSecondsElapsed() const { return _timeElapsed; }
+double PhysicsEngine::getSimulationSecondsElapsed() const {
+  return _timeElapsed;
+}
 double PhysicsEngine::getRealSecondsElapsed() const {
   return _timeElapsed / _timeScale;
 }
@@ -90,10 +88,12 @@ void PhysicsEngine::evolve(std::vector<std::unique_ptr<Body>> &bodies,
 
   dt *= _timeScale * (_running ? 1 : 0);
 
-  // First gravity must be applied.
+  // First gravity must be applied to all, first step.
   for (auto it = bodies.begin(); it != bodies.end(); ++it) {
     for (auto is = it + 1; is < bodies.end(); ++is) {
-      if (it != is) applyGravity(*it, *is);
+      if (it != is) {
+        applyGravity(*it, *is);
+      }
     }
     firstStep(*it, dt);
 

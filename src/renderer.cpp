@@ -27,7 +27,7 @@ namespace gs {
 
   double Renderer::getUniverseHeight() { return _window.getView().getSize().y * _scale; }
 
-  void Renderer::draw(std::unique_ptr<Body>& body) { draw(*(body->getShape(_scale, getUniverseWidth()))); }
+  void Renderer::draw(std::unique_ptr<Body>& body) { draw(*(body->getShape(_scale))); }
 
   void Renderer::draw(sf::Shape& shape) {
     auto pos = realToScreen(shape.getPosition());
