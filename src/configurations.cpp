@@ -102,7 +102,7 @@ auto createEarthAndSun(sf::RenderWindow& window) {
 
   auto height = 3 * EARTH_SUN_DISTANCE;
 
-  std::unique_ptr<Body> sun = std::make_unique<Planet>(
+  std::unique_ptr<Body> sun = std::make_unique<Star>(
       Vector{height / 2, height / 2}, Vector{0, 0}, SUN_MASS);
   std::unique_ptr<Body> earth = std::make_unique<Planet>(
       Vector{height / 2 + EARTH_SUN_DISTANCE, height / 2},

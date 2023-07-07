@@ -224,7 +224,7 @@ La classe cardine del programma è \verb|SimulationState|, la quale rappresenta 
 
 \subsection{PhysicsEngine}
 \label{physics_engine}
-Il metodo principale, \verb|evolve|, oltre ha come parametro la lista dei corpi da evolvere e l'intervallo di tempo \verb|dt|. Tale intervallo deve corrispondere all'intervallo di tempo che è trascorso \textit{nella realtà} dalla scorsa chiamata di \verb|evolve|.
+Il metodo principale, \verb|evolve|, ha come parametro la lista dei corpi da evolvere e l'intervallo di tempo \verb|dt|. Tale intervallo deve corrispondere all'intervallo di tempo che è trascorso \textit{nella realtà} dalla scorsa chiamata di \verb|evolve|.
 
 Al fine di simulare eventi che avvengono in periodi estesi, come anni, è necessario però utilizzare una \verb|timescale|, ovvero un valore che velocizzi la simulazione. Tale valore è moltiplicato per il \verb|dt| del metodo evolve. Si incorre nella seguente relazione:
 
@@ -351,4 +351,8 @@ Ecco perchè nel testo ci si riferisce alle sue componenti nella forma:
 Tra i vari metodi di integrazione numerica testati, il metodo LeapFrog si è rivelato il più accurato, mostrando una stabilità delle orbite notevolmente superiore a quella ottenuta con gli altri metodi.
 
 La prima versione del progetto presentava un'implementazione del metodo di Eulero, basato sullo sviluppo in serie di Taylor, fino a terzo e quarto ordine. Le orbite erano instabili e divergevano.
+
+L'implementazione del metodo Runge-Kutta del secondo e quarto ordine risultava più precisa nella stablità delle orbite, presentando comunque approssimazioni notevoli sull'energia, che non si conservava e continuava a crescere.
+
+Il metodo LeapFrog, a dispetto degli altri, mantiene costanti le energie, approssimando leggermente le traiettorie (a livello trascurabile date distanze così elevate tra i corpi celesti), mantenendo però orbite costanti e stabili nel tempo.
 \end{document}
