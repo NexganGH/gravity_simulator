@@ -47,7 +47,7 @@ Eseguire il pull della repository con il comando:
 
 Installare \href{https://www.sfml-dev.org/tutorials/2.5/start-linux.php}{SFML v2.5.1} con il comando:
 \begin{verbatim}
-    $ sudo apt-get install libsfml-dev=2.5.1
+    $ sudo apt-get install libsfml-dev=2.5.1+dfsg-1build1
 \end{verbatim}
 
 Installare \href{https://www.sfml-dev.org/tutorials/2.5/start-linux.php}{TGUI}, libreria estensione di SFML per create le interfacce utenti:
@@ -64,7 +64,7 @@ Assicurarsi di avere CMake installato, da installare altrimenti con:
 
 Il programma può essere compilato, \textit{per la release}, con:
 \begin{verbatim}
-    $ cmake -S. -B build -DBUILD_TESTING=Off
+    $ cmake -S. -B build -DBUILD_TESTING=Off -DCMAKE_BUILD_TYPE=Release
     $ cmake --build build
     $ build/gravity
      \end{verbatim}
@@ -250,6 +250,9 @@ Per accedere ad un oggetto detenuto da \verb|SimulationState|, questa fornisce c
 Per istanziare i puntatori si utilizzano i metodi \verb|std::make_unique| e \verb|std::make_shared|.
 
 \section{Testing e debugging}
+\subsection{Tecnica di testing}
+È stato utilizzata la libreria \verb|doctest| per effettuare i testing. CMake permette di effettuare i linking e creare un eseguibile per ogni file di test.
+
 \subsection{Eseguire un test}
 I test sono contenuti in executable separati con il nome della classe.t. Ad esempio, per effettuare il test della classe \verb|PhysicsEngine|:
 \begin{verbatim}
@@ -280,6 +283,8 @@ Tra i problemi riscontrati, tuttavia, si evidenzia:
     \item un peggioramento delle performance nel tempo, dovuto alla creazione dei punti delle orbite (anche se questi vengono cancellati dopo un certo periodo);
     \item dopo un periodo di simulazione elevato, il tempo di rivoluzione della Terra aumenta la proprio durata ($> 1$ anno). Si ipotizza che tale problema sia dovuto alle approssimazioni numeriche effettuate.
 \end{itemize}
+
+\subsection{}
 \appendix
 \section{Calcoli e approssimazioni}
 
