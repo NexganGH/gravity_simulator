@@ -158,7 +158,7 @@ auto createThreeBodies(sf::RenderWindow& window) {
       Vector{0, 0}, SATURN_MASS);
   std::unique_ptr<Body> p3 =
       std::make_unique<Planet>(Vector{height / 2, height / 2 - VENUS_AFELIO},
-                               Vector{10, 30}, 0.8*JUPITER_MASS);
+                               Vector{10, 30}, 0.8 * JUPITER_MASS);
 
   threeBodies->addBody(p1);
   threeBodies->addBody(p2);
@@ -199,6 +199,42 @@ auto createCollapsingBinaryStars(sf::RenderWindow& window) {
   return collapsingBinaryStars;
 }
 
+auto createSolarSystemWithBlackHole(sf::RenderWindow& window) {
+  auto solarSystemTillMars = std::make_shared<Configuration>(
+      "Solar System with Black Hole", 3 * MARS_AFELIO, 1000000, window);
+
+  auto height = 3 * MARS_AFELIO;
+
+  std::unique_ptr<Body> sun = std::make_unique<Star>(
+      Vector{height / 2, height / 2}, Vector{0, 0}, 3.3f * SUN_MASS);
+      // THe smallest black hole is just 3.3 times the mass of the sun.
+  std::unique_ptr<Body> earth = std::make_unique<Planet>(
+      Vector{height / 2 + EARTH_SUN_DISTANCE, height / 2},
+      Vector{0, -EARTH_SPEED}, EARTH_MASS);
+  std::unique_ptr<Body> mercury =
+      std::make_unique<Planet>(Vector{height / 2 - MERCURY_AFELIO, height / 2},
+                               Vector{0, MERCURY_AFELIO_SPEED}, MERCURY_MASS);
+  std::unique_ptr<Body> venus =
+      std::make_unique<Planet>(Vector{height / 2 - VENUS_AFELIO, height / 2},
+                               Vector{0, VENUS_AFELIO_SPEED}, VENUS_MASS);
+  std::unique_ptr<Body> mars =
+      std::make_unique<Planet>(Vector{height / 2 - MARS_AFELIO, height / 2},
+                               Vector{0, MARS_AFELIO_SPEED}, MARS_MASS);
+
+  std::unique_ptr<Body> moon = std::make_unique<Planet>(
+      Vector{height / 2 + EARTH_SUN_DISTANCE + MOON_AFELIO, height / 2},
+      Vector{0, -MOON_AFELIO_SPEED - EARTH_SPEED}, MOON_MASS);
+
+  solarSystemTillMars->addBody(sun);
+  solarSystemTillMars->addBody(earth);
+  solarSystemTillMars->addBody(mercury);
+  solarSystemTillMars->addBody(venus);
+  solarSystemTillMars->addBody(mars);
+  solarSystemTillMars->addBody(moon);
+
+  return solarSystemTillMars;
+}
+
 std::vector<std::shared_ptr<Configuration>> getConfigurations(
     sf::RenderWindow& window) {
   std::vector<std::shared_ptr<Configuration>> list;
@@ -206,10 +242,10 @@ std::vector<std::shared_ptr<Configuration>> getConfigurations(
   list.push_back(createSolarSystemTillMars(window));
   list.push_back(createSolarSystem(window));
   list.push_back(createEarthAndSun(window));
-  list.push_back(createStarCollapsing(window));
-  list.push_back(createThreeBodies(window));
+  list.push_back(createSolarSystemWithBlackHole(window));
+  //   list.push_back(createThreeBodies(window));
   list.push_back(createBinaryStars(window));
-  list.push_back(createCollapsingBinaryStars(window));
+  //   list.push_back(createCollapsingBinaryStars(window));
 
   return list;
 }

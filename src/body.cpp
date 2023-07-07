@@ -44,7 +44,7 @@ std::unique_ptr<sf::Shape> Planet::getShape(double scale) const {
 
   // Making body's size proportional to mass.
   auto radius = std::pow(getMass(), 0.08) * 1E8;
-  
+
   // We must rescale the REAL radius to the SCREEN radius (REAL = meters;
   // SCREEN = pixels)
   circle->setRadius(radius / scale);
@@ -70,7 +70,7 @@ std::unique_ptr<sf::Shape> Star::getShape(double scale) const {
   if (_mass <= SUN_MASS) {
     circle->setFillColor(sf::Color::Yellow);
   } else if (_mass <= 10 * SUN_MASS) {
-    circle->setFillColor(sf::Color(0, 0, 0));
+    circle->setFillColor(sf::Color(255, 215, 0));
   } else {
     circle->setFillColor(sf::Color::Red);
   }
