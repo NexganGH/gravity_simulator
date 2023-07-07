@@ -242,6 +242,9 @@ Per accedere ad un oggetto detenuto da \verb|SimulationState|, questa fornisce c
 Per istanziare i puntatori si utilizzano i metodi \verb|std::make_unique| e \verb|std::make_shared|.
 
 \section{Testing e debugging}
+\subsection{Tecnica di testing}
+È stato utilizzata la libreria \verb|doctest| per effettuare i testing. CMake permette di effettuare i linking e creare un eseguibile per ogni file di test.
+
 \subsection{Eseguire un test}
 I test sono contenuti in executable separati con il nome della classe.t. Ad esempio, per effettuare il test della classe \verb|PhysicsEngine|:
 \begin{verbatim}
@@ -272,6 +275,8 @@ Tra i problemi riscontrati, tuttavia, si evidenzia:
     \item un peggioramento delle performance nel tempo, dovuto alla creazione dei punti delle orbite (anche se questi vengono cancellati dopo un certo periodo);
     \item dopo un periodo di simulazione elevato, il tempo di rivoluzione della Terra aumenta la proprio durata ($> 1$ anno). Si ipotizza che tale problema sia dovuto alle approssimazioni numeriche effettuate.
 \end{itemize}
+
+\subsection{}
 \appendix
 \section{Calcoli e approssimazioni}
 
