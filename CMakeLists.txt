@@ -24,7 +24,7 @@ include_directories(include)
 # Add the source files in the src/ directory
 file(GLOB_RECURSE SRC_FILES src/*.cpp)
 
-find_package(SFML 2.6 COMPONENTS system window graphics REQUIRED)
+find_package(SFML 2.5 COMPONENTS system window graphics REQUIRED)
 
 
 #find_package(TGUI 0.10 REQUIRED)
