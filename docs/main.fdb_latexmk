@@ -1,8 +1,8 @@
 # Fdb version 4
-["pdflatex"] 1688726801 "c:/Users/Torto/OneDrive - Alma Mater Studiorum Università di Bologna/Programmazione/gravity_simulator/docs/main.tex" "main.pdf" "main" 1688726804 0
+["pdflatex"] 1688737192 "c:/Users/Torto/OneDrive - Alma Mater Studiorum Università di Bologna/Programmazione/gravity_simulator/docs/main.tex" "main.pdf" "main" 1688737196 0
   "Playpause.png" 1688674302 7123 634b98fef202a8ef799cfdffcd2d2a56 ""
   "VersoreDistanza.png" 1688725362 68028 f5f6da50ace31019643b2a358e0b82ec ""
-  "c:/Users/Torto/OneDrive - Alma Mater Studiorum Università di Bologna/Programmazione/gravity_simulator/docs/main.tex" 1688726797 22477 f92e9263c0f9272c43ea184dcef623a7 ""
+  "c:/Users/Torto/OneDrive - Alma Mater Studiorum Università di Bologna/Programmazione/gravity_simulator/docs/main.tex" 1688737191 22477 f92e9263c0f9272c43ea184dcef623a7 ""
   "c:/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1678194964 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1678196008 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2022/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1678195572 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
@@ -111,9 +111,9 @@
   "c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1678200484 4662804 131178ccc9b2f4741a821427ce79dce1 ""
   "c:/texlive/2022/texmf-var/web2c/pdftex/pdflatex.fmt" 1678200585 7883458 266ecc9c59e663f69c080cc39665130f ""
   "c:/texlive/2022/texmf.cnf" 1678200453 713 e69b156964470283e0530f5060668171 ""
-  "main.aux" 1688726804 5877 965e332ac547a01074d4f1441afd7874 "pdflatex"
-  "main.out" 1688726804 3973 448ada20a5dcb1adf07a435e3314cc72 "pdflatex"
-  "main.tex" 1688726797 22477 f92e9263c0f9272c43ea184dcef623a7 ""
+  "main.aux" 1688737196 5877 965e332ac547a01074d4f1441afd7874 "pdflatex"
+  "main.out" 1688737196 3973 448ada20a5dcb1adf07a435e3314cc72 "pdflatex"
+  "main.tex" 1688737191 22477 f92e9263c0f9272c43ea184dcef623a7 ""
   "menu.png" 1688725362 3590 f68210f2067da137ce435b40a21bce4b ""
   (generated)
   "main.aux"
