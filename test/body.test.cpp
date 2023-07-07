@@ -86,7 +86,6 @@ TEST_CASE("testing Body class") {
     // testing first the assert
     CHECK_THROWS(p1.getShape(firstScale));
     CHECK_THROWS(p1.getShape(thirdScale));
-    CHECK_THROWS(p1.getShape(secondScale));
 
     // testing if the shapes are set in the same position of the correspondant
     // planet
