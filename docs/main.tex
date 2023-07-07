@@ -118,16 +118,16 @@ In tutta la finestra grafica è possibile cliccare con il tasto destro in un pun
 \begin{figure} [H]
     \centering
     \includegraphics[height=.20\linewidth]{menu.png}
-    \captionof{figure}{Il menù presente nella parte alta a sinistra dell'interfaccia serve a selezionare delle simulazioni prefabbricate. Cliccandone una essa comparirà nello schermo. Le possibilità sono: Solar system till mars, Solar system, Earth & Sun, Star collapsing, Two planets, Two planets 2, Three planets, Binary stars, Collapsing binary stars.}
+    \captionof{figure}{Il menù presente nella parte alta a sinistra dell'interfaccia serve a selezionare delle simulazioni prefabbricate. Cliccandone una essa comparirà nello schermo.}
     \label{menu}
 \end{figure}
 
 
 \subsection{La fisica dietro al programma}
-\label{la_fisica_dietro_al_programma}
+\label{fisica}
 La legge di gravitazione universale afferma che due punti materiali si attraggono con una forza di intensità direttamente proporzionale al prodotto delle masse dei singoli corpi e inversamente proporzionale al quadrato della loro distanza. Questa legge, espressa vettorialmente, diventa:
 \begin{equation}
-    \textbf{F}_{2,1}(\textbf{r})=-\frac{Gm_{1}m_{2}}{r^{2}}\textbf{\hat{u}}_{r}
+    \mathbf{F}_{2,1}(\mathbf{r})=-\frac{Gm_{1}m_{2}}{r^{2}}\mathbf{\hat{u}}_{r}
 \end{equation}
 dove $\textbf{F}_{2,1}$ è la forza con cui l'oggetto 1 è attratto dall'oggetto 2, G è la costante di gravitazione universale, che vale circa $6,67\cdot 10^{-11}\frac{Nm^2}{kg^2}$, $m_1$ e $m_2$ sono le masse dei due corpi, $\textbf{r}=\textbf{r}_1-\textbf{r}_2$ è il vettore congiungente i due corpi (supposti puntiformi), 
 $r$ è il suo modulo e $\hat{\textbf{u}}_{r}=\frac{\textbf{r}}{r}$ rappresenta il versore che individua la retta congiungente i due punti materiali.\\
@@ -140,7 +140,7 @@ dove $\textbf{F}_{j,tot}$ è la forza risultante che agisce sul corpo $j$.\\
 Integrando poi la precedente equazione si ottiene la legge oraria $\textbf{r}(t)$ del corpo $j$. Non essendo risolvibile analiticamente si deve ricorrere a metodi di integrazione numerica.
 
 \section{Trattazione matematica}
-Siccome la forza gravitazione è una grandezza vettoriale (vedi \ref{la_fisica_dietro_al_programma}) è possibile scomporla nelle sue due componenti indipendenti\footnote{Il progetto infatti tratta solo il caso bidimensionale.}: nel caso del progetto si è preferito fare utilizzo delle coordinate cartesiane, così da poter ottenere, a partire dalla \ref{eq2}, le equazioni differenziali qui sotto riportatete ||||||| le cui soluzioni descrivono rispettivamnete la proiezione sull'asse x ed y del moto dei corpi.
+Siccome la forza gravitazione è una grandezza vettoriale (vedi \ref{fisica}) è possibile scomporla nelle sue due componenti indipendenti\footnote{Il progetto infatti tratta solo il caso bidimensionale.}: nel caso del progetto si è preferito fare utilizzo delle coordinate cartesiane, così da poter ottenere, a partire dalla \ref{eq2}, le equazioni differenziali qui sotto riportatete ||||||| le cui soluzioni descrivono rispettivamnete la proiezione sull'asse x ed y del moto dei corpi.
 
 \begin{equation}
     F_{j,x,tot}=\sum_{i=1,i\neq j}^{N_{bodies}}-\frac{Gm_{j}m_{i}}{d_{j,i}^2}\frac{x_{j}-x_{i}}{d_{j,i}}=m_{j}\ddot{x_{j}}
@@ -164,12 +164,12 @@ dove $(\frac{x_{j}-x_{i}}{d_{j,i}}; \frac{y_{j}-y_{i}}{d_{j,i}})$ è il versore 
 Nel progetto si farà uso di questa equazione in forma vettoriale, alla quale verranno appliacati i metodi di integrazione numerica che ci proponiamo di trattare di seguito.
 \subsection{Metodo LeapFrog}
 Come precedentemente menzionato, la soluzione dell'equazione differenziale \ref{eq5} per ogni singolo corpo risulta impossibile da ricavare analiticamente. Si deve quindi ricorrere a metodi numerici di integrazione per equazioni differenziali.
-Nel presente progetto,  per ottenere la posizione $\textbf{r}_{j}$ e la velocità $\textbf{\dot{r}}_{j}$ del corpo $j$\footnote{Il sistema di riferimento utilizzato è quello della finestra grafica nel quale  l'origine è posta nel vertice in alto a sinistra, l'asse delle ascisse positivo verso destra e quello delle ordinate positivo verso il basso.}, che risente dell'attrazione gravitazionale simultanea degli altri N-1 corpi,è stato adottato il metodo Leapfrog.
+Nel presente progetto,  per ottenere la posizione $\mathbf{r}_{j}$ e la velocità $\mathbf{\dot{r}}_{j}$ del corpo $j$\footnote{Il sistema di riferimento utilizzato è quello della finestra grafica nel quale  l'origine è posta nel vertice in alto a sinistra, l'asse delle ascisse positivo verso destra e quello delle ordinate positivo verso il basso.}, che risente dell'attrazione gravitazionale simultanea degli altri N-1 corpi,è stato adottato il metodo Leapfrog.
 È un sistema ampiamente utilizzato per ricavare numericamente le soluzioni di equazioni differenziali scalari del tipo:
 \begin{equation}
     \ddot{x}=\dot{v}=A(x)
 \end{equation}
-L'algoritmo permette di calcolare la posizione del corpo in esame allo step $i+1$ $x_{i+1}$ nota la positione allo step $i$ $x_{i}$ e la velocità del corpo allo step $v_{i+\frac{1}{2}$}.
+L'algoritmo permette di calcolare la posizione del corpo in esame allo step $i+1$ $x_{i+1}$ nota la positione allo step $i$ $x_{i}$ e la velocità del corpo allo step $v_{i+\frac{1}{2}}$.
 
 Le equazioni per aggionare la posizione e la velocità del corpo al rispettivo step sono:
 \begin{equation}
@@ -344,11 +344,11 @@ Per calcolare il suo versore è sufficiente riscalare lo stesso per l'inverso de
 \end{equation}
 Di conseguenza la formula del versore distanza sarà:
 \begin{equation}
-    \textbf{\hat{d}}=(\frac{x_{1}-x_{2}}{\sqrt{(x_{1}-x_{2})^2+(y_{1}-y_{2})^2}}; \frac{y_{1}-y_{2}}{\sqrt{(x_{1}-x_{2})^2+(y_{1}-y_{2})^2}})   
+    \mathbf{\hat{d}}=(\frac{x_{1}-x_{2}}{\sqrt{(x_{1}-x_{2})^2+(y_{1}-y_{2})^2}}; \frac{y_{1}-y_{2}}{\sqrt{(x_{1}-x_{2})^2+(y_{1}-y_{2})^2}})   
 \end{equation}
 Ecco perchè nel testo ci si riferisce alle sue componenti nella forma:
 \begin{equation}
-    \textbf{\hat{d}}_{x}=\frac{x_{1}-x_{2}}{\sqrt{(x_{1}-x_{2})^2+(y_{1}-y_{2})^2}} ; \textbf{\hat{d}}_{y}=\frac{y_{1}-y_{2}}{\sqrt{(x_{1}-x_{2})^2+(y_{1}-y_{2})^2}}
+    \mathbf{\hat{d}}_{x}=\frac{x_{1}-x_{2}}{\sqrt{(x_{1}-x_{2})^2+(y_{1}-y_{2})^2}} ; \mathbf{\hat{d}}_{y}=\frac{y_{1}-y_{2}}{\sqrt{(x_{1}-x_{2})^2+(y_{1}-y_{2})^2}}
 \end{equation}
 \begin{figure}
     \centering
