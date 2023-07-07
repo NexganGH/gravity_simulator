@@ -41,13 +41,13 @@ TEST_CASE("testing Vector class") {
   }
 
   SUBCASE("Testing versor function") {
-    // TEst con Vector{0,0}??
     gs::Vector a{1, 1};
     gs::Vector b{5, 0};
     gs::Vector c{0, 3};
     gs::Vector d{-2, 0};
     gs::Vector e{0, -3};
     gs::Vector f{3, 3};
+    gs::Vector g{0,0};
     CHECK((a.versor()).x == doctest::Approx(0.7071));
     CHECK((a.versor()).y == doctest::Approx(0.7071));
     CHECK(b.versor() == gs::Vector{1, 0});
@@ -56,6 +56,7 @@ TEST_CASE("testing Vector class") {
     CHECK(e.versor() == gs::Vector{0, -1});
     CHECK((f.versor()).x == doctest::Approx(0.7071));
     CHECK((f.versor()).y == doctest::Approx(0.7071));
+    CHECK_THROWS(g.versor());
     }
 
   SUBCASE("Testing the toSfrml function") {
