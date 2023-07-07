@@ -74,6 +74,27 @@ Questo creerà un eseguibile \verb|gravity| nella cartella \verb|build|, da eseg
     $ build/gravity
 \end{verbatim}
 
+\subsection{Funzionalità}
+Il programma consiste in uno spazio in cui sono presenti diversi corpi stellari, i quali sono soggetti a gravità reciproca.
+
+La schermata iniziale prevede una simulazione del sistema solare fino a Marte. L'utente può da qui avviare la simulazione con il tasto in alto a sinistra. 
+
+Tra le varie funzionalità:
+\begin{itemize}
+    \item l'utente può inserire un nuovo corpo con click destro del mouse. Questo tasto apre una finestra che richiede di inserire la massa \textbf{in unità terrestri} (1 = massa della Terra). Successivamente è richiesto scegliere la direzione verso cui il corpo verrà lanciato con un modulo di 30 km/s.
+    \item l'utente può mettere in pausa la simulazione
+    \item l'utente può ripristinare la simulazione con il tasto "reset", in alto a sinistra.
+    \item l'utente può scegliere tra varie configurazioni predefinite in alto a sinistra.
+\end{itemize}
+
+Altre caratteristiche:
+\begin{itemize}
+    \item la grandezza dei pianeti è proporzionale in maniera esponenziale alla massa (con esponente < 1);
+    \item il colore dei pianeti è casuale; il colore delle stelle varia da giallo a rosso a seconda della massa.
+    \item la finestra è sempre quadrata e dipende dalla grandezza dello schermo dell'utente.
+\end{itemize}
+
+Da notare che l'interfaccia grafica non scala con la grandezza dello schermo dell'utente.
 
 
 \subsection{Interface}
@@ -221,6 +242,18 @@ Per accedere ad un oggetto detenuto da \verb|SimulationState|, questa fornisce c
 Per istanziare i puntatori si utilizzano i metodi \verb|std::make_unique| e \verb|std::make_shared|.
 
 \section{Testing e debugging}
+\subsection{Eseguire un test}
+I test sono contenuti in executable separati con il nome della classe.t. Ad esempio, per effettuare il test della classe \verb|PhysicsEngine|:
+\begin{verbatim}
+    $ cmake -S. -B build -DBUILD_TESTING=On
+    $ cmake --build build --target physics_engine.t
+    $ build/gravity
+\end{verbatim}
+
+Per eseguire i test, eseguire \verb|physics_engine.t| nella cartella \verb|build|:
+\begin{verbatim}
+    $ build/physics_engine.t
+\end{verbatim}
 \subsection{Memory Leak}
 Durante i test non sono stati riscontrati memory leak provenienti dal codice originale. In determinati test si sono evidenziati, però, dei leak provenienti da SFML oppure TGUI la cui causa è sconosciuta.
 
