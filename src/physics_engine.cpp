@@ -24,7 +24,7 @@ void PhysicsEngine::firstStep(std::unique_ptr<Body> &b1, double dt) const {
   b1->setVelocity(newVelocity);
 
   // implementazione eulero
-  auto newPosition = pos + vel * dt + 0.5 * acc * std::pow(dt, 2);
+  auto newPosition = pos + newVelocity * dt ;
 
   b1->setPosition(newPosition);
 }
@@ -71,7 +71,6 @@ PhysicsEngine::PhysicsEngine(double timeScale) : _timeScale(timeScale) {
 double PhysicsEngine::getTimeScale() const { return _timeScale; }
 
 void PhysicsEngine::setTimeScale(double timeScale) {
-  // assert(timeScale >= 0);
   if (timeScale < 0) throw std::invalid_argument("timeScale must be >= 0");
   _timeScale = timeScale;
 }
