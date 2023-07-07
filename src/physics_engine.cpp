@@ -61,7 +61,7 @@ void PhysicsEngine::applyGravity(std::unique_ptr<Body> &b1,
 }
 
 PhysicsEngine::PhysicsEngine(double timeScale) : _timeScale(timeScale) {
-  if (timeScale < 0) throw std::invalid_argument("timeScale must be >= 0");
+  if (timeScale <= 0) throw std::invalid_argument("timeScale must be >= 0");
 }
 
 double PhysicsEngine::getTimeScale() const { return _timeScale; }
