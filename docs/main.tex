@@ -65,7 +65,7 @@ Assicurarsi di avere CMake installato, da installare altrimenti con:
 Il programma può essere compilato, \textit{per la release}, con:
 \begin{verbatim}
     $ cmake -S. -B build -DBUILD_TESTING=Off
-    $ cmake --build build
+    $ cmake -DCMAKE_BUILD_TYPE=Release build
     $ build/gravity
      \end{verbatim}
 
@@ -118,7 +118,7 @@ In tutta la finestra grafica è possibile cliccare con il tasto destro in un pun
 \begin{figure} [H]
     \centering
     \includegraphics[height=.20\linewidth]{Menù.png}
-    \captionof{figure}{Il menù presente nella parte alta a sinistra dell'interfaccia serve a selezionare delle simulazioni prefabbricate. Cliccandone una essa comparirà nello schermo. Le possibilità sono: Solar system till mars, Solar system, Earth & Sun, Star collapsing, Two planets, Two planets 2, Three planets, Binary stars, Collapsing binary stars.}
+    \captionof{figure}{Il menù presente nella parte alta a sinistra dell'interfaccia serve a selezionare delle simulazioni prefabbricate. Cliccandone una essa comparirà nello schermo. Le possibilità sono: Solar system till mars, Solar system, Earth and Sun, Star collapsing, Two planets, Two planets 2, Three planets, Binary stars, Collapsing binary stars.}
     \label{playpause}
 \end{figure}
 
