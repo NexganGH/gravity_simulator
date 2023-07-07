@@ -23,6 +23,9 @@
 
 \begin{document}
 \maketitle
+
+\tableofcontents
+
 \section{Introduzione}
 
 \subsection{Obiettivo del simulatore}
@@ -66,8 +69,7 @@ Il programma può essere compilato, \textit{per la release}, con:
 \begin{verbatim}
     $ cmake -S. -B build -DBUILD_TESTING=Off -DCMAKE_BUILD_TYPE=Release
     $ cmake --build build
-    $ build/gravity
-     \end{verbatim}
+\end{verbatim}
 
 Questo creerà un eseguibile \verb|gravity| nella cartella \verb|build|, da eseguire con il comando:
 \begin{verbatim}
@@ -292,7 +294,6 @@ I test sono contenuti in executable separati con il nome della classe.t. Ad esem
 \begin{verbatim}
     $ cmake -S. -B build -DBUILD_TESTING=On
     $ cmake --build build --target physics_engine.t
-    $ build/gravity
 \end{verbatim}
 
 Per eseguire i test, eseguire \verb|physics_engine.t| nella cartella \verb|build|:

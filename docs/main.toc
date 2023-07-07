@@ -1,0 +1,27 @@
+\babel@toc {italian}{}\relax 
+\babel@toc {italian}{}\relax 
+\contentsline {section}{\numberline {1}Introduzione}{2}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Obiettivo del simulatore}{2}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Istruzioni per la compilazione}{2}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Funzionalità}{2}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}La fisica dietro al programma}{3}{subsection.1.4}%
+\contentsline {section}{\numberline {2}Trattazione matematica}{4}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Metodo LeapFrog}{4}{subsection.2.1}%
+\contentsline {section}{\numberline {3}Implementazione}{5}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Strumenti utilizzati}{5}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Struttura dei file}{5}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Struttura generale delle classi}{6}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}PhysicsEngine}{6}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Renderer}{7}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.6}Configuration}{7}{subsection.3.6}%
+\contentsline {subsection}{\numberline {3.7}Altre classi}{7}{subsection.3.7}%
+\contentsline {subsection}{\numberline {3.8}Ciclo principale}{7}{subsection.3.8}%
+\contentsline {subsection}{\numberline {3.9}Utilizzo dei puntatori}{7}{subsection.3.9}%
+\contentsline {section}{\numberline {4}Testing e debugging}{8}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Tecnica di testing}{8}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Eseguire un test}{8}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Memory Leak}{8}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Risultati e problemi riscontrati}{8}{section.5}%
+\contentsline {section}{\numberline {A}Calcoli e approssimazioni}{9}{appendix.Alph1}%
+\contentsline {subsection}{\numberline {A.1}Versore distanza tra due corpi}{9}{subsection.Alph1.1}%
+\contentsline {subsection}{\numberline {A.2}Altri metodi di approssimazione}{9}{subsection.Alph1.2}%
