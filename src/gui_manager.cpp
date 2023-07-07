@@ -60,8 +60,14 @@ void GuiManager::rightButtonClicked(sf::Event event) {
     // Must be converted to real (universe)'s coordinate
     Vector realPos = _state.getRenderer()->screenToReal(pos);
 
-    _creatingBody = std::make_unique<Planet>(
-        realPos, Vector{0, 0}, _massInserter->getText().toFloat() * 5.9722E24);
+    auto massInEarthUnits = _massInserter->getText().toFloat();
+
+    if (massInEarthUnits > 0 && massInEarthUnits < 1E15) {
+      _creatingBody = std::make_unique<Planet>(
+          realPos, Vector{0, 0},
+          _massInserter->getText().toFloat() * 5.9722E24);
+      
+    }
     _massInserter->onUnfocus.disconnectAll();
     _gui.remove(_massInserter);
   });
