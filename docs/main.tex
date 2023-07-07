@@ -47,7 +47,7 @@ Eseguire il pull della repository con il comando:
 
 Installare \href{https://www.sfml-dev.org/tutorials/2.5/start-linux.php}{SFML v2.5.1} con il comando:
 \begin{verbatim}
-    $ sudo apt-get install libsfml-dev=2.5.1
+    $ sudo apt-get install libsfml-dev=2.5.1+dfsg-1build1
 \end{verbatim}
 
 Installare \href{https://www.sfml-dev.org/tutorials/2.5/start-linux.php}{TGUI}, libreria estensione di SFML per create le interfacce utenti:
@@ -64,8 +64,8 @@ Assicurarsi di avere CMake installato, da installare altrimenti con:
 
 Il programma può essere compilato, \textit{per la release}, con:
 \begin{verbatim}
-    $ cmake -S. -B build -DBUILD_TESTING=Off
-    $ cmake -DCMAKE_BUILD_TYPE=Release build
+    $ cmake -S. -B build -DBUILD_TESTING=Off -DCMAKE_BUILD_TYPE=Release
+    $ cmake --build build
     $ build/gravity
      \end{verbatim}
 
